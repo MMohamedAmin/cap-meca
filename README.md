@@ -52,6 +52,8 @@ images/pieces/             les photos des pièces (Wikimedia Commons)
 images/icones/             les icônes de l'appli
 outils/verifier-donnees.js vérification automatique du contenu
 outils/maj-hors-ligne.js   met à jour sw.js après une modification
+outils/preparer-site.js    assemble le site à publier dans _site/ (mise en ligne)
+.github/workflows/         mise en ligne automatique sur GitHub Pages
 ```
 
 ## Ajouter ou modifier du contenu
@@ -79,8 +81,25 @@ node outils/verifier-donnees.js
 
 ## Suite prévue
 
-- **V4** : branchement de l'IA (questions générées sur les points faibles, bouton « Explique-moi »), en même temps que la mise en ligne.
+- **V4** : branchement de l'IA (questions générées sur les points faibles, bouton « Explique-moi »), avec un petit intermédiaire serveur qui garde la clé API cachée.
 
-## Mettre en ligne (plus tard)
+## Mettre en ligne (GitHub Pages)
 
-Le site est statique. Il suffit d'envoyer le dossier tel quel sur GitHub Pages, Netlify ou n'importe quel hébergeur. Il doit être servi en **https** : c'est ce qui permet de l'installer sur le téléphone et de l'utiliser sans connexion. En double-cliquant sur `index.html`, tout marche aussi, sauf l'installation.
+Le site est publié automatiquement par GitHub à chaque envoi sur la branche `main` (fichier `.github/workflows/mise-en-ligne.yml`). Avant de publier, GitHub lance `node outils/verifier-donnees.js` : si le contenu a une erreur ou si `sw.js` n'est pas à jour, rien n'est publié et l'ancienne version reste en ligne. Seuls les fichiers du site sont publiés (`outils/preparer-site.js`), pas les outils ni la documentation.
+
+**Première fois :**
+
+1. Sur github.com, crée un dépôt **public** vide nommé `cap-meca`, sans README ni licence.
+2. Dans le dépôt : **Settings → Pages → Build and deployment → Source : GitHub Actions**.
+3. Relie le dossier au dépôt et envoie-le (remplace `TON-PSEUDO`) :
+
+   ```
+   git remote add origin https://github.com/TON-PSEUDO/cap-meca.git
+   git push -u origin main
+   ```
+
+4. Onglet **Actions** du dépôt : attends la coche verte (1 à 2 minutes). Le site est alors à l'adresse `https://TON-PSEUDO.github.io/cap-meca/`.
+
+**Ensuite, à chaque modification :** `node outils/maj-hors-ligne.js`, `node outils/verifier-donnees.js`, un commit, puis `git push`. Sur un téléphone où le site est installé, la nouvelle version arrive à l'ouverture suivante.
+
+Le site doit être servi en **https** : c'est ce qui permet de l'installer sur le téléphone et de l'utiliser sans connexion. En double-cliquant sur `index.html`, tout marche aussi, sauf l'installation.

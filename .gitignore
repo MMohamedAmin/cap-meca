@@ -1,2 +1,5 @@
 .DS_Store
 Thumbs.db
+
+# Site assemblé pour la mise en ligne (outils/preparer-site.js)
+_site/

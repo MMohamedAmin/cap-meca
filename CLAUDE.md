@@ -6,7 +6,7 @@ Site de révision pour un élève en **CAP Maintenance des véhicules, option vo
 
 - **Site statique, sans build, sans dépendance, sans framework.** HTML, CSS et JavaScript « vanilla ».
 - Le site doit marcher en **double-cliquant sur `index.html`** (protocole `file://`). Donc : pas de `fetch()` de fichiers locaux et pas de modules ES (`import`). Le contenu est chargé par des balises `<script>` classiques qui appellent `CAP.ajouterChapitre({...})`.
-- Hébergement prévu plus tard sur un hébergeur statique (GitHub Pages ou Netlify).
+- Hébergement : GitHub Pages, publié par `.github/workflows/mise-en-ligne.yml` à chaque envoi sur `main`, seulement si `outils/verifier-donnees.js` passe. Le site est servi dans un sous-dossier (`/cap-meca/`) : tous les chemins doivent rester **relatifs**.
 - Mobile d'abord : tout doit être utilisable sur un téléphone de 360 px de large.
 - Toute lecture/écriture de `localStorage` est dans un `try/catch`.
 
