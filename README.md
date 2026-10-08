@@ -21,6 +21,11 @@ Ta progression est enregistrée dans le navigateur. Pour la sauvegarder ou la tr
 - **Reconnaître les pièces** : des questions sur photo (« Quelle est cette pièce ? », « Que constates-tu sur ce soufflet ? »).
 - **Examen blanc** : 20 questions sur tous les chapitres en 20 minutes, sans correction pendant l'épreuve, avec la note sur 20 et une correction détaillée à la fin.
 - **Progression enrichie** : calendrier d'activité, courbe des examens blancs, répartition des cartes par boîte.
+- **Formulaire** : les formules à connaître (moteur, électricité, pneus, unités) avec un exemple chiffré.
+- **Calculatrices** : cylindrée, rapport volumétrique, loi d'Ohm et puissance, avec le calcul détaillé étape par étape.
+- **Lexique** : 74 mots du métier, avec un filtre et des photos.
+- **Recherche** (loupe en haut) : dans le lexique, le formulaire, les fiches, les cartes et les questions, sans se soucier des accents.
+- **Installation sur le téléphone** et fonctionnement **sans connexion**, une fois le site mis en ligne.
 - Mode clair et sombre, affichage adapté au téléphone.
 
 ## Organisation des fichiers
@@ -32,12 +37,21 @@ js/cap.js                  base : CAP.ajouterChapitre()
 js/stockage.js             enregistrement de la progression (navigateur)
 js/stats.js                calculs : réussite, sous-thèmes, points faibles
 js/series.js               composition des séries (ciblé, erreurs, examen, cartes du jour)
+js/calculs.js              calculatrices (cylindrée, rapport volumétrique, Ohm, puissance)
+js/recherche.js            recherche dans tout le site
+js/pwa.js                  installation sur le téléphone et hors ligne
+sw.js                      service worker, GÉNÉRÉ par outils/maj-hors-ligne.js
+manifest.webmanifest       description de l'appli installée (nom, icônes, couleurs)
 js/ia.js                   emplacement prévu pour l'IA (V4), inactif
 js/app.js                  écrans et navigation
 data/images.js             les photos et leurs crédits (auteur, licence, source)
+data/formulaire.js         les formules à connaître
+data/lexique.js            les mots du métier
 data/chapitres/*.js        le contenu, un fichier par chapitre
 images/pieces/             les photos des pièces (Wikimedia Commons)
+images/icones/             les icônes de l'appli
 outils/verifier-donnees.js vérification automatique du contenu
+outils/maj-hors-ligne.js   met à jour sw.js après une modification
 ```
 
 ## Ajouter ou modifier du contenu
@@ -56,17 +70,17 @@ Dans les textes, `**mot**` met le mot en gras. Les apostrophes s'écrivent `\'`.
 
 Pour un **nouveau chapitre** : crée le fichier, puis ajoute sa ligne `<script>` dans `index.html`, dans la partie « Contenu ».
 
-Ensuite, vérifie qu'il n'y a pas d'erreur (il faut avoir Node.js installé) :
+Ensuite (il faut avoir Node.js installé), mets à jour la liste des fichiers gardés hors ligne, puis vérifie qu'il n'y a pas d'erreur :
 
 ```
+node outils/maj-hors-ligne.js
 node outils/verifier-donnees.js
 ```
 
 ## Suite prévue
 
-- **V3** : formulaire, calculatrices, lexique, installation sur le téléphone et mode hors ligne.
 - **V4** : branchement de l'IA (questions générées sur les points faibles, bouton « Explique-moi »), en même temps que la mise en ligne.
 
 ## Mettre en ligne (plus tard)
 
-Le site est statique. Il suffit d'envoyer le dossier tel quel sur GitHub Pages, Netlify ou n'importe quel hébergeur.
+Le site est statique. Il suffit d'envoyer le dossier tel quel sur GitHub Pages, Netlify ou n'importe quel hébergeur. Il doit être servi en **https** : c'est ce qui permet de l'installer sur le téléphone et de l'utiliser sans connexion. En double-cliquant sur `index.html`, tout marche aussi, sauf l'installation.

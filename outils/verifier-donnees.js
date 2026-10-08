@@ -69,9 +69,43 @@ for (const ch of contexte.CAP.chapitres) {
   });
 }
 
+// Lexique
+const idsChapitres = new Set(contexte.CAP.chapitres.map(c => c.id));
+const mots = new Set();
+(contexte.CAP.lexique || []).forEach((m, i) => {
+  const p = `[lexique] ${m.mot || 'n°' + (i + 1)}`;
+  if (!m.mot || !m.definition) erreurs.push(`${p} : mot ou définition vide`);
+  const cle = String(m.mot || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+  if (mots.has(cle)) erreurs.push(`${p} : mot en double`);
+  mots.add(cle);
+  if (m.chapitre && !idsChapitres.has(m.chapitre)) erreurs.push(`${p} : chapitre inconnu « ${m.chapitre} »`);
+  if (m.image !== undefined) {
+    if (!images[m.image]) erreurs.push(`${p} : image inconnue « ${m.image} »`);
+    else imagesUtilisees.add(m.image);
+  }
+});
+
+// Formulaire (les calculatrices sont dans js/calculs.js)
+vm.runInContext(fs.readFileSync(path.join(racine, 'js/calculs.js'), 'utf8'), contexte);
+const calculs = contexte.CAP.calculs.liste;
+(contexte.CAP.formulaire || []).forEach(th => {
+  if (!th.theme || !Array.isArray(th.formules) || !th.formules.length) erreurs.push(`[formulaire] thème vide ou sans formule : ${th.theme}`);
+  (th.formules || []).forEach(f => {
+    if (!f.nom || !f.formule) erreurs.push(`[formulaire] ${th.theme} : formule sans nom ou sans contenu`);
+    if (f.calcul && !calculs[f.calcul]) erreurs.push(`[formulaire] ${f.nom} : calculatrice inconnue « ${f.calcul} »`);
+  });
+});
+
+// Service worker : la liste des fichiers et la version doivent correspondre au site actuel.
+const { genererServiceWorker, lire } = require('./maj-hors-ligne');
+if (!fs.existsSync(path.join(racine, 'sw.js')) || lire('sw.js') !== genererServiceWorker()) {
+  erreurs.push('[hors ligne] sw.js n\'est pas à jour : lance « node outils/maj-hors-ligne.js »');
+}
+
 const nbQ = contexte.CAP.chapitres.reduce((n, c) => n + c.questions.length, 0);
 const nbC = contexte.CAP.chapitres.reduce((n, c) => n + c.cartes.length, 0);
-console.log(`${contexte.CAP.chapitres.length} chapitres, ${nbQ} questions, ${nbC} cartes, ${imagesUtilisees.size} images.`);
+const nbF = (contexte.CAP.formulaire || []).reduce((n, t) => n + t.formules.length, 0);
+console.log(`${contexte.CAP.chapitres.length} chapitres, ${nbQ} questions, ${nbC} cartes, ${imagesUtilisees.size} images, ${mots.size} mots, ${nbF} formules.`);
 const inutilisees = Object.keys(images).filter(k => !imagesUtilisees.has(k));
 if (inutilisees.length) console.log('Images déclarées mais pas utilisées : ' + inutilisees.join(', '));
 if (erreurs.length) {

@@ -56,15 +56,17 @@
   }
 
   // Photo d'une question, avec son crédit. Un appui l'ouvre en grand.
-  function illustration(q, petite) {
-    const im = q.image && CAP.images[q.image];
+  // differe : chargement retardé, pour les longues listes (lexique).
+  function photo(cle, petite, differe) {
+    const im = cle && CAP.images[cle];
     if (!im) return '';
     return `
       <figure class="illustration${petite ? ' petite' : ''}">
-        <a href="${echapper(im.fichier)}" target="_blank" rel="noopener"><img src="${echapper(im.fichier)}" alt="${echapper(im.description)}"></a>
+        <a href="${echapper(im.fichier)}" target="_blank" rel="noopener"><img src="${echapper(im.fichier)}" alt="${echapper(im.description)}"${differe ? ' loading="lazy"' : ''}></a>
         <figcaption>Photo : ${echapper(im.auteur)} · ${echapper(im.licence)}</figcaption>
       </figure>`;
   }
+  function illustration(q, petite) { return photo(q.image, petite); }
 
   // Séance en cours qui ne doit pas être quittée par erreur (examen blanc).
   let garde = null;      // fonction qui renvoie true si on peut quitter
@@ -141,6 +143,15 @@
 
       <h2 class="titre-section">Chapitres</h2>
       <div class="grille-chapitres">${cartesChapitres}</div>
+
+      <h2 class="titre-section">Outils</h2>
+      <div class="modes">
+        <a class="mode" href="#/formulaire"><strong>Formulaire</strong><span>Les formules à connaître</span></a>
+        <a class="mode" href="#/calculs"><strong>Calculatrices</strong><span>Cylindrée, loi d'Ohm…</span></a>
+        <a class="mode" href="#/lexique"><strong>Lexique</strong><span>${CAP.lexique.length} mots du métier</span></a>
+        <a class="mode" href="#/recherche"><strong>Rechercher</strong><span>Dans tout le site</span></a>
+        ${CAP.pwa.possible() ? '<a class="mode" href="#/installer"><strong>Installer sur mon téléphone</strong><span>Pour réviser sans connexion</span></a>' : ''}
+      </div>
     `);
   }
 
@@ -180,7 +191,8 @@
     return '';
   }
 
-  function vueFiche(ch) {
+  // section : numéro de la section à afficher directement (lien depuis la recherche).
+  function vueFiche(ch, section) {
     afficher(`
       ${lienRetour('#/chapitre/' + ch.id, ch.titre)}
       <h1>Fiche : ${echapper(ch.titre)}</h1>
@@ -202,6 +214,11 @@
       e.preventDefault();
       document.getElementById('section-' + a.dataset.section).scrollIntoView({ behavior: 'smooth' });
     }));
+    const cible = section !== undefined && document.getElementById('section-' + section);
+    if (cible) {
+      cible.classList.add('cible');
+      cible.scrollIntoView();
+    }
   }
 
   // ---------- Cartes mémo ----------
@@ -662,6 +679,258 @@
     montrer();
   }
 
+  // ---------- Formulaire ----------
+  function vueFormulaire() {
+    afficher(`
+      ${lienRetour('#/', 'Accueil')}
+      <h1>Formulaire</h1>
+      <nav class="sommaire">
+        ${CAP.formulaire.map((th, i) => `<a href="#" data-theme="${i}">${echapper(th.theme)}</a>`).join('')}
+      </nav>
+      ${CAP.formulaire.map((th, i) => `
+        <section class="section-fiche" id="theme-${i}">
+          <h2>${echapper(th.theme)}</h2>
+          ${th.formules.map(f => `
+            <div class="bloc-formule">
+              <h3>${echapper(f.nom)}</h3>
+              <div class="formule">${fmt(f.formule)}</div>
+              ${f.unites ? `<p class="petit">${fmt(f.unites)}</p>` : ''}
+              ${f.exemple ? `<p><span class="petit">Exemple :</span> ${fmt(f.exemple)}</p>` : ''}
+              ${f.calcul ? `<a class="lien-calcul" href="#/calculs/${f.calcul}">Calculer →</a>` : ''}
+            </div>`).join('')}
+        </section>`).join('')}
+    `);
+    app.querySelectorAll('[data-theme]').forEach(a => a.addEventListener('click', e => {
+      e.preventDefault();
+      document.getElementById('theme-' + a.dataset.theme).scrollIntoView({ behavior: 'smooth' });
+    }));
+  }
+
+  // ---------- Calculatrices ----------
+  function vueCalculs(cible) {
+    const liste = CAP.calculs.liste;
+    afficher(`
+      ${lienRetour('#/', 'Accueil')}
+      <h1>Calculatrices</h1>
+      <p class="description">Entre tes valeurs : le calcul est détaillé étape par étape, comme sur une copie. Tu peux écrire 8,5 ou 8.5.</p>
+      <nav class="sommaire">
+        ${Object.entries(liste).map(([cle, c]) => `<a href="#" data-calc="${cle}">${echapper(c.titre)}</a>`).join('')}
+      </nav>
+      ${Object.entries(liste).map(([cle, c]) => `
+        <form class="section-fiche calculatrice" id="calc-${cle}" data-cle="${cle}" novalidate>
+          <h2>${echapper(c.titre)}</h2>
+          ${c.aide ? `<p class="petit">${echapper(c.aide)}</p>` : ''}
+          <div class="champs">
+            ${c.champs.map(ch => `
+              <label class="champ">
+                <span>${echapper(ch.nom)}</span>
+                <span class="saisie">
+                  <input type="text" inputmode="decimal" autocomplete="off" name="${ch.cle}" placeholder="${ch.exemple ? 'ex. ' + echapper(ch.exemple) : ''}">
+                  ${ch.unite ? `<span class="unite">${echapper(ch.unite)}</span>` : ''}
+                </span>
+              </label>`).join('')}
+          </div>
+          <div class="pied-actions">
+            <button class="bouton bouton-principal" type="submit">Calculer</button>
+            <button class="bouton" type="reset">Effacer</button>
+          </div>
+          <div class="resultat-calcul" aria-live="polite" hidden></div>
+        </form>`).join('')}
+    `);
+
+    app.querySelectorAll('[data-calc]').forEach(a => a.addEventListener('click', e => {
+      e.preventDefault();
+      document.getElementById('calc-' + a.dataset.calc).scrollIntoView({ behavior: 'smooth' });
+    }));
+    app.querySelectorAll('.calculatrice').forEach(form => {
+      const zone = form.querySelector('.resultat-calcul');
+      form.addEventListener('submit', e => {
+        e.preventDefault();
+        const saisies = {};
+        form.querySelectorAll('input').forEach(i => { saisies[i.name] = i.value; });
+        const r = liste[form.dataset.cle].calculer(saisies);
+        zone.className = 'resultat-calcul ' + (r.erreur ? 'retour-faux' : 'retour-bon');
+        zone.innerHTML = r.erreur
+          ? echapper(r.erreur)
+          : `<strong>${echapper(r.resultat)}</strong><ol class="etapes">${r.etapes.map(t => `<li>${echapper(t)}</li>`).join('')}</ol>`;
+        zone.hidden = false;
+      });
+      form.addEventListener('reset', () => { zone.hidden = true; });
+    });
+
+    const formCible = cible && document.getElementById('calc-' + cible);
+    if (formCible) {
+      formCible.scrollIntoView();
+      formCible.querySelector('input').focus({ preventScroll: true });
+    }
+  }
+
+  // ---------- Lexique ----------
+  function vueLexique() {
+    const mots = CAP.lexique.slice().sort((a, b) => a.mot.localeCompare(b.mot, 'fr', { sensitivity: 'base' }));
+    const lettre = m => CAP.recherche.normaliser(m.mot.charAt(0)).toUpperCase();
+
+    afficher(`
+      ${lienRetour('#/', 'Accueil')}
+      <h1>Lexique</h1>
+      <label class="champ-recherche">
+        <span class="visuellement-cache">Chercher un mot</span>
+        <input type="search" id="filtre" placeholder="Chercher un mot…" autocomplete="off">
+      </label>
+      <nav class="lettres" id="lettres"></nav>
+      <div id="liste-mots"></div>
+    `);
+
+    const liste = document.getElementById('liste-mots');
+    const lettres = document.getElementById('lettres');
+    const filtre = document.getElementById('filtre');
+
+    function rendre() {
+      const termes = CAP.recherche.termes(filtre.value);
+      const retenus = termes.length
+        ? mots.filter(m => {
+          const n = CAP.recherche.normaliser(m.mot + ' ' + m.definition);
+          return termes.every(t => n.includes(t));
+        })
+        : mots;
+      const groupes = [];
+      retenus.forEach(m => {
+        const l = lettre(m);
+        if (!groupes.length || groupes[groupes.length - 1].l !== l) groupes.push({ l, mots: [] });
+        groupes[groupes.length - 1].mots.push(m);
+      });
+      lettres.innerHTML = termes.length ? '' : groupes.map(g => `<a href="#" data-lettre="${g.l}">${g.l}</a>`).join('');
+      liste.innerHTML = groupes.length ? groupes.map(g => `
+        <section class="groupe-lettre" id="lettre-${g.l}">
+          <h2>${g.l}</h2>
+          ${g.mots.map(m => {
+            const ch = m.chapitre && trouverChapitre(m.chapitre);
+            return `
+              <article class="mot">
+                <h3>${CAP.recherche.surligner(m.mot, termes)}</h3>
+                <p>${CAP.recherche.surligner(m.definition, termes)}</p>
+                ${photo(m.image, true, true)}
+                ${ch ? `<a class="petit" href="#/chapitre/${ch.id}">${ch.icone} ${echapper(ch.titre)}</a>` : ''}
+              </article>`;
+          }).join('')}
+        </section>`).join('')
+        : '<p class="petit">Aucun mot trouvé. Essaie la <a href="#/recherche">recherche dans tout le site</a>.</p>';
+    }
+
+    lettres.addEventListener('click', e => {
+      const a = e.target.closest('[data-lettre]');
+      if (!a) return;
+      e.preventDefault();
+      document.getElementById('lettre-' + a.dataset.lettre).scrollIntoView({ behavior: 'smooth' });
+    });
+    filtre.addEventListener('input', rendre);
+    rendre();
+  }
+
+  // ---------- Recherche globale ----------
+  function rendreResultat(e, termes) {
+    const S = CAP.recherche.surligner, X = CAP.recherche.extrait;
+    const lieu = e.ch ? `<span class="petit">${e.ch.icone} ${echapper(e.ch.titre)}</span>` : '';
+    switch (e.type) {
+      case 'lexique': {
+        const ch = e.mot.chapitre && trouverChapitre(e.mot.chapitre);
+        return `<div class="resultat-recherche"><strong>${S(e.mot.mot, termes)}</strong><p>${S(e.mot.definition, termes)}</p>
+          ${ch ? `<a class="petit" href="#/chapitre/${ch.id}">${ch.icone} ${echapper(ch.titre)}</a>` : ''}</div>`;
+      }
+      case 'formule':
+        return `<div class="resultat-recherche"><span class="petit">${echapper(e.theme)}</span><strong>${S(e.formule.nom, termes)}</strong>
+          <div class="formule">${S(e.formule.formule, termes)}</div>
+          ${e.formule.calcul ? `<a class="lien-calcul" href="#/calculs/${e.formule.calcul}">Calculer →</a>` : ''}</div>`;
+      case 'fiche':
+        return `<a class="resultat-recherche lien-resultat" href="#/chapitre/${e.ch.id}/fiche/${e.section}">${lieu}
+          <strong>${S(e.titre, termes)}</strong><p>${X(e.texte, termes)}</p></a>`;
+      case 'carte':
+        return `<details class="resultat-recherche"><summary>${lieu}<strong>${S(e.carte.recto, termes)}</strong></summary>
+          <p>${S(e.carte.verso, termes)}</p></details>`;
+      case 'question':
+        return `<details class="resultat-recherche"><summary>${lieu}<strong>${S(e.question.enonce, termes)}</strong></summary>
+          ${illustration(e.question, true)}
+          <p class="erreur-reponse">✔ ${S(e.question.choix[e.question.bonne], termes)}</p>
+          <p class="petit">${S(e.question.explication, termes)}</p></details>`;
+    }
+    return '';
+  }
+
+  const MAX_PAR_GROUPE = 8;
+
+  function vueRecherche(requete) {
+    afficher(`
+      ${lienRetour('#/', 'Accueil')}
+      <h1>Rechercher</h1>
+      <form class="champ-recherche" id="form-recherche" role="search">
+        <label class="visuellement-cache" for="requete">Chercher dans tout le site</label>
+        <input type="search" id="requete" placeholder="Ex. : étrier, PMH, loi d'Ohm…" autocomplete="off" enterkeyhint="search">
+      </form>
+      <div id="resultats" aria-live="polite"></div>
+    `);
+    const champ = document.getElementById('requete');
+    const zone = document.getElementById('resultats');
+    champ.value = requete || '';
+
+    function rendre() {
+      const q = champ.value;
+      const nouveauHash = '#/recherche' + (q.trim() ? '/' + encodeURIComponent(q.trim()) : '');
+      if (location.hash !== nouveauHash) { history.replaceState(null, '', nouveauHash); hashCourant = nouveauHash; }
+      const r = CAP.recherche.chercher(q);
+      if (!r.termes.length) {
+        zone.innerHTML = '<p class="petit">Tape au moins 2 lettres. La recherche porte sur le lexique, le formulaire, les fiches, les cartes et les questions.</p>';
+        return;
+      }
+      if (!r.total) {
+        zone.innerHTML = '<p>Aucun résultat. Vérifie l\'orthographe ou essaie un autre mot.</p>';
+        return;
+      }
+      zone.innerHTML = `<p class="petit">${pluriel(r.total, 'résultat')}</p>` + r.groupes.map(g => `
+        <section class="panneau">
+          <h2>${echapper(g.nom)} <span class="petit">(${g.resultats.length})</span></h2>
+          ${g.resultats.slice(0, MAX_PAR_GROUPE).map(e => rendreResultat(e, r.termes)).join('')}
+          ${g.resultats.length > MAX_PAR_GROUPE ? `<p class="petit">… et ${g.resultats.length - MAX_PAR_GROUPE} autres : précise ta recherche.</p>` : ''}
+        </section>`).join('');
+    }
+
+    let minuterie = null;
+    champ.addEventListener('input', () => { clearTimeout(minuterie); minuterie = setTimeout(rendre, 150); });
+    document.getElementById('form-recherche').addEventListener('submit', e => { e.preventDefault(); champ.blur(); rendre(); });
+    rendre();
+    if (!requete) champ.focus();
+  }
+
+  // ---------- Installer sur le téléphone ----------
+  function vueInstaller() {
+    const bouton = CAP.pwa.boutonDisponible();
+    afficher(`
+      ${lienRetour('#/', 'Accueil')}
+      <h1>Installer sur mon téléphone</h1>
+      <p class="description">Une fois installé, CAP Méca s'ouvre comme une appli, depuis l'écran d'accueil, et marche même sans connexion.</p>
+      ${!CAP.pwa.possible() ? '<p class="retour-reponse retour-bon">Le site est déjà installé, ou ouvert depuis un fichier : il n\'y a rien à faire.</p>' : ''}
+      ${bouton ? '<button class="bouton bouton-principal bouton-large" id="installer">Installer CAP Méca</button>' : ''}
+      <section class="panneau">
+        <h2>Sur Android (Chrome)</h2>
+        <ol class="etapes">
+          <li>Touche le menu <strong>⋮</strong> en haut à droite.</li>
+          <li>Choisis <strong>Installer l'application</strong> ou <strong>Ajouter à l'écran d'accueil</strong>.</li>
+        </ol>
+      </section>
+      <section class="panneau">
+        <h2>Sur iPhone (Safari)</h2>
+        <ol class="etapes">
+          <li>Touche le bouton <strong>Partager</strong> (le carré avec une flèche vers le haut).</li>
+          <li>Choisis <strong>Sur l'écran d'accueil</strong>, puis <strong>Ajouter</strong>.</li>
+        </ol>
+      </section>
+      <p class="petit">Ta progression reste enregistrée sur le téléphone. Pense à l'exporter de temps en temps (page Progression).</p>
+    `);
+    const b = document.getElementById('installer');
+    if (b) b.addEventListener('click', async () => {
+      if (await CAP.pwa.installer()) vueInstaller();
+    });
+  }
+
   // ---------- Progression ----------
   const NOMS_SEANCES = {
     melange: 'Quiz mélangé',
@@ -853,17 +1122,31 @@
     if (p[0] === 'examen') return vueExamen();
     if (p[0] === 'pieces') return vuePieces();
     if (p[0] === 'credits') return vueCredits();
+    if (p[0] === 'formulaire') return vueFormulaire();
+    if (p[0] === 'calculs') return vueCalculs(p[1]);
+    if (p[0] === 'lexique') return vueLexique();
+    if (p[0] === 'recherche') {
+      let q = p.slice(1).join('/');
+      try { q = decodeURIComponent(q); } catch (e) { /* adresse mal formée : on garde le texte brut */ }
+      return vueRecherche(q);
+    }
+    if (p[0] === 'installer') return vueInstaller();
     if (p[0] === 'chapitre') {
       const ch = trouverChapitre(p[1]);
       if (ch) {
         if (!p[2]) return vueChapitre(ch);
-        if (p[2] === 'fiche') return vueFiche(ch);
+        if (p[2] === 'fiche') return vueFiche(ch, p[3]);
         if (p[2] === 'cartes') return vueCartes(ch);
         if (p[2] === 'quiz') return vueQuiz(ch);
       }
     }
     afficher(`<h1>Page introuvable</h1><p><a href="#/">Retour à l'accueil</a></p>`);
   }
+
+  // Le navigateur propose l'installation : on met à jour l'accueil ou la page d'installation.
+  window.addEventListener('capmeca:installable', () => {
+    if (['', '#', '#/', '#/installer'].includes(location.hash)) route();
+  });
 
   window.addEventListener('beforeunload', e => {
     if (garde) { e.preventDefault(); e.returnValue = ''; }

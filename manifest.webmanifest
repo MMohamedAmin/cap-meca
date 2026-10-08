@@ -1,0 +1,17 @@
+{
+  "name": "CAP Méca — révisions",
+  "short_name": "CAP Méca",
+  "description": "Révisions CAP Maintenance des véhicules, option voitures particulières : fiches, cartes mémo, quiz et examens blancs.",
+  "lang": "fr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4f2ee",
+  "theme_color": "#d9480f",
+  "icons": [
+    { "src": "images/icones/icone-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "images/icones/icone-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "images/icones/icone-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "images/icones/icone.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

@@ -325,3 +325,72 @@ main { max-width: 760px; margin: 0 auto; padding: 16px 16px 48px; }
 .ligne-credit img { width: 72px; height: 54px; object-fit: cover; border-radius: 8px; background: var(--surface-2); }
 .ligne-credit div { display: flex; flex-direction: column; min-width: 0; overflow-wrap: anywhere; }
 .pied-page a { color: var(--texte-doux); }
+
+/* ===== V3 : outils ===== */
+a.bouton-theme { color: var(--texte); text-decoration: none; flex-shrink: 0; }
+.visuellement-cache {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+h3 { font-size: 1rem; margin: 0 0 .4rem; }
+mark { background: var(--jaune-doux); color: inherit; border-radius: 3px; padding: 0 1px; box-shadow: 0 0 0 1px var(--jaune); }
+.section-fiche.cible { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-doux); }
+
+/* Formulaire */
+.bloc-formule { padding: 12px 0; border-bottom: 1px solid var(--bordure); }
+.bloc-formule:last-child { border-bottom: 0; padding-bottom: 0; }
+.bloc-formule p { margin-bottom: .4rem; }
+.lien-calcul { font-weight: 600; text-decoration: none; font-size: .9rem; }
+
+/* Calculatrices */
+.champs { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+.champ { display: flex; flex-direction: column; gap: 4px; font-size: .9rem; font-weight: 600; }
+.saisie { display: flex; align-items: center; gap: 6px; }
+.saisie input, .champ-recherche input {
+  flex: 1; min-width: 0; font: inherit; font-weight: 400; padding: 10px 12px; min-height: 46px;
+  border: 2px solid var(--bordure); border-radius: 12px; background: var(--fond); color: var(--texte);
+}
+.saisie input:focus, .champ-recherche input:focus { outline: none; border-color: var(--accent); }
+.unite { color: var(--texte-doux); font-weight: 600; min-width: 2.2em; }
+.calculatrice .pied-actions { margin-top: 12px; }
+.resultat-calcul { margin-top: 12px; padding: 12px 14px; border-radius: 12px; border-left: 4px solid; }
+.etapes { margin: 8px 0 0; padding-left: 1.3rem; }
+.etapes li { margin-bottom: .3rem; }
+.resultat-calcul .etapes { font-family: ui-monospace, "Cascadia Code", Consolas, monospace; font-size: .85rem; overflow-wrap: anywhere; }
+
+/* Lexique et recherche */
+.champ-recherche { display: flex; margin: 8px 0 12px; }
+.champ-recherche input { font-size: 1.05rem; }
+.lettres { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 12px; }
+.lettres a {
+  min-width: 34px; height: 34px; display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 8px; background: var(--surface); border: 1px solid var(--bordure);
+  text-decoration: none; font-weight: 700; color: var(--texte);
+}
+.groupe-lettre { scroll-margin-top: 70px; }
+.groupe-lettre > h2 { color: var(--accent); margin: 16px 0 6px; }
+.mot { background: var(--surface); border: 1px solid var(--bordure); border-radius: var(--rayon); padding: 12px 14px; margin-bottom: 8px; }
+.mot p { margin-bottom: .4rem; }
+.mot a { text-decoration: none; }
+.resultat-recherche { display: block; padding: 10px 0; border-bottom: 1px solid var(--bordure); color: var(--texte); }
+.resultat-recherche:last-of-type { border-bottom: 0; }
+.resultat-recherche > .petit, .resultat-recherche summary .petit { display: block; }
+.resultat-recherche strong { display: block; }
+.resultat-recherche p { margin: 4px 0 0; }
+.resultat-recherche .formule { margin: 6px 0; }
+a.lien-resultat { text-decoration: none; }
+a.lien-resultat:hover strong { color: var(--accent); }
+details.resultat-recherche summary { cursor: pointer; list-style: none; }
+details.resultat-recherche summary::-webkit-details-marker { display: none; }
+details.resultat-recherche summary strong::after { content: ' ▾'; color: var(--texte-doux); font-weight: 400; }
+details.resultat-recherche[open] summary strong::after { content: ' ▴'; }
+
+/* En-tête à 360 px : logo, 2 liens, recherche et thème sur une seule ligne */
+.logo { white-space: nowrap; flex-shrink: 0; }
+.bouton-theme { flex-shrink: 0; }
+@media (max-width: 420px) {
+  .entete-int { gap: 6px; padding: 10px 12px; }
+  .nav { gap: 0; }
+  .nav a { padding: 6px 6px; }
+  .bouton-theme { width: 34px; height: 34px; }
+}
