@@ -113,7 +113,7 @@ CAP.ajouterChapitre({
       explication: 'Un calibre plus fort ne protège plus le circuit : risque de fils qui chauffent et d\'incendie.'
     },
     {
-      id: 'elec-q7', sousTheme: 'batterie', type: 'qcm',
+      id: 'elec-q7', sousTheme: 'batterie', type: 'qcm', niveau: 2,
       enonce: 'Au repos, une batterie affiche 12,0 V. Que peut-on en conclure ?',
       choix: ['Elle est nettement déchargée', 'Elle est parfaitement chargée', 'Elle est surchargée', 'La mesure est impossible au repos'],
       bonne: 0,
@@ -155,7 +155,7 @@ CAP.ajouterChapitre({
       explication: '70 Ah, c\'est la capacité (la réserve d\'énergie). 640 A, c\'est l\'intensité qu\'elle peut débiter brièvement au démarrage par temps froid.'
     },
     {
-      id: 'elec-q13', sousTheme: 'charge', type: 'qcm',
+      id: 'elec-q13', sousTheme: 'charge', type: 'qcm', niveau: 2,
       enonce: 'Le voyant de charge reste allumé moteur tournant. Que suspecter en premier ?',
       choix: ['Un défaut de charge : courroie d\'accessoires, alternateur ou régulateur', 'Un manque d\'huile moteur', 'Une ampoule de feu stop grillée', 'Un fusible d\'autoradio grillé'],
       bonne: 0,
@@ -230,6 +230,48 @@ CAP.ajouterChapitre({
       choix: ['Une pince ampèremétrique', 'Un voltmètre branché en parallèle', 'Un ohmmètre', 'Un réfractomètre'],
       bonne: 0,
       explication: 'La **pince ampèremétrique** entoure le fil et mesure le courant qui le traverse, sans le débrancher.'
+    },
+    {
+      id: 'elec-q24', sousTheme: 'bases', type: 'qcm', niveau: 2,
+      enonce: 'Deux ampoules de 21 W sont alimentées en 12 V. Quelle intensité totale consomment-elles ?',
+      choix: ['3,5 A', '1,75 A', '7 A', '252 A'],
+      bonne: 0,
+      explication: 'Puissance totale : 21 + 21 = 42 W. I = P ÷ U = 42 ÷ 12 = **3,5 A**. Le piège : 21 ÷ 12 = 1,75 A pour une seule ampoule.'
+    },
+    {
+      id: 'elec-q25', sousTheme: 'batterie', type: 'qcm', niveau: 2,
+      enonce: 'Batterie de 60 Ah. Un plafonnier qui consomme 0,5 A reste allumé. En théorie, au bout de combien de temps la batterie est-elle vide ?',
+      choix: ['120 heures, soit 5 jours', '30 heures', '60 heures', '12 heures'],
+      bonne: 0,
+      explication: 'Durée = capacité ÷ intensité = 60 ÷ 0,5 = **120 h**. En pratique, le moteur ne pourra plus démarrer bien avant.'
+    },
+    {
+      id: 'elec-q26', sousTheme: 'charge', type: 'qcm', niveau: 2,
+      enonce: 'Moteur tournant, la tension aux bornes de la batterie est de 12,2 V. Que conclure ?',
+      choix: ['La charge est insuffisante : l\'alternateur ne fournit pas assez', 'La charge est parfaite', 'La batterie est surchargée', 'C\'est normal moteur tournant'],
+      bonne: 0,
+      explication: 'Moteur tournant, il faut environ **13,5 à 14,5 V**. À 12,2 V, la batterie se décharge : courroie, alternateur ou régulateur.'
+    },
+    {
+      id: 'elec-q27', sousTheme: 'mesures', type: 'qcm', niveau: 3,
+      enonce: 'Le circuit fonctionne. On mesure 0 V aux bornes d\'un fusible en place. Que conclure ?',
+      choix: ['Le fusible est bon : un fusible intact ne crée presque pas de chute de tension', 'Le fusible est grillé', 'La batterie est vide', 'Le multimètre est forcément en panne'],
+      bonne: 0,
+      explication: 'Un fusible intact se comporte comme un fil : presque aucune tension à ses bornes. Un fusible **grillé**, circuit alimenté, ferait apparaître environ 12 V à ses bornes.'
+    },
+    {
+      id: 'elec-q28', sousTheme: 'batterie', type: 'qcm', niveau: 3,
+      enonce: 'Une batterie affiche 12,6 V au repos, mais tombe à 8 V pendant le démarrage et le moteur tourne lentement. Conclusion ?',
+      choix: ['La batterie est usée : elle est chargée mais ne tient plus le courant de démarrage', 'La batterie est en parfait état', 'L\'alternateur ne charge pas', 'Le fusible du démarreur est grillé'],
+      bonne: 0,
+      explication: 'La tension au repos ne suffit pas à juger une batterie. Au démarrage, elle ne doit pas descendre trop bas (souvent pas sous 9,5 à 10 V) : on fait un **test de charge**.'
+    },
+    {
+      id: 'elec-q29', sousTheme: 'charge', type: 'qcm', niveau: 3,
+      enonce: 'Tension de charge mesurée : 15,5 V moteur tournant. Quel est le risque, et quel élément suspecter ?',
+      choix: ['Une surcharge qui abîme la batterie et les ampoules : régulateur défectueux', 'Aucun risque : plus c\'est haut, mieux c\'est', 'La batterie est déchargée : il faut la changer', 'La courroie d\'accessoires patine'],
+      bonne: 0,
+      explication: 'Au-delà d\'environ 14,5 V, la batterie surchauffe et perd son électrolyte, les ampoules grillent. Le **régulateur** de l\'alternateur ne limite plus la tension.'
     }
   ]
 });

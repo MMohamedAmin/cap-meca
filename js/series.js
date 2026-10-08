@@ -21,6 +21,17 @@ CAP.series = (function () {
     return melanger(items).sort((a, b) => rang(a) - rang(b));
   }
 
+  // Niveau atteint par sous-thème, calculé une fois par série.
+  function carteNiveaux() {
+    const m = new Map();
+    CAP.stats.niveaux().forEach(n => m.set(n.ch.id + '/' + n.id, n.niveau));
+    return m;
+  }
+  // Une question n'est proposée que si son niveau est débloqué dans son sous-thème.
+  function accessibles(items, niveaux) {
+    return items.filter(x => CAP.stats.niveau(x.q) <= niveaux.get(x.ch.id + '/' + x.q.sousTheme));
+  }
+
   function erreurs() {
     return toutesQuestions().filter(x => {
       const s = CAP.stockage.question(x.q.id);
@@ -29,10 +40,23 @@ CAP.series = (function () {
   }
 
   return {
+    // Série de n questions adaptée au niveau atteint : environ 70 % au niveau en cours
+    // de chaque sous-thème, le reste en révision des niveaux inférieurs.
+    adaptee(items, n) {
+      const niveaux = carteNiveaux();
+      const ok = accessibles(items, niveaux);
+      const auNiveau = x => CAP.stats.niveau(x.q) === niveaux.get(x.ch.id + '/' + x.q.sousTheme);
+      const haut = melanger(ok.filter(auNiveau));
+      const bas = melanger(ok.filter(x => !auNiveau(x)));
+      const nHaut = Math.min(haut.length, Math.ceil(n * 0.7));
+      return melanger(haut.slice(0, nHaut).concat(bas, haut.slice(nHaut)).slice(0, n));
+    },
+
     // Environ 70 % des questions sur les sous-thèmes les plus faibles, le reste en mélange.
     // Sans point faible repéré, on privilégie les questions jamais vues.
     ciblee(n) {
-      const toutes = toutesQuestions();
+      const niveaux = carteNiveaux();
+      const toutes = accessibles(toutesQuestions(), niveaux);
       const nCible = Math.round(n * 0.7);
       const cibles = [];
       let pool = [];
@@ -43,7 +67,7 @@ CAP.series = (function () {
           .filter(q => q.sousTheme === st.id)
           .map(q => ({ q, ch: st.chapitre })));
       }
-      const choisies = prioriser(pool).slice(0, nCible);
+      const choisies = prioriser(accessibles(pool, niveaux)).slice(0, nCible);
       const pris = new Set(choisies.map(x => x.q.id));
       const jamaisVue = x => (CAP.stockage.question(x.q.id) ? 1 : 0);
       const reste = melanger(toutes.filter(x => !pris.has(x.q.id)))
@@ -65,11 +89,20 @@ CAP.series = (function () {
     nbErreurs() { return erreurs().length; },
 
     // Examen blanc : le même nombre de questions dans chaque chapitre, complété au hasard.
+    // Tous les niveaux sont mélangés, comme dans une vraie épreuve : dans chaque chapitre,
+    // une question de niveau 1 et une question plus difficile (niveau 2 ou 3).
     examen(n) {
       const parChapitre = Math.floor(n / CAP.chapitres.length);
       let choisies = [];
       CAP.chapitres.forEach(ch => {
-        choisies = choisies.concat(melanger(ch.questions).slice(0, parChapitre).map(q => ({ q, ch })));
+        const faciles = melanger(ch.questions.filter(q => CAP.stats.niveau(q) === 1));
+        const difficiles = melanger(ch.questions.filter(q => CAP.stats.niveau(q) > 1));
+        const ordre = [];
+        for (let k = 0; ordre.length < ch.questions.length; k++) {
+          if (k < faciles.length) ordre.push(faciles[k]);
+          if (k < difficiles.length) ordre.push(difficiles[k]);
+        }
+        choisies = choisies.concat(ordre.slice(0, parChapitre).map(q => ({ q, ch })));
       });
       const pris = new Set(choisies.map(x => x.q.id));
       const reste = melanger(toutesQuestions().filter(x => !pris.has(x.q.id)));

@@ -169,7 +169,7 @@ CAP.ajouterChapitre({
       explication: 'L\'assistance est hydraulique (pompe) ou électrique (moteur électrique). Elle aide surtout à basse vitesse et pour les manœuvres.'
     },
     {
-      id: 'sol-q14', sousTheme: 'direction', type: 'qcm',
+      id: 'sol-q14', sousTheme: 'direction', type: 'qcm', niveau: 2,
       enonce: 'Direction imprécise et claquements sur les bosses. Que contrôle-t-on en premier ?',
       choix: ['Les rotules et biellettes de direction', 'Le niveau de liquide de frein', 'La tension de la courroie d\'accessoires', 'L\'embrayage'],
       bonne: 0,
@@ -230,6 +230,48 @@ CAP.ajouterChapitre({
       choix: ['Sur l\'étiquette du constructeur, sur la portière ou la trappe à carburant', 'Sur le flanc du pneu', 'Sur la jante', 'C\'est toujours 2 bar pour tous les véhicules'],
       bonne: 0,
       explication: 'Le flanc du pneu indique une pression **maximale**, pas la pression à utiliser. La bonne valeur est donnée par le constructeur du véhicule.'
+    },
+    {
+      id: 'sol-q23', sousTheme: 'pneus', type: 'qcm', niveau: 2,
+      enonce: 'Sur un pneu 195/65 R15, quelle est la hauteur du flanc ?',
+      choix: ['Environ 127 mm', '65 mm', '195 mm', '98 mm'],
+      bonne: 0,
+      explication: 'Hauteur = largeur × série ÷ 100 = 195 × 65 ÷ 100 ≈ **127 mm**. Le chiffre 65 est un pourcentage, pas une hauteur.'
+    },
+    {
+      id: 'sol-q24', sousTheme: 'suspension', type: 'qcm', niveau: 2,
+      enonce: 'On appuie fort sur l\'aile puis on relâche : la caisse oscille plusieurs fois avant de s\'arrêter. Que suspecter ?',
+      choix: ['Un amortisseur usé', 'Un ressort trop dur', 'Une rotule de direction usée', 'Une pression des pneus trop élevée'],
+      bonne: 0,
+      explication: 'Un bon amortisseur stoppe le mouvement après environ une oscillation. Plusieurs rebonds : il ne freine plus le **ressort**.'
+    },
+    {
+      id: 'sol-q25', sousTheme: 'direction', type: 'qcm', niveau: 2,
+      enonce: 'Après un choc contre un trottoir, le volant n\'est plus droit en ligne droite. Que faire ?',
+      choix: ['Contrôler les pièces de direction et de suspension, puis la géométrie au banc', 'Gonfler les pneus', 'Remplacer les amortisseurs', 'Rien, on s\'habitue'],
+      bonne: 0,
+      explication: 'Le choc a pu tordre une biellette ou un bras. On contrôle les **pièces**, puis on règle le **parallélisme** au banc.'
+    },
+    {
+      id: 'sol-q26', sousTheme: 'geometrie', type: 'qcm', niveau: 3,
+      enonce: 'Les deux pneus avant sont usés sur le bord extérieur. Quel défaut de parallélisme est le plus probable ?',
+      choix: ['Un pincement excessif', 'Une ouverture excessive', 'Une chasse trop faible', 'Une pression trop forte'],
+      bonne: 0,
+      explication: 'Trop de **pincement** use le bord extérieur ; trop d\'**ouverture** use le bord intérieur. Une pression trop forte use plutôt le centre.'
+    },
+    {
+      id: 'sol-q27', sousTheme: 'pneus', type: 'qcm', niveau: 3,
+      enonce: 'Un pneu est usé uniquement au centre de la bande de roulement. Cause probable ?',
+      choix: ['Une pression de gonflage trop élevée', 'Une pression trop faible', 'Un pincement excessif', 'Un amortisseur usé'],
+      bonne: 0,
+      explication: 'Surgonflé, le pneu se bombe et appuie sur son **centre**. Sous-gonflé, il s\'écrase et s\'use sur les deux bords.'
+    },
+    {
+      id: 'sol-q28', sousTheme: 'suspension', type: 'qcm', niveau: 3,
+      enonce: 'Au freinage, l\'avant plonge fortement et rebondit. Un amortisseur avant présente une trace d\'huile. Que faire ?',
+      choix: ['Remplacer les deux amortisseurs avant', 'Remplacer seulement l\'amortisseur qui fuit', 'Rajouter de l\'huile dans l\'amortisseur', 'Remplacer les plaquettes'],
+      bonne: 0,
+      explication: 'Un amortisseur qui fuit est hors service. Comme pour les freins, on remplace **par essieu**, pour garder un comportement équilibré.'
     }
   ]
 });

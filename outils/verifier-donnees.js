@@ -59,6 +59,7 @@ for (const ch of contexte.CAP.chapitres) {
     if (!Array.isArray(q.choix) || q.choix.length < 2) erreurs.push(`${p} ${q.id} : il faut au moins 2 choix`);
     else if (!(q.bonne >= 0 && q.bonne < q.choix.length)) erreurs.push(`${p} ${q.id} : « bonne » hors des choix`);
     if (!q.explication) erreurs.push(`${p} ${q.id} : explication manquante`);
+    if (q.niveau !== undefined && ![1, 2, 3].includes(q.niveau)) erreurs.push(`${p} ${q.id} : niveau doit être 1, 2 ou 3`);
     if (q.image !== undefined) {
       if (!images[q.image]) erreurs.push(`${p} ${q.id} : image inconnue « ${q.image} » (à déclarer dans data/images.js)`);
       else imagesUtilisees.add(q.image);
@@ -105,7 +106,8 @@ if (!fs.existsSync(path.join(racine, 'sw.js')) || lire('sw.js') !== genererServi
 const nbQ = contexte.CAP.chapitres.reduce((n, c) => n + c.questions.length, 0);
 const nbC = contexte.CAP.chapitres.reduce((n, c) => n + c.cartes.length, 0);
 const nbF = (contexte.CAP.formulaire || []).reduce((n, t) => n + t.formules.length, 0);
-console.log(`${contexte.CAP.chapitres.length} chapitres, ${nbQ} questions, ${nbC} cartes, ${imagesUtilisees.size} images, ${mots.size} mots, ${nbF} formules.`);
+const parNiveau = [1, 2, 3].map(n => contexte.CAP.chapitres.reduce((t, c) => t + c.questions.filter(q => (q.niveau || 1) === n).length, 0));
+console.log(`${contexte.CAP.chapitres.length} chapitres, ${nbQ} questions (niveaux 1 / 2 / 3 : ${parNiveau.join(' / ')}), ${nbC} cartes, ${imagesUtilisees.size} images, ${mots.size} mots, ${nbF} formules.`);
 const inutilisees = Object.keys(images).filter(k => !imagesUtilisees.has(k));
 if (inutilisees.length) console.log('Images déclarées mais pas utilisées : ' + inutilisees.join(', '));
 if (erreurs.length) {

@@ -114,7 +114,7 @@ CAP.ajouterChapitre({
       explication: 'Vrai : elle évacue une partie de la chaleur, notamment des pistons et des paliers.'
     },
     {
-      id: 'lubri-q8', sousTheme: 'entretien', type: 'qcm',
+      id: 'lubri-q8', sousTheme: 'entretien', type: 'qcm', niveau: 2,
       enonce: 'Le niveau d\'huile est nettement au-dessus du maxi. Que faut-il faire ?',
       choix: ['Corriger le niveau, car l\'excès peut abîmer le moteur', 'Rien, plus il y a d\'huile mieux c\'est', 'Rouler pour qu\'il baisse', 'Ajouter un additif'],
       bonne: 0,
@@ -196,6 +196,48 @@ CAP.ajouterChapitre({
       choix: ['Vrai', 'Faux'],
       bonne: 0,
       explication: 'Vrai : l\'huile forme un film entre les pièces. Sans elle, l\'échauffement est tel que les pièces se soudent : c\'est le **serrage**.'
+    },
+    {
+      id: 'lubri-q20', sousTheme: 'circuit', type: 'qcm', niveau: 2,
+      enonce: 'Le filtre à huile est complètement colmaté. Que se passe-t-il grâce à son clapet de dérivation (by-pass) ?',
+      choix: ['L\'huile contourne le filtre : le moteur reste graissé, mais avec de l\'huile non filtrée', 'Le moteur s\'arrête aussitôt', 'La pression d\'huile double', 'L\'huile repart vers le réservoir de carburant'],
+      bonne: 0,
+      explication: 'Le **by-pass** évite de priver le moteur d\'huile, mais les impuretés circulent : il faut respecter les échéances de remplacement du filtre.'
+    },
+    {
+      id: 'lubri-q22', sousTheme: 'huiles', type: 'qcm', niveau: 2,
+      enonce: 'Le constructeur préconise une 5W30 de norme C3. Le magasin n\'a qu\'une 5W30 sans cette norme. Peut-on l\'utiliser ?',
+      choix: ['Non : la viscosité ne suffit pas, il faut aussi respecter la norme', 'Oui, seule l\'indication 5W30 compte', 'Oui, si on en met un peu moins', 'Oui, en ajoutant un additif'],
+      bonne: 0,
+      explication: 'La **norme** garantit la composition de l\'huile (additifs, compatibilité avec le filtre à particules…). Même viscosité ne veut pas dire même huile.'
+    },
+    {
+      id: 'lubri-q23', sousTheme: 'role', type: 'qcm', niveau: 2,
+      enonce: 'Pourquoi une huile trop vieille protège-t-elle moins bien le moteur ?',
+      choix: ['Ses additifs s\'épuisent et elle se charge d\'impuretés', 'Sa couleur foncée gêne la lubrification', 'Elle s\'évapore entièrement', 'Elle devient de l\'antigel'],
+      bonne: 0,
+      explication: 'Une huile foncée n\'est pas forcément usée : c\'est le temps et les kilomètres qui épuisent ses **additifs** et la chargent d\'impuretés.'
+    },
+    {
+      id: 'lubri-q24', sousTheme: 'circuit', type: 'qcm', niveau: 3,
+      enonce: 'Le voyant de pression d\'huile s\'allume au ralenti moteur chaud et s\'éteint dès qu\'on accélère. Le niveau est bon. Que faire ?',
+      choix: ['Mesurer la pression d\'huile avec un manomètre', 'Rajouter de l\'huile au-dessus du maxi', 'Ignorer : c\'est normal au ralenti', 'Remplacer le joint de culasse'],
+      bonne: 0,
+      explication: 'La pression est peut-être vraiment trop faible au ralenti (pompe ou paliers usés, huile inadaptée), ou le manocontact est défectueux. Le **manomètre** tranche avant de changer quoi que ce soit.'
+    },
+    {
+      id: 'lubri-q21', sousTheme: 'entretien', type: 'qcm', niveau: 3,
+      enonce: 'Sur un diesel avec filtre à particules, le niveau d\'huile monte entre deux vidanges et l\'huile sent le gazole. Cause probable ?',
+      choix: ['Du gazole passe dans l\'huile, souvent quand les régénérations du filtre à particules sont interrompues', 'Du liquide de refroidissement passe dans l\'huile', 'Le moteur fabrique de l\'huile en chauffant', 'Quelqu\'un a rajouté du liquide de frein'],
+      bonne: 0,
+      explication: 'C\'est la **dilution** de l\'huile par le gazole, fréquente avec beaucoup de petits trajets. L\'huile perd sa viscosité : vidange et recherche de la cause.'
+    },
+    {
+      id: 'lubri-q25', sousTheme: 'entretien', type: 'qcm', niveau: 3,
+      enonce: 'Juste après une vidange, au premier démarrage, le voyant de pression d\'huile reste allumé 2 ou 3 secondes puis s\'éteint. Que penser ?',
+      choix: ['C\'est normal : le filtre neuf se remplit d\'huile', 'Il faut refaire la vidange', 'Le manocontact est forcément hors service', 'Il faut rouler pour que le voyant disparaisse'],
+      bonne: 0,
+      explication: 'Le filtre neuf est vide : la pression met quelques secondes à monter. En revanche, si le voyant reste allumé plus longtemps, on **coupe le moteur** et on cherche.'
     }
   ]
 });

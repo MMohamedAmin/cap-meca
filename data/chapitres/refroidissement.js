@@ -101,7 +101,7 @@ CAP.ajouterChapitre({
       explication: 'En ouvrant, la pression chute brutalement : le liquide très chaud se met à bouillir et jaillit.'
     },
     {
-      id: 'refroid-q5', sousTheme: 'pannes', type: 'qcm',
+      id: 'refroid-q5', sousTheme: 'pannes', type: 'qcm', niveau: 2,
       enonce: 'Le moteur met très longtemps à chauffer et le chauffage est faible. Cause probable ?',
       choix: ['Thermostat bloqué ouvert', 'Thermostat bloqué fermé', 'Radiateur bouché', 'Motoventilateur HS'],
       bonne: 0,
@@ -122,7 +122,7 @@ CAP.ajouterChapitre({
       explication: 'Le réfractomètre (ou un pèse-antigel) indique jusqu\'à quelle température le liquide est protégé.'
     },
     {
-      id: 'refroid-q8', sousTheme: 'pannes', type: 'qcm',
+      id: 'refroid-q8', sousTheme: 'pannes', type: 'qcm', niveau: 2,
       enonce: 'Le moteur chauffe surtout dans les bouchons, mais pas sur route. Quel élément suspecter en premier ?',
       choix: ['Le motoventilateur', 'Le thermostat bloqué ouvert', 'L\'aérotherme', 'La jauge d\'huile'],
       bonne: 0,
@@ -150,7 +150,7 @@ CAP.ajouterChapitre({
       explication: 'L\'air qui traverse les ailettes du radiateur, aidé par le motoventilateur à l\'arrêt, refroidit le liquide.'
     },
     {
-      id: 'refroid-q12', sousTheme: 'pannes', type: 'qcm',
+      id: 'refroid-q12', sousTheme: 'pannes', type: 'qcm', niveau: 2,
       enonce: 'Fumée blanche à l\'échappement, liquide de refroidissement qui baisse sans fuite visible, dépôt « mayonnaise » sous le bouchon d\'huile. Que suspecter ?',
       choix: ['Le joint de culasse', 'Le thermostat bloqué ouvert', 'Le motoventilateur', 'La sonde de température'],
       bonne: 0,
@@ -197,6 +197,48 @@ CAP.ajouterChapitre({
       choix: ['Une sonde de température ou le calculateur moteur', 'La pédale d\'accélérateur', 'Le thermostat, directement', 'L\'interrupteur du chauffage'],
       bonne: 0,
       explication: 'Quand la température du liquide dépasse un seuil, la sonde (ou le calculateur) met le motoventilateur en marche.'
+    },
+    {
+      id: 'refroid-q19', sousTheme: 'role', type: 'qcm', niveau: 2,
+      enonce: 'Pourquoi le liquide d\'un circuit sous pression peut-il dépasser 100 °C sans bouillir ?',
+      choix: ['Plus la pression est élevée, plus la température d\'ébullition est haute', 'Parce que le glycol est froid', 'Parce que la pompe à eau le refroidit', 'La pression fait baisser la température d\'ébullition'],
+      bonne: 0,
+      explication: 'Le bouchon taré maintient le circuit sous pression : le liquide peut ainsi dépasser **100 °C** sans bouillir.'
+    },
+    {
+      id: 'refroid-q20', sousTheme: 'liquide', type: 'qcm', niveau: 2,
+      enonce: 'Pourquoi ne faut-il pas remplir le circuit avec de l\'eau seule ?',
+      choix: ['L\'eau gèle en hiver, bout plus tôt et favorise la corrosion', 'L\'eau ne refroidit pas du tout', 'L\'eau est trop épaisse pour la pompe', 'L\'eau fait mousser l\'huile moteur'],
+      bonne: 0,
+      explication: 'Le **glycol** et les additifs du liquide protègent contre le gel, l\'ébullition et la corrosion.'
+    },
+    {
+      id: 'refroid-q21', sousTheme: 'composants', type: 'qcm', niveau: 2,
+      enonce: 'Le chauffage souffle froid alors que le moteur est à bonne température. Que suspecter ?',
+      choix: ['Un aérotherme bouché ou de l\'air dans le circuit', 'Un thermostat bloqué fermé', 'Un motoventilateur toujours en marche', 'Un bouchon de vase d\'expansion trop serré'],
+      bonne: 0,
+      explication: 'Le moteur chauffe bien, donc le problème est du côté de l\'**aérotherme** : liquide qui n\'y circule pas (bouché, bulle d\'air) ou commande de chauffage.'
+    },
+    {
+      id: 'refroid-q22', sousTheme: 'pannes', type: 'qcm', niveau: 3,
+      enonce: 'Le liquide déborde du vase d\'expansion, des bulles remontent moteur tournant et les durites sont dures dès le démarrage à froid. Que suspecter ?',
+      choix: ['Le joint de culasse : des gaz de combustion passent dans le circuit', 'Le thermostat bloqué ouvert', 'Le motoventilateur', 'Un manque de liquide'],
+      bonne: 0,
+      explication: 'Les gaz de combustion mettent le circuit sous pression même moteur froid. On le confirme avec un **testeur de gaz** (CO2) dans le vase d\'expansion.'
+    },
+    {
+      id: 'refroid-q23', sousTheme: 'pannes', type: 'qcm', niveau: 3,
+      enonce: 'Le moteur surchauffe sur autoroute mais pas en ville, et le motoventilateur fonctionne. Que suspecter en premier ?',
+      choix: ['Un radiateur partiellement bouché, qui n\'évacue plus assez de chaleur à forte charge', 'Le motoventilateur', 'La sonde de température du chauffage', 'Un liquide trop froid'],
+      bonne: 0,
+      explication: 'En ville, le moteur produit peu de chaleur. Sur autoroute, il en produit beaucoup : un **radiateur** entartré ou aux ailettes bouchées ne suit plus.'
+    },
+    {
+      id: 'refroid-q24', sousTheme: 'liquide', type: 'qcm', niveau: 3,
+      enonce: 'Après une vidange du circuit, le moteur chauffe et le chauffage reste froid. Quelle étape a probablement été oubliée ?',
+      choix: ['La purge de l\'air du circuit', 'Le serrage des roues', 'Le remplacement du thermostat', 'La vidange de l\'huile moteur'],
+      bonne: 0,
+      explication: 'Une **bulle d\'air** bloque la circulation : le liquide ne passe plus dans l\'aérotherme et le moteur refroidit mal. On purge selon la méthode du constructeur.'
     }
   ]
 });

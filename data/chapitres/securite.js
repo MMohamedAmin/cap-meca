@@ -195,6 +195,48 @@ CAP.ajouterChapitre({
       choix: ['Le monoxyde de carbone (CO)', 'Le dioxyde de carbone (CO2)', 'L\'hydrogène', 'L\'azote'],
       bonne: 0,
       explication: 'Le **monoxyde de carbone** ne se sent pas et peut tuer : on branche toujours l\'aspiration des gaz d\'échappement.'
+    },
+    {
+      id: 'secu-q20', sousTheme: 'levage', type: 'qcm', niveau: 2,
+      enonce: 'Avant de lever un véhicule avec un cric, que faut-il faire ?',
+      choix: ['Le placer sur un sol plat et dur, frein de parking serré, et caler les roues qui restent au sol', 'Démarrer le moteur', 'Retirer d\'abord les roues', 'Desserrer le frein de parking'],
+      bonne: 0,
+      explication: 'Un véhicule qui roule ou un cric qui s\'enfonce, et c\'est la chute. **Sol dur et plat, frein serré, cales**, puis chandelles avant de passer dessous.'
+    },
+    {
+      id: 'secu-q21', sousTheme: 'produits', type: 'qcm', niveau: 2,
+      enonce: 'On vidange un réservoir de carburant. Quelle précaution est indispensable ?',
+      choix: ['Travailler loin de toute flamme ou étincelle, dans un local ventilé, avec un récupérateur adapté', 'Fumer seulement à 2 mètres du véhicule', 'Éclairer avec une baladeuse ordinaire placée près du réservoir', 'Faire tourner le moteur pour vider plus vite'],
+      bonne: 0,
+      explication: 'Les vapeurs de carburant s\'enflamment très facilement : **pas de source d\'inflammation**, ventilation et matériel adapté.'
+    },
+    {
+      id: 'secu-q22', sousTheme: 'produits', type: 'qcm', niveau: 2,
+      enonce: 'Que signifie le pictogramme qui montre une main et une surface rongées par un liquide ?',
+      choix: ['Produit corrosif', 'Produit inflammable', 'Produit toxique', 'Gaz sous pression'],
+      bonne: 0,
+      explication: 'C\'est le pictogramme **corrosif** : le produit brûle la peau, les yeux et attaque les matériaux (acide de batterie par exemple).'
+    },
+    {
+      id: 'secu-q23', sousTheme: 'produits', type: 'qcm', niveau: 3,
+      enonce: 'Il faut remplacer une pièce près des câbles orange d\'un véhicule hybride. Tu n\'as pas d\'habilitation. Que faire ?',
+      choix: ['Ne pas intervenir : une personne habilitée doit d\'abord consigner (mettre hors tension) le système haute tension', 'Débrancher soi-même la batterie 12 V, cela suffit', 'Mettre des gants nitrile et intervenir', 'Attendre 2 minutes que le moteur refroidisse'],
+      bonne: 0,
+      explication: 'La batterie 12 V ne coupe pas la haute tension. Seule une personne **habilitée** peut consigner le circuit haute tension avant l\'intervention.'
+    },
+    {
+      id: 'secu-q24', sousTheme: 'levage', type: 'qcm', niveau: 3,
+      enonce: 'Un véhicule est sur un pont élévateur à deux colonnes. On va déposer le moteur et la boîte. Quel risque particulier ?',
+      choix: ['Le centre de gravité se déplace : le véhicule peut basculer, il faut le maintenir (sangles, chandelles de soutien)', 'Aucun, le pont tient tout', 'Les pneus risquent de se dégonfler', 'Le moteur risque de redémarrer'],
+      bonne: 0,
+      explication: 'Sans moteur, l\'avant devient léger : l\'équilibre sur les bras du pont change. On anticipe avec des **sangles** ou des chandelles de soutien.'
+    },
+    {
+      id: 'secu-q25', sousTheme: 'dechets', type: 'qcm', niveau: 3,
+      enonce: 'Un collègue verse le liquide de frein usagé dans le fût d\'huile usagée « pour gagner de la place ». Pourquoi est-ce un problème ?',
+      choix: ['Les déchets doivent être triés : mélangés, ils ne peuvent plus partir dans la bonne filière', 'Aucun problème, ce sont deux liquides', 'Le liquide de frein va geler dans le fût', 'Au contraire, cela rend l\'huile plus fluide'],
+      bonne: 0,
+      explication: 'L\'huile usagée est collectée pour être **régénérée**. Mélangée à d\'autres produits, elle n\'est plus acceptée par la filière.'
     }
   ]
 });

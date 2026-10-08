@@ -68,6 +68,28 @@
   }
   function illustration(q, petite) { return photo(q.image, petite); }
 
+  // ---------- Niveaux de difficulté ----------
+  const NOMS_NIVEAUX = ['', 'Connaître', 'Comprendre et calculer', 'Diagnostiquer'];
+  function badgeNiveau(n) {
+    return `<span class="badge-niveau n${n}" title="${NOMS_NIVEAUX[n]}">Niveau ${n}</span>`;
+  }
+  // Sous-thèmes dont le niveau a monté depuis un relevé de CAP.stats.niveaux().
+  function niveauxGagnes(avant) {
+    const a = new Map(avant.map(n => [n.ch.id + '/' + n.id, n.niveau]));
+    return CAP.stats.niveaux().filter(n => n.niveau > a.get(n.ch.id + '/' + n.id));
+  }
+  function panneauNiveaux(gagnes) {
+    if (!gagnes.length) return '';
+    return `
+      <section class="panneau niveau-gagne">
+        <h2>Niveau débloqué !</h2>
+        <ul class="liste-faibles">
+          ${gagnes.map(n => `<li><span>${echapper(n.nom)} <span class="petit">· ${echapper(n.ch.titre)}</span></span>${badgeNiveau(n.niveau)}</li>`).join('')}
+        </ul>
+        <p class="petit">Les prochaines séries sur ${gagnes.length > 1 ? 'ces thèmes' : 'ce thème'} contiendront des questions plus difficiles.</p>
+      </section>`;
+  }
+
   // ---------- Assistant IA : éléments communs ----------
   const AVERTISSEMENT_IA = 'Écrit par une IA : elle peut se tromper. En cas de doute, ta fiche de cours fait foi.';
 
@@ -245,9 +267,10 @@
         <h2>Par sous-thème</h2>
         ${st.map(x => `
           <div class="ligne-theme">
-            <div class="ligne-theme-haut"><span>${echapper(x.nom)}</span><span class="petit">${pourcent(x.pourcent)}</span></div>
+            <div class="ligne-theme-haut"><span>${echapper(x.nom)} ${badgeNiveau(CAP.stats.niveauSousTheme(ch, x.id))}</span><span class="petit">${pourcent(x.pourcent)}</span></div>
             ${barre(x.pourcent)}
           </div>`).join('')}
+        <p class="petit">Niveau 1 : connaître · Niveau 2 : comprendre et calculer · Niveau 3 : diagnostiquer. Réussis les questions d'un niveau pour débloquer le suivant.</p>
       </section>
     `);
   }
@@ -402,6 +425,7 @@
   function lancerQuiz(o) {
     const nb = o.items.length;
     const serie = o.items.map(({ q, ch }) => ({ q, ch, choix: preparerChoix(q) }));
+    const niveauxAvant = o.sansSuivi ? null : CAP.stats.niveaux();
     let i = 0, score = 0;
     const erreurs = [];
 
@@ -416,6 +440,7 @@
         ${o.bandeau ? `<p class="bandeau">${o.bandeau}</p>` : ''}
         <section class="question">
           ${o.sansEtiquette ? '' : `<span class="etiquette">${o.plusieursChapitres ? echapper(item.ch.titre) + ' · ' : ''}${echapper(item.ch.sousThemes[item.q.sousTheme] || '')}</span>`}
+          ${badgeNiveau(CAP.stats.niveau(item.q))}
           <h2>${fmt(item.q.enonce)}</h2>
           ${illustration(item.q)}
           <div class="liste-choix">
@@ -476,6 +501,7 @@
           <p class="gros-score">${noteSur20(score, nb)} / 20</p>
           <p>${score} bonne${score > 1 ? 's' : ''} réponse${score > 1 ? 's' : ''} sur ${nb}</p>
         </section>
+        ${niveauxAvant ? panneauNiveaux(niveauxGagnes(niveauxAvant)) : ''}
         ${panneauBilanIA()}
         ${erreurs.length ? `
           <section class="panneau">
@@ -504,7 +530,7 @@
 
   function vueQuiz(ch) {
     lancerQuiz({
-      items: melanger(ch.questions).slice(0, 10).map(q => ({ q, ch })),
+      items: CAP.series.adaptee(ch.questions.map(q => ({ q, ch })), 10),
       retour: lienRetour('#/chapitre/' + ch.id, ch.titre),
       seance: ch.id,
       liensFin: `<a class="bouton" href="#/chapitre/${ch.id}/fiche">Relire la fiche</a>`,
@@ -515,7 +541,7 @@
   function vueMelange() {
     const toutes = CAP.chapitres.flatMap(ch => ch.questions.map(q => ({ q, ch })));
     lancerQuiz({
-      items: melanger(toutes).slice(0, 20),
+      items: CAP.series.adaptee(toutes, 20),
       retour: lienRetour('#/', 'Accueil'),
       seance: 'melange',
       plusieursChapitres: true,
@@ -629,6 +655,7 @@
 
   function passerExamen() {
     const serie = CAP.series.examen(NB_EXAMEN).map(({ q, ch }) => ({ q, ch, choix: preparerChoix(q) }));
+    const niveauxAvant = CAP.stats.niveaux();
     const nb = serie.length;
     const reponses = new Array(nb).fill(null);
     const debut = Date.now();
@@ -658,6 +685,7 @@
         </div>
         <section class="question">
           <span class="etiquette">${echapper(item.ch.titre)}</span>
+          ${badgeNiveau(CAP.stats.niveau(item.q))}
           <h2>${fmt(item.q.enonce)}</h2>
           ${illustration(item.q)}
           <div class="liste-choix">
@@ -733,6 +761,7 @@
           <p class="gros-score">${noteSur20(score, nb)} / 20</p>
           <p>${score} sur ${nb} · en ${minutesSecondes(duree)} min</p>
         </section>
+        ${panneauNiveaux(niveauxGagnes(niveauxAvant))}
         ${panneauBilanIA()}
         <section class="panneau">
           <h2>Par chapitre</h2>
@@ -1214,6 +1243,8 @@
 
   function vueProgression() {
     const g = CAP.stats.global();
+    const tousNiveaux = CAP.stats.niveaux();
+    const niveauxCh = ch => tousNiveaux.filter(n => n.ch === ch);
     const faibles = CAP.stats.pointsFaibles(8);
     const seances = CAP.stockage.seances().slice(-10).reverse();
     const nbErreurs = CAP.series.nbErreurs();
@@ -1248,6 +1279,7 @@
               <div class="ligne-theme-haut"><span>${ch.icone} ${echapper(ch.titre)}</span><span class="petit">${pourcent(s.pourcent)}</span></div>
               ${barre(s.pourcent)}
               <span class="petit">${s.uniques}/${s.total} questions vues · ${CAP.stats.cartesMaitrisees(ch)}/${ch.cartes.length} cartes maîtrisées</span>
+              <span class="petit">${[1, 2, 3].map(n => [n, niveauxCh(ch).filter(x => x.niveau === n).length]).filter(([, k]) => k).map(([n, k]) => `${pluriel(k, 'thème')} au niveau ${n}`).join(' · ')}</span>
             </a>`;
         }).join('')}
       </section>

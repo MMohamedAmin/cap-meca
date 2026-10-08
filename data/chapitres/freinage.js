@@ -141,14 +141,14 @@ CAP.ajouterChapitre({
       explication: 'La pression créée au maître-cylindre arrive intacte aux étriers. L\'air, lui, se comprime : c\'est ce qui rend la pédale molle.'
     },
     {
-      id: 'frein-q12', sousTheme: 'hydraulique', type: 'vf',
+      id: 'frein-q12', sousTheme: 'hydraulique', type: 'vf', niveau: 2,
       enonce: 'Vrai ou faux : le niveau de liquide de frein baisse légèrement à mesure que les plaquettes s\'usent.',
       choix: ['Vrai', 'Faux'],
       bonne: 0,
       explication: 'Vrai : les pistons d\'étrier sortent un peu plus pour compenser l\'usure, il y a donc plus de liquide dans les étriers. Une baisse rapide, elle, signale une fuite.'
     },
     {
-      id: 'frein-q13', sousTheme: 'assistance', type: 'qcm',
+      id: 'frein-q13', sousTheme: 'assistance', type: 'qcm', niveau: 2,
       enonce: 'Moteur arrêté, après quelques appuis, la pédale de frein devient très dure. Pourquoi ?',
       choix: ['La réserve de dépression du servofrein est épuisée', 'Le liquide de frein est trop vieux', 'Les plaquettes sont neuves', 'L\'ABS est en panne'],
       bonne: 0,
@@ -230,6 +230,48 @@ CAP.ajouterChapitre({
       choix: ['Vrai', 'Faux'],
       bonne: 1,
       explication: 'Faux : l\'ABS sert surtout à garder la **direction** en freinant fort. Sur certains sols (gravier, neige fraîche), la distance peut même être un peu plus longue.'
+    },
+    {
+      id: 'frein-q25', sousTheme: 'hydraulique', type: 'qcm', niveau: 2,
+      enonce: 'Sur un circuit de freinage monté en X, un des deux circuits fuit. Que reste-t-il pour freiner ?',
+      choix: ['Une roue avant et la roue arrière opposée', 'Seulement le frein de parking', 'Les deux roues avant', 'Plus aucun frein'],
+      bonne: 0,
+      explication: 'En X, chaque circuit freine une roue avant et la roue arrière **opposée**. Le véhicule freine moins, mais reste stable.'
+    },
+    {
+      id: 'frein-q26', sousTheme: 'organes', type: 'qcm', niveau: 2,
+      enonce: 'Un disque avant mesure 20,4 mm. L\'épaisseur minimale gravée est de 21 mm. Que faire ?',
+      choix: ['Remplacer les disques et les plaquettes de l\'essieu', 'Rien, il reste de la marge', 'Remplacer seulement ce disque', 'Rectifier le disque'],
+      bonne: 0,
+      explication: 'Sous l\'épaisseur minimale, le disque doit être **remplacé**, et on ne le rectifie pas. Toujours par essieu, avec des plaquettes neuves.'
+    },
+    {
+      id: 'frein-q27', sousTheme: 'entretien', type: 'qcm', niveau: 2,
+      enonce: 'Avec un liquide de frein ancien, pourquoi la pédale devient-elle molle dans une longue descente ?',
+      choix: ['L\'eau absorbée fait bouillir le liquide : des bulles de vapeur se forment et se compriment', 'Les plaquettes refroidissent trop', 'Le servofrein se remplit d\'huile', 'Le liquide gèle'],
+      bonne: 0,
+      explication: 'Les freins chauffent beaucoup en descente. Chargé d\'eau, le liquide **bout** plus tôt, et la vapeur se comprime comme de l\'air.'
+    },
+    {
+      id: 'frein-q28', sousTheme: 'organes', type: 'qcm', niveau: 3,
+      enonce: 'Le véhicule tire à gauche seulement quand on freine. Que suspecter en premier ?',
+      choix: ['Un déséquilibre entre les freins avant gauche et droit (étrier grippé, plaquettes souillées) : contrôle au banc', 'Un amortisseur arrière usé', 'Une pression des pneus trop forte des deux côtés', 'Un liquide de frein neuf'],
+      bonne: 0,
+      explication: 'Si le véhicule ne tire qu\'au freinage, c\'est un **écart de freinage** entre gauche et droite. Le banc de freinage mesure chaque roue.'
+    },
+    {
+      id: 'frein-q29', sousTheme: 'assistance', type: 'qcm', niveau: 3,
+      enonce: 'Moteur arrêté, on pompe plusieurs fois, on garde le pied sur la pédale et on démarre. La pédale s\'enfonce légèrement. Que conclure ?',
+      choix: ['Le servofrein fonctionne normalement', 'Le servofrein est hors service', 'Il y a de l\'air dans le circuit', 'Le maître-cylindre fuit'],
+      bonne: 0,
+      explication: 'Au démarrage, la dépression revient et l\'assistance aide à nouveau : la pédale **descend un peu**. C\'est le test simple du servofrein.'
+    },
+    {
+      id: 'frein-q30', sousTheme: 'hydraulique', type: 'qcm', niveau: 3,
+      enonce: 'Pied maintenu sur la pédale, celle-ci s\'enfonce lentement jusqu\'au plancher, sans aucune fuite visible. Que suspecter ?',
+      choix: ['Une fuite interne au maître-cylindre (joints usés)', 'De l\'air dans le circuit', 'Des plaquettes neuves', 'Un servofrein trop puissant'],
+      bonne: 0,
+      explication: 'Sans fuite extérieure, le liquide passe à l\'intérieur du **maître-cylindre**, d\'une chambre à l\'autre. L\'air, lui, donne une pédale spongieuse, pas une pédale qui descend.'
     }
   ]
 });

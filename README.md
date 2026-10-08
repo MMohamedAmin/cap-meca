@@ -15,6 +15,7 @@ Ta progression est enregistrée dans le navigateur. Pour la sauvegarder ou la tr
 - **Cartes mémo** : question, puis retournement, puis « je savais / je ne savais pas ». À la fin, on peut revoir seulement les cartes ratées.
 - **Quiz** : 10 questions par chapitre ou 20 en mélangé, explication après chaque réponse, note sur 20 et liste des erreurs.
 - **Progression** : réussite par chapitre et par sous-thème, points faibles, dernières séances, série de jours, export et import.
+- **Trois niveaux de difficulté** : 1 (connaître), 2 (comprendre, calculer), 3 (diagnostiquer comme à l'atelier). Quand un thème est maîtrisé, les questions du niveau suivant se débloquent ; une erreur peut faire redescendre. L'examen blanc mélange les trois niveaux.
 - **Entraînement ciblé** : 15 questions, dont environ 70 % sur tes sous-thèmes les plus faibles et le reste en mélange.
 - **Cartes du jour** : répétition espacée en 5 boîtes. Une carte sue revient de plus en plus tard (1, 2, 4, 8 puis 16 jours) et une carte ratée revient le lendemain.
 - **Mes erreurs** : les questions ratées la dernière fois. Une question réussie sort de la liste.
@@ -67,6 +68,7 @@ Chaque chapitre est un fichier dans `data/chapitres/`. Pour ajouter une question
 
 - `id` : unique sur tout le site, par exemple `frein-q11` ;
 - `sousTheme` : une des clés de `sousThemes` du chapitre ;
+- `niveau` (facultatif) : `2` ou `3` pour une question plus difficile (1 par défaut) ;
 - `type` : `qcm`, dont les choix sont mélangés, ou `vf`, avec les choix `['Vrai', 'Faux']` gardés dans l'ordre ;
 - `choix` et `bonne`, l'index de la bonne réponse en partant de 0 ;
 - `explication`.

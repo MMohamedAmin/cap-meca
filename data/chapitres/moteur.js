@@ -134,7 +134,7 @@ CAP.ajouterChapitre({
       explication: 'Il empêche gaz, huile et liquide de refroidissement de fuir ou de se mélanger entre culasse et bloc.'
     },
     {
-      id: 'moteur-q9', sousTheme: 'caracteristiques', type: 'qcm',
+      id: 'moteur-q9', sousTheme: 'caracteristiques', type: 'qcm', niveau: 2,
       enonce: 'Alésage 8 cm, course 8 cm. Quelle est la cylindrée unitaire (environ) ?',
       choix: ['402 cm³', '512 cm³', '64 cm³', '201 cm³'],
       bonne: 0,
@@ -211,7 +211,7 @@ CAP.ajouterChapitre({
       explication: 'La culasse ferme le haut des cylindres : elle porte les chambres de combustion, les soupapes et souvent les arbres à cames (posés à côté sur la photo).'
     },
     {
-      id: 'moteur-q20', sousTheme: 'organes', type: 'qcm', image: 'joint-culasse',
+      id: 'moteur-q20', sousTheme: 'organes', type: 'qcm', image: 'joint-culasse', niveau: 2,
       enonce: 'Que constates-tu sur ce joint de culasse ?',
       choix: ['Il est brûlé entre deux cylindres : il n\'est plus étanche', 'Il est neuf, prêt à être monté', 'Il est juste sale : on peut le nettoyer et le remonter', 'Ce n\'est pas un joint de culasse mais un joint de carter'],
       bonne: 0,
@@ -272,6 +272,48 @@ CAP.ajouterChapitre({
       choix: ['Le volant moteur', 'La poulie de vilebrequin', 'L\'arbre à cames', 'Le carter d\'huile'],
       bonne: 0,
       explication: 'Lourd, le **volant moteur** emmagasine de l\'énergie pour lisser les à-coups. Sa couronne dentée reçoit le pignon du démarreur.'
+    },
+    {
+      id: 'moteur-q29', sousTheme: 'caracteristiques', type: 'qcm', niveau: 2,
+      enonce: 'Alésage 76 mm, course 88 mm, 4 cylindres. Quelle est la cylindrée totale, environ ?',
+      choix: ['1,6 L', '0,4 L', '6,4 L', '1,2 L'],
+      bonne: 0,
+      explication: 'En cm : 7,6 et 8,8. Cylindrée unitaire = 3,1416 × 7,6² ÷ 4 × 8,8 ≈ 399 cm³. × 4 ≈ 1 597 cm³, soit **1,6 L**. Le piège : oublier de multiplier par le nombre de cylindres (0,4 L).'
+    },
+    {
+      id: 'moteur-q30', sousTheme: 'caracteristiques', type: 'qcm', niveau: 2,
+      enonce: 'Cylindrée unitaire 450 cm³, volume de la chambre de combustion 50 cm³. Quel est le rapport volumétrique ?',
+      choix: ['10 : 1', '9 : 1', '11 : 1', '22,5 : 1'],
+      bonne: 0,
+      explication: '(450 + 50) ÷ 50 = **10**. Le piège : 450 ÷ 50 = 9, en oubliant d\'ajouter la chambre au volume total.'
+    },
+    {
+      id: 'moteur-q31', sousTheme: 'distribution', type: 'qcm', niveau: 2,
+      enonce: 'Pourquoi l\'arbre à cames tourne-t-il deux fois moins vite que le vilebrequin ?',
+      choix: ['Chaque soupape ne s\'ouvre qu\'une fois par cycle, et un cycle dure 2 tours de vilebrequin', 'Pour réduire l\'usure de la courroie', 'Parce que l\'arbre à cames est plus lourd', 'Pour économiser du carburant'],
+      bonne: 0,
+      explication: 'Un cycle à 4 temps = **2 tours** de vilebrequin. Chaque soupape s\'ouvre une seule fois par cycle, donc l\'arbre à cames fait 1 tour quand le vilebrequin en fait 2.'
+    },
+    {
+      id: 'moteur-q32', sousTheme: 'distribution', type: 'qcm', niveau: 3,
+      enonce: 'Après le remplacement de la courroie de distribution, le moteur démarre mal et manque de puissance. Que vérifier en premier ?',
+      choix: ['Le calage de la distribution (repères du vilebrequin et de l\'arbre à cames)', 'La pression des pneus', 'Le niveau de liquide de refroidissement', 'La tension de la batterie'],
+      bonne: 0,
+      explication: 'Une seule dent de décalage suffit à fausser l\'ouverture des soupapes : le moteur tourne mal. On contrôle les **repères de calage**.'
+    },
+    {
+      id: 'moteur-q33', sousTheme: 'cycle', type: 'qcm', niveau: 3,
+      enonce: 'Un moteur diesel démarre mal à froid, puis tourne normalement une fois chaud. Que suspecter en priorité ?',
+      choix: ['Les bougies de préchauffage', 'Les bougies d\'allumage', 'Le thermostat', 'Le joint de culasse'],
+      bonne: 0,
+      explication: 'À froid, l\'air comprimé ne chauffe pas assez pour enflammer le gazole : les **bougies de préchauffage** aident. Un diesel n\'a pas de bougies d\'allumage.'
+    },
+    {
+      id: 'moteur-q34', sousTheme: 'organes', type: 'qcm', niveau: 3,
+      enonce: 'Fumée bleue à l\'échappement et niveau d\'huile qui baisse sans fuite visible. Que suspecter ?',
+      choix: ['Des segments ou des guides de soupapes usés : le moteur brûle de l\'huile', 'Un joint de culasse qui laisse passer du liquide de refroidissement', 'Un mélange trop riche en carburant', 'Un filtre à air trop propre'],
+      bonne: 0,
+      explication: 'Couleur de fumée : **bleue** = huile brûlée, **blanche** épaisse = liquide de refroidissement, **noire** = excès de carburant.'
     }
   ]
 });

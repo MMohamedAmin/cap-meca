@@ -128,7 +128,7 @@ CAP.ajouterChapitre({
       explication: 'Vrai : c\'est son rôle, pour démarrer et changer de vitesse.'
     },
     {
-      id: 'trans-q10', sousTheme: 'differentiel', type: 'qcm',
+      id: 'trans-q10', sousTheme: 'differentiel', type: 'qcm', niveau: 2,
       enonce: 'Une roue motrice patine sur la glace, l\'autre reste immobile. Pourquoi ?',
       choix: ['Le différentiel envoie la rotation vers la roue qui résiste le moins', 'Le différentiel est cassé', 'L\'embrayage patine', 'La boîte est restée au point mort'],
       bonne: 0,
@@ -184,7 +184,7 @@ CAP.ajouterChapitre({
       explication: 'Moteur → **embrayage** → **boîte** → **différentiel** → **arbres de transmission** → roues.'
     },
     {
-      id: 'trans-q18', sousTheme: 'boite', type: 'qcm',
+      id: 'trans-q18', sousTheme: 'boite', type: 'qcm', niveau: 2,
       enonce: 'Un craquement se fait entendre en passant une vitesse. Que suspecter ?',
       choix: ['Des synchroniseurs usés ou un embrayage qui débraye mal', 'Un différentiel cassé', 'Une huile moteur trop vieille', 'Un soufflet de transmission déchiré'],
       bonne: 0,
@@ -210,6 +210,48 @@ CAP.ajouterChapitre({
       choix: ['De la graisse', 'De l\'huile de boîte', 'Du liquide de frein', 'De l\'air sous pression'],
       bonne: 0,
       explication: 'La **graisse** lubrifie le joint homocinétique. Le soufflet la garde et empêche la saleté d\'entrer.'
+    },
+    {
+      id: 'trans-q22', sousTheme: 'embrayage', type: 'qcm', niveau: 2,
+      enonce: 'Pourquoi un embrayage patine-t-il quand ses garnitures sont imbibées d\'huile ?',
+      choix: ['L\'huile diminue l\'adhérence : le disque glisse au lieu d\'entraîner', 'L\'huile fait gonfler le volant moteur', 'L\'huile bloque la butée', 'L\'huile augmente trop le couple'],
+      bonne: 0,
+      explication: 'L\'embrayage transmet le couple par **frottement**. Avec de l\'huile, il glisse. Il faut aussi trouver d\'où vient l\'huile (souvent un joint spi).'
+    },
+    {
+      id: 'trans-q23', sousTheme: 'boite', type: 'qcm', niveau: 2,
+      enonce: 'En 1re, le moteur tourne 3 fois plus vite que l\'arbre de sortie de la boîte. Que fait la boîte ?',
+      choix: ['Elle divise la vitesse par 3 et multiplie le couple par 3 (sans compter les pertes)', 'Elle augmente la vitesse et le couple', 'Elle divise le couple par 3', 'Elle transmet tel quel'],
+      bonne: 0,
+      explication: 'Une démultiplication échange de la **vitesse** contre du **couple** : c\'est ce qui permet de démarrer en côte.'
+    },
+    {
+      id: 'trans-q24', sousTheme: 'transmissions', type: 'qcm', niveau: 2,
+      enonce: 'Claquements seulement en virage serré, en accélérant. Quelle pièce suspecter ?',
+      choix: ['Le joint homocinétique côté roue', 'Le différentiel', 'L\'embrayage', 'Les plaquettes de frein'],
+      bonne: 0,
+      explication: 'Roue braquée, le **joint homocinétique** côté roue travaille en grand angle : usé, il claque. On regarde aussi l\'état de son soufflet.'
+    },
+    {
+      id: 'trans-q25', sousTheme: 'embrayage', type: 'qcm', niveau: 3,
+      enonce: 'Les vitesses passent bien moteur arrêté, mais mal moteur tournant, pédale à fond. Que suspecter ?',
+      choix: ['L\'embrayage débraye mal (réglage, récepteur, air dans la commande hydraulique)', 'Des synchroniseurs neufs', 'Le différentiel', 'L\'huile moteur'],
+      bonne: 0,
+      explication: 'Moteur arrêté, rien ne tourne : les vitesses passent. Moteur tournant, si le disque reste un peu entraîné, ça **craque** : l\'embrayage ne désaccouple pas complètement.'
+    },
+    {
+      id: 'trans-q26', sousTheme: 'embrayage', type: 'qcm', niveau: 3,
+      enonce: 'Odeur de brûlé en côte, régime qui monte sans que la voiture accélère, et trace d\'huile sous le carter d\'embrayage. Que remplacer ?',
+      choix: ['Le kit d\'embrayage et la bague d\'étanchéité (joint spi) qui fuit', 'Seulement le disque, sans chercher la fuite', 'La boîte de vitesses', 'Le différentiel'],
+      bonne: 0,
+      explication: 'Le disque est huilé et patine. Sans réparer la **fuite** (joint spi de vilebrequin ou d\'arbre de boîte), le kit neuf sera vite abîmé.'
+    },
+    {
+      id: 'trans-q27', sousTheme: 'differentiel', type: 'qcm', niveau: 3,
+      enonce: 'Pourquoi ne faut-il pas monter deux pneus de diamètres différents sur l\'essieu moteur ?',
+      choix: ['Le différentiel compense en permanence la différence de vitesse : il chauffe et s\'use', 'Le compteur de vitesse s\'arrête', 'L\'embrayage ne fonctionne plus', 'Ce n\'est pas un problème'],
+      bonne: 0,
+      explication: 'Même en ligne droite, les deux roues tourneraient à des vitesses différentes : le **différentiel** travaillerait sans arrêt, comme dans un virage permanent.'
     }
   ]
 });

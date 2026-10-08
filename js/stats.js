@@ -43,6 +43,42 @@ CAP.stats = {
       .slice(0, limite || 5);
   },
 
+  // ---------- Niveaux de difficulté ----------
+  // 1 : connaître ; 2 : comprendre, calculer ; 3 : diagnostiquer.
+  niveau(q) { return q.niveau || 1; },
+
+  // Un groupe de questions est maîtrisé quand assez de questions ont été vues
+  // (3, ou toutes s'il y en a moins) et qu'au moins 80 % ont été réussies la dernière fois.
+  // On regarde la dernière réponse : une nouvelle erreur peut faire redescendre.
+  maitrise(questions) {
+    const vues = questions.map(q => CAP.stockage.question(q.id)).filter(Boolean);
+    if (!vues.length || vues.length < Math.min(3, questions.length)) return false;
+    return vues.filter(s => s.derniere).length / vues.length >= 0.8;
+  },
+
+  // Niveau atteint dans un sous-thème : le niveau 2 s'ouvre quand le niveau 1 est maîtrisé,
+  // le niveau 3 quand le niveau 2 l'est. Jamais au-delà du plus haut niveau existant.
+  niveauSousTheme(ch, st) {
+    const qs = ch.questions.filter(q => q.sousTheme === st);
+    const max = Math.max(1, ...qs.map(CAP.stats.niveau));
+    let n = 1;
+    for (let k = 1; k < 3; k++) {
+      const duNiveau = qs.filter(q => CAP.stats.niveau(q) === k);
+      if (duNiveau.length && !CAP.stats.maitrise(duNiveau)) break;
+      n = k + 1;
+    }
+    return Math.min(n, max);
+  },
+
+  // Tous les sous-thèmes avec leur niveau : [{ ch, id, nom, niveau, max }].
+  niveaux() {
+    return CAP.chapitres.flatMap(ch => Object.entries(ch.sousThemes).map(([id, nom]) => ({
+      ch, id, nom,
+      niveau: CAP.stats.niveauSousTheme(ch, id),
+      max: Math.max(1, ...ch.questions.filter(q => q.sousTheme === id).map(CAP.stats.niveau))
+    })));
+  },
+
   // Répartition des cartes : [nouvelles, boîte 1, …, boîte 5].
   boites() {
     const r = new Array(CAP.stockage.BOITE_MAX + 1).fill(0);

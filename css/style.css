@@ -38,6 +38,8 @@
 
 /* ===== Base ===== */
 * { box-sizing: border-box; }
+/* L'attribut hidden doit toujours cacher, même sur un élément qui a un display (bouton, grille…). */
+[hidden] { display: none !important; }
 html { -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
@@ -422,3 +424,16 @@ details.resultat-recherche[open] summary strong::after { content: ' ▴'; }
 }
 .signalement .bouton { margin-top: 8px; }
 #message-code { margin: 10px 0 0; }
+
+/* ===== Niveaux de difficulté ===== */
+.badge-niveau {
+  display: inline-block; font-size: .72rem; font-weight: 700; padding: 2px 8px; border-radius: 99px;
+  margin: 0 0 8px; border: 1px solid; white-space: nowrap; vertical-align: 1px;
+}
+.ligne-theme-haut .badge-niveau { margin: 0 0 0 4px; }
+.liste-faibles .badge-niveau { margin: 0; }
+.badge-niveau.n1 { color: var(--texte-doux); border-color: var(--bordure); }
+.badge-niveau.n2 { color: var(--jaune); border-color: var(--jaune); background: var(--jaune-doux); }
+.badge-niveau.n3 { color: var(--rouge); border-color: var(--rouge); background: var(--rouge-doux); }
+.niveau-gagne { border-color: var(--vert); background: var(--vert-doux); }
+.lien-ligne .petit { display: block; }
