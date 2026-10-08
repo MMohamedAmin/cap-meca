@@ -1,0 +1,52 @@
+# CLAUDE.md — CAP Méca
+
+Site de révision pour un élève en **CAP Maintenance des véhicules, option voitures particulières** (programme officiel du CAP, pas de cours fournis). Tout le site, le code et le contenu sont en **français**.
+
+## Contraintes techniques
+
+- **Site statique, sans build, sans dépendance, sans framework.** HTML, CSS et JavaScript « vanilla ».
+- Le site doit marcher en **double-cliquant sur `index.html`** (protocole `file://`). Donc : pas de `fetch()` de fichiers locaux et pas de modules ES (`import`). Le contenu est chargé par des balises `<script>` classiques qui appellent `CAP.ajouterChapitre({...})`.
+- Hébergement prévu plus tard sur un hébergeur statique (GitHub Pages ou Netlify).
+- Mobile d'abord : tout doit être utilisable sur un téléphone de 360 px de large.
+- Toute lecture/écriture de `localStorage` est dans un `try/catch`.
+
+## Architecture
+
+- `js/cap.js` : espace de noms global `CAP` et `CAP.ajouterChapitre`.
+- `data/chapitres/*.js` : contenu. L'ordre des `<script>` dans `index.html` = l'ordre d'affichage.
+- `js/stockage.js` : `CAP.stockage`, la progression dans `localStorage` (clé `capmeca.progression.v1`). Par question : `{vu, ok, derniere, date}`. Par carte : `{sais, pas, derniere, date}`. Plus les `seances` et les `jours` de révision.
+- `js/stats.js` : `CAP.stats`, la réussite par chapitre et par sous-thème, ainsi que `pointsFaibles()`.
+- `js/ia.js` : `CAP.ia`, stub inactif pour la V4.
+- `js/app.js` : routeur par hash (`#/`, `#/chapitre/:id`, `#/chapitre/:id/fiche|cartes|quiz`, `#/melange`, `#/progression`) et rendu des vues avec des template strings.
+
+Tout texte venant du contenu passe par `fmt()` (échappement HTML, puis `**gras**`) ou `echapper()`. Ne jamais injecter du contenu brut.
+
+## Format d'un chapitre
+
+```js
+CAP.ajouterChapitre({
+  id, titre, icone, description,
+  sousThemes: { cle: 'Nom affiché' },
+  fiche: [{ titre, sousTheme, contenu: [ 'paragraphe', {liste:[...]}, {formule}, {retenir}, {attention} ] }],
+  cartes: [{ id, sousTheme, recto, verso }],
+  questions: [{ id, sousTheme, type: 'qcm'|'vf', enonce, choix: [...], bonne: index, explication }]
+});
+```
+
+- Les `id` sont uniques sur tout le site et **ne doivent jamais changer**, car la progression y est rattachée.
+- `qcm` : les choix sont mélangés à l'affichage. Par convention, on met la bonne réponse en premier (`bonne: 0`).
+- `vf` : choix `['Vrai', 'Faux']`, non mélangés.
+- Chaque sous-thème doit avoir au moins une question. Le sous-thème est la base de l'entraînement ciblé.
+
+## Contenu
+
+- Exactitude technique avant tout : niveau CAP, phrases simples, vocabulaire du métier.
+- Les mauvaises réponses doivent être plausibles. L'explication dit **pourquoi**.
+- Après toute modification du contenu : `node outils/verifier-donnees.js`, qui doit afficher « Tout est bon ».
+
+## Feuille de route
+
+- **V1 (fait)** : chapitres, fiches, cartes mémo, quiz, progression de base, export et import.
+- **V2** : mode « Entraînement ciblé » (≈70 % de questions sur les sous-thèmes les plus faibles, 30 % de mélange), répétition espacée des cartes (type Leitner), révision des erreurs, examen blanc chronométré noté sur 20, tableau de progression enrichi.
+- **V3** : formulaire et calculatrices (cylindrée, rapport volumétrique, loi d'Ohm, puissance), lexique avec recherche, PWA (manifest + service worker, hors ligne), recherche globale.
+- **V4** : IA via un intermédiaire serverless (Netlify Functions ou Cloudflare Workers) qui garde la clé API Anthropic côté serveur. Elle sert à générer des questions sur les points faibles, à donner une explication personnalisée après une erreur et à faire un bilan de séance. **Jamais de clé API dans le code client.** Les questions générées doivent avoir un bouton « Signaler une erreur ».
