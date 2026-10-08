@@ -175,6 +175,41 @@ CAP.ajouterChapitre({
       choix: ['Il est fendu : il faut le remplacer rapidement', 'Il est en bon état', 'Il est juste sale : un nettoyage suffit', 'C\'est normal, un soufflet se fend toujours avec le temps et ne sert à rien'],
       bonne: 0,
       explication: 'Par la fente, la graisse sort et la saleté entre : le joint homocinétique va s\'user puis claquer en virage. On remplace le soufflet et on regraisse dès qu\'on le voit.'
+    },
+    {
+      id: 'trans-q17', sousTheme: 'boite', type: 'qcm',
+      enonce: 'Dans quel ordre le mouvement va-t-il du moteur aux roues ?',
+      choix: ['Embrayage, boîte de vitesses, différentiel, arbres de transmission', 'Boîte de vitesses, embrayage, arbres de transmission, différentiel', 'Différentiel, embrayage, boîte de vitesses, arbres de transmission', 'Embrayage, différentiel, boîte de vitesses, arbres de transmission'],
+      bonne: 0,
+      explication: 'Moteur → **embrayage** → **boîte** → **différentiel** → **arbres de transmission** → roues.'
+    },
+    {
+      id: 'trans-q18', sousTheme: 'boite', type: 'qcm',
+      enonce: 'Un craquement se fait entendre en passant une vitesse. Que suspecter ?',
+      choix: ['Des synchroniseurs usés ou un embrayage qui débraye mal', 'Un différentiel cassé', 'Une huile moteur trop vieille', 'Un soufflet de transmission déchiré'],
+      bonne: 0,
+      explication: 'Les **synchroniseurs** égalisent les vitesses avant l\'engagement. Usés, ou si le moteur n\'est pas bien désaccouplé, les dents craquent.'
+    },
+    {
+      id: 'trans-q19', sousTheme: 'boite', type: 'vf',
+      enonce: 'Vrai ou faux : la 5e donne plus de couple aux roues que la 1re.',
+      choix: ['Vrai', 'Faux'],
+      bonne: 1,
+      explication: 'Faux : c\'est la **1re** qui donne le plus de couple, pour démarrer. Les rapports supérieurs donnent de la vitesse.'
+    },
+    {
+      id: 'trans-q20', sousTheme: 'differentiel', type: 'vf',
+      enonce: 'Vrai ou faux : en virage, la roue extérieure tourne plus vite que la roue intérieure.',
+      choix: ['Vrai', 'Faux'],
+      bonne: 0,
+      explication: 'Vrai : elle parcourt plus de chemin dans le même temps. Le **différentiel** permet cette différence de vitesse.'
+    },
+    {
+      id: 'trans-q21', sousTheme: 'transmissions', type: 'qcm',
+      enonce: 'Que contient un soufflet de transmission ?',
+      choix: ['De la graisse', 'De l\'huile de boîte', 'Du liquide de frein', 'De l\'air sous pression'],
+      bonne: 0,
+      explication: 'La **graisse** lubrifie le joint homocinétique. Le soufflet la garde et empêche la saleté d\'entrer.'
     }
   ]
 });

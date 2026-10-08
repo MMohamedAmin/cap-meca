@@ -237,6 +237,41 @@ CAP.ajouterChapitre({
       choix: ['Un injecteur diesel', 'Une bougie de préchauffage', 'Une sonde lambda', 'Un capteur de pression d\'huile'],
       bonne: 0,
       explication: 'Il pulvérise le gazole sous très haute pression directement dans la chambre de combustion, au bon moment.'
+    },
+    {
+      id: 'moteur-q24', sousTheme: 'caracteristiques', type: 'qcm',
+      enonce: 'Un moteur a 4 cylindres de 500 cm³ chacun. Quelle est sa cylindrée totale ?',
+      choix: ['2 L', '0,5 L', '1,5 L', '20 L'],
+      bonne: 0,
+      explication: '500 × 4 = 2 000 cm³. Comme 1 L = 1 000 cm³, cela fait **2 L**.'
+    },
+    {
+      id: 'moteur-q25', sousTheme: 'caracteristiques', type: 'qcm',
+      enonce: 'Que mesure la course d\'un moteur ?',
+      choix: ['La distance parcourue par le piston entre le PMB et le PMH', 'Le diamètre du cylindre', 'Le volume de la chambre de combustion', 'Le nombre de tours par minute'],
+      bonne: 0,
+      explication: 'La course va du PMB au PMH. Le diamètre du cylindre, lui, s\'appelle l\'**alésage**.'
+    },
+    {
+      id: 'moteur-q26', sousTheme: 'cycle', type: 'vf',
+      enonce: 'Vrai ou faux : dans un moteur 4 temps, chacun des 4 temps fournit de l\'énergie au vilebrequin.',
+      choix: ['Vrai', 'Faux'],
+      bonne: 1,
+      explication: 'Faux : seul le temps **combustion-détente** est moteur. Les trois autres utilisent l\'énergie gardée par le volant moteur.'
+    },
+    {
+      id: 'moteur-q27', sousTheme: 'cycle', type: 'qcm',
+      enonce: 'Pendant le temps d\'échappement, que fait le piston ?',
+      choix: ['Il remonte et chasse les gaz brûlés', 'Il descend et aspire l\'air', 'Il remonte et comprime les gaz, soupapes fermées', 'Il reste immobile au PMB'],
+      bonne: 0,
+      explication: 'Soupape d\'échappement ouverte, le piston remonte du PMB au PMH et pousse les gaz brûlés vers l\'échappement.'
+    },
+    {
+      id: 'moteur-q28', sousTheme: 'organes', type: 'qcm',
+      enonce: 'Quel organe régularise la rotation du vilebrequin et porte la couronne du démarreur ?',
+      choix: ['Le volant moteur', 'La poulie de vilebrequin', 'L\'arbre à cames', 'Le carter d\'huile'],
+      bonne: 0,
+      explication: 'Lourd, le **volant moteur** emmagasine de l\'énergie pour lisser les à-coups. Sa couronne dentée reçoit le pignon du démarreur.'
     }
   ]
 });

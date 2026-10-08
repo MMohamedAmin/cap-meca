@@ -161,6 +161,41 @@ CAP.ajouterChapitre({
       choix: ['Elle sort la jauge pour contrôler le niveau d\'huile moteur', 'Elle contrôle le niveau de liquide de frein', 'Elle vérifie le niveau de liquide de refroidissement', 'Elle remplit le réservoir de lave-glace'],
       bonne: 0,
       explication: 'On essuie la jauge, on la replonge à fond, puis on lit le niveau entre les repères mini et maxi. Véhicule à plat, moteur arrêté depuis quelques minutes.'
+    },
+    {
+      id: 'lubri-q15', sousTheme: 'circuit', type: 'qcm',
+      enonce: 'Quel élément allume le voyant de pression d\'huile au tableau de bord ?',
+      choix: ['Le manocontact de pression d\'huile', 'La jauge d\'huile', 'Le clapet de décharge', 'Le filtre à huile'],
+      bonne: 0,
+      explication: 'Le **manocontact** est un interrupteur commandé par la pression : si elle est trop faible, il allume le voyant.'
+    },
+    {
+      id: 'lubri-q16', sousTheme: 'huiles', type: 'qcm',
+      enonce: 'Entre une huile 0W30 et une 15W40, laquelle est la plus fluide à froid ?',
+      choix: ['La 0W30', 'La 15W40', 'Elles sont identiques à froid', 'On ne peut pas savoir avec ces indications'],
+      bonne: 0,
+      explication: 'Plus le chiffre avant le **W** est petit, plus l\'huile reste fluide à froid, donc au démarrage.'
+    },
+    {
+      id: 'lubri-q17', sousTheme: 'huiles', type: 'qcm',
+      enonce: 'Quels sont les trois grands types d\'huile moteur ?',
+      choix: ['Minérale, semi-synthétique et synthétique', 'Végétale, animale et minérale', 'Hiver, été et quatre saisons', 'Diesel, essence et GPL'],
+      bonne: 0,
+      explication: 'On choisit ensuite selon la viscosité et les normes (ACEA, API, norme du constructeur).'
+    },
+    {
+      id: 'lubri-q18', sousTheme: 'role', type: 'qcm',
+      enonce: 'Comment l\'huile participe-t-elle au refroidissement du moteur ?',
+      choix: ['Elle emporte une partie de la chaleur des pièces chaudes, puis la cède en retombant dans le carter', 'Elle contient de l\'antigel', 'Elle passe dans le radiateur de refroidissement', 'Elle ralentit la combustion'],
+      bonne: 0,
+      explication: 'L\'huile circule sur les pistons et les paliers, se charge de chaleur, puis se refroidit dans le carter.'
+    },
+    {
+      id: 'lubri-q19', sousTheme: 'role', type: 'vf',
+      enonce: 'Vrai ou faux : sans huile, les pièces métalliques frotteraient directement entre elles et le moteur pourrait serrer.',
+      choix: ['Vrai', 'Faux'],
+      bonne: 0,
+      explication: 'Vrai : l\'huile forme un film entre les pièces. Sans elle, l\'échauffement est tel que les pièces se soudent : c\'est le **serrage**.'
     }
   ]
 });

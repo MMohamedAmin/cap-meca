@@ -160,6 +160,41 @@ CAP.ajouterChapitre({
       choix: ['Ce sont des chandelles : elles maintiennent le véhicule levé en sécurité', 'Ce sont des crics : ils servent à lever le véhicule', 'Ce sont des cales de roue', 'Ce sont des supports de moteur'],
       bonne: 0,
       explication: 'Le cric rouleur (au sol) sert seulement à lever. On pose ensuite le véhicule sur des chandelles, aux points prévus, avant de passer dessous.'
+    },
+    {
+      id: 'secu-q15', sousTheme: 'dechets', type: 'qcm',
+      enonce: 'Comment un déchet dangereux est-il suivi jusqu\'à son élimination ?',
+      choix: ['Par un bordereau de suivi des déchets', 'Par la carte grise du véhicule', 'Par la facture du client', 'Il n\'est pas suivi'],
+      bonne: 0,
+      explication: 'Le **bordereau de suivi** accompagne le déchet du garage jusqu\'à la filière agréée qui l\'élimine.'
+    },
+    {
+      id: 'secu-q16', sousTheme: 'dechets', type: 'qcm',
+      enonce: 'Où met-on les chiffons souillés d\'huile ?',
+      choix: ['Dans le bac des déchets dangereux', 'À la poubelle ordinaire', 'Dans le bac à papier et carton', 'On les brûle dans l\'atelier'],
+      bonne: 0,
+      explication: 'Imprégnés d\'huile, les chiffons sont des **déchets dangereux**, et ils sont inflammables.'
+    },
+    {
+      id: 'secu-q17', sousTheme: 'epi', type: 'qcm',
+      enonce: 'Pourquoi retirer bagues et bracelets pour travailler près d\'un moteur qui tourne ?',
+      choix: ['Ils peuvent s\'accrocher aux pièces en rotation', 'Pour ne pas les salir', 'Pour ne pas rayer la carrosserie', 'Ce n\'est utile que si le moteur est froid'],
+      bonne: 0,
+      explication: 'Une bague ou un bracelet happé par une courroie ou un ventilateur peut provoquer une blessure grave. En plus, le métal conduit le courant.'
+    },
+    {
+      id: 'secu-q18', sousTheme: 'epi', type: 'qcm',
+      enonce: 'Quels EPI faut-il pour manipuler une batterie ?',
+      choix: ['Des gants et des lunettes de protection', 'Une protection auditive', 'Un gilet haute visibilité seul', 'Aucun, l\'acide d\'une batterie est sans danger'],
+      bonne: 0,
+      explication: 'L\'électrolyte est de l\'**acide sulfurique** : il brûle la peau et les yeux.'
+    },
+    {
+      id: 'secu-q19', sousTheme: 'produits', type: 'qcm',
+      enonce: 'Quel gaz, sans odeur et mortel, rejette un moteur qui tourne dans un atelier fermé ?',
+      choix: ['Le monoxyde de carbone (CO)', 'Le dioxyde de carbone (CO2)', 'L\'hydrogène', 'L\'azote'],
+      bonne: 0,
+      explication: 'Le **monoxyde de carbone** ne se sent pas et peut tuer : on branche toujours l\'aspiration des gaz d\'échappement.'
     }
   ]
 });

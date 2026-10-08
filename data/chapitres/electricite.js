@@ -195,6 +195,41 @@ CAP.ajouterChapitre({
       choix: ['Un multimètre', 'Un réfractomètre', 'Un manomètre', 'Une valise de diagnostic'],
       bonne: 0,
       explication: 'Selon la position du sélecteur, il mesure une tension (voltmètre), une intensité (ampèremètre) ou une résistance (ohmmètre).'
+    },
+    {
+      id: 'elec-q19', sousTheme: 'bases', type: 'qcm',
+      enonce: 'Une résistance de 6 Ω est traversée par un courant de 2 A. Quelle est la tension à ses bornes ?',
+      choix: ['12 V', '3 V', '8 V', '0,33 V'],
+      bonne: 0,
+      explication: 'Loi d\'Ohm : U = R × I = 6 × 2 = **12 V**.'
+    },
+    {
+      id: 'elec-q20', sousTheme: 'bases', type: 'qcm',
+      enonce: 'Quelle grandeur se mesure en ampères ?',
+      choix: ['L\'intensité du courant', 'La tension', 'La résistance', 'La puissance'],
+      bonne: 0,
+      explication: 'Intensité en ampères (A), tension en volts (V), résistance en ohms (Ω), puissance en watts (W).'
+    },
+    {
+      id: 'elec-q21', sousTheme: 'batterie', type: 'qcm',
+      enonce: 'À quoi est reliée la borne négative de la batterie ?',
+      choix: ['À la masse, c\'est-à-dire la caisse du véhicule', 'Au démarreur uniquement', 'Au boîtier de fusibles', 'À l\'alternateur uniquement'],
+      bonne: 0,
+      explication: 'Le retour du courant se fait par la **masse** : la caisse métallique du véhicule.'
+    },
+    {
+      id: 'elec-q22', sousTheme: 'batterie', type: 'qcm',
+      enonce: 'Pourquoi recharge-t-on une batterie dans un local aéré, loin des flammes et des étincelles ?',
+      choix: ['Elle dégage de l\'hydrogène, un gaz explosif', 'Elle dégage du monoxyde de carbone', 'Elle risque de geler', 'Pour qu\'elle refroidisse plus vite'],
+      bonne: 0,
+      explication: 'Pendant la charge, la batterie au plomb dégage de l\'**hydrogène**, qui peut exploser au contact d\'une étincelle.'
+    },
+    {
+      id: 'elec-q23', sousTheme: 'mesures', type: 'qcm',
+      enonce: 'Quel appareil mesure l\'intensité sans couper le circuit ?',
+      choix: ['Une pince ampèremétrique', 'Un voltmètre branché en parallèle', 'Un ohmmètre', 'Un réfractomètre'],
+      bonne: 0,
+      explication: 'La **pince ampèremétrique** entoure le fil et mesure le courant qui le traverse, sans le débrancher.'
     }
   ]
 });

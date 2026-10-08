@@ -162,6 +162,41 @@ CAP.ajouterChapitre({
       choix: ['Du liquide de refroidissement', 'De l\'huile moteur', 'Du liquide de frein', 'Du carburant'],
       bonne: 0,
       explication: 'Sa couleur dépend du fabricant (vert, rose, bleu…). On choisit le liquide selon la norme du constructeur, pas selon la couleur. Et on n\'ouvre jamais ce bouchon moteur chaud.'
+    },
+    {
+      id: 'refroid-q14', sousTheme: 'pannes', type: 'qcm',
+      enonce: 'Le thermostat est bloqué fermé. Que se passe-t-il ?',
+      choix: ['Le moteur surchauffe rapidement', 'Le moteur met très longtemps à chauffer', 'Le chauffage de l\'habitacle devient froid mais le moteur va bien', 'Rien, le motoventilateur compense'],
+      bonne: 0,
+      explication: 'Fermé, le thermostat empêche le liquide d\'aller au radiateur : la chaleur n\'est plus évacuée.'
+    },
+    {
+      id: 'refroid-q15', sousTheme: 'pannes', type: 'qcm',
+      enonce: 'Traces au sol sous l\'avant du véhicule et odeur sucrée. Que suspecter ?',
+      choix: ['Une fuite de liquide de refroidissement', 'Une fuite d\'huile moteur', 'Une fuite de liquide de frein', 'Une fuite de carburant'],
+      bonne: 0,
+      explication: 'Le glycol du liquide de refroidissement a une odeur **sucrée** caractéristique.'
+    },
+    {
+      id: 'refroid-q16', sousTheme: 'composants', type: 'qcm',
+      enonce: 'Quel élément porte le bouchon taré qui met le circuit sous pression ?',
+      choix: ['Le vase d\'expansion', 'Le thermostat', 'La pompe à eau', 'Le motoventilateur'],
+      bonne: 0,
+      explication: 'Le bouchon du **vase d\'expansion** maintient une pression qui élève le point d\'ébullition du liquide.'
+    },
+    {
+      id: 'refroid-q17', sousTheme: 'role', type: 'vf',
+      enonce: 'Vrai ou faux : un moteur qui fonctionne trop froid s\'use plus vite et consomme davantage.',
+      choix: ['Vrai', 'Faux'],
+      bonne: 0,
+      explication: 'Vrai : à froid, l\'huile lubrifie moins bien et la combustion est moins bonne : plus d\'usure, de consommation et de pollution.'
+    },
+    {
+      id: 'refroid-q18', sousTheme: 'composants', type: 'qcm',
+      enonce: 'Qu\'est-ce qui commande la mise en marche du motoventilateur ?',
+      choix: ['Une sonde de température ou le calculateur moteur', 'La pédale d\'accélérateur', 'Le thermostat, directement', 'L\'interrupteur du chauffage'],
+      bonne: 0,
+      explication: 'Quand la température du liquide dépasse un seuil, la sonde (ou le calculateur) met le motoventilateur en marche.'
     }
   ]
 });

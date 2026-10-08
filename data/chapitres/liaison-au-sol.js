@@ -188,6 +188,48 @@ CAP.ajouterChapitre({
       choix: ['Une rotule de direction', 'Un silentbloc', 'Une biellette de barre stabilisatrice', 'Un amortisseur'],
       bonne: 0,
       explication: 'Vissée au bout de la biellette, elle relie la direction au pivot de la roue. Usée, elle prend du jeu : direction floue et usure des pneus.'
+    },
+    {
+      id: 'sol-q17', sousTheme: 'geometrie', type: 'qcm',
+      enonce: 'Qu\'est-ce que le carrossage ?',
+      choix: ['L\'inclinaison de la roue par rapport à la verticale, vue de face', 'L\'orientation des roues vues de dessus', 'L\'inclinaison de l\'axe de pivot vue de côté', 'La hauteur entre la caisse et le sol'],
+      bonne: 0,
+      explication: 'Vue de face : c\'est le **carrossage**. Vue de dessus : le parallélisme. Vue de côté : la chasse.'
+    },
+    {
+      id: 'sol-q18', sousTheme: 'geometrie', type: 'qcm',
+      enonce: 'Quel angle aide la direction à revenir seule en ligne droite ?',
+      choix: ['La chasse', 'Le carrossage', 'Le pincement', 'Le voile de roue'],
+      bonne: 0,
+      explication: 'La **chasse** (inclinaison de l\'axe de pivot vue de côté) ramène les roues en ligne droite après un virage.'
+    },
+    {
+      id: 'sol-q19', sousTheme: 'pneus', type: 'qcm',
+      enonce: 'Sur un pneu 205/55 R16 91V, que signifie « V » ?',
+      choix: ['L\'indice de vitesse : la vitesse maximale du pneu', 'L\'indice de charge', 'La structure radiale', 'Un pneu à valve renforcée'],
+      bonne: 0,
+      explication: '« 91 » est l\'indice de charge, « **V** » l\'indice de vitesse. La lettre « R » indique la structure radiale.'
+    },
+    {
+      id: 'sol-q20', sousTheme: 'suspension', type: 'qcm',
+      enonce: 'Quelles pièces supportent le poids du véhicule ?',
+      choix: ['Les ressorts', 'Les amortisseurs', 'La barre stabilisatrice', 'Les rotules de direction'],
+      bonne: 0,
+      explication: 'Les **ressorts** portent le véhicule. Les amortisseurs, eux, freinent seulement leurs oscillations.'
+    },
+    {
+      id: 'sol-q21', sousTheme: 'direction', type: 'qcm',
+      enonce: 'Aujourd\'hui, quel type de direction assistée est le plus courant ?',
+      choix: ['L\'assistance électrique', 'L\'assistance hydraulique', 'L\'assistance pneumatique', 'Les voitures n\'ont plus de direction assistée'],
+      bonne: 0,
+      explication: 'L\'assistance **électrique** (un moteur électrique sur la colonne ou la crémaillère) a remplacé la pompe hydraulique sur la plupart des voitures.'
+    },
+    {
+      id: 'sol-q22', sousTheme: 'pneus', type: 'qcm',
+      enonce: 'Où trouve-t-on la pression de gonflage préconisée pour un véhicule ?',
+      choix: ['Sur l\'étiquette du constructeur, sur la portière ou la trappe à carburant', 'Sur le flanc du pneu', 'Sur la jante', 'C\'est toujours 2 bar pour tous les véhicules'],
+      bonne: 0,
+      explication: 'Le flanc du pneu indique une pression **maximale**, pas la pression à utiliser. La bonne valeur est donnée par le constructeur du véhicule.'
     }
   ]
 });

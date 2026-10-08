@@ -195,6 +195,41 @@ CAP.ajouterChapitre({
       choix: ['Le maître-cylindre et son réservoir de liquide de frein', 'Le vase d\'expansion du liquide de refroidissement', 'Le réservoir de lave-glace', 'Le filtre à carburant'],
       bonne: 0,
       explication: 'Le bocal contient le liquide de frein, dont le niveau doit être entre MINI et MAXI. Le maître-cylindre est fixé sur le servofrein, contre le tablier.'
+    },
+    {
+      id: 'frein-q20', sousTheme: 'entretien', type: 'qcm',
+      enonce: 'En général, tous les combien remplace-t-on le liquide de frein ?',
+      choix: ['Environ tous les 2 ans, selon le constructeur', 'À chaque vidange moteur', 'Jamais, il ne s\'use pas', 'Seulement quand la pédale devient dure'],
+      bonne: 0,
+      explication: 'Comme il absorbe l\'humidité, son point d\'ébullition baisse avec le temps : on le remplace périodiquement, souvent tous les 2 ans environ.'
+    },
+    {
+      id: 'frein-q21', sousTheme: 'entretien', type: 'qcm',
+      enonce: 'Du liquide de frein a coulé sur la peinture. Que faut-il faire ?',
+      choix: ['Rincer tout de suite à l\'eau, car il attaque la peinture', 'Le laisser sécher, il protège la peinture', 'L\'essuyer avec de l\'essence', 'Rien, il est sans danger'],
+      bonne: 0,
+      explication: 'Le liquide de frein (glycol) abîme la peinture : on rince rapidement à l\'eau. Et on porte gants et lunettes.'
+    },
+    {
+      id: 'frein-q22', sousTheme: 'assistance', type: 'qcm',
+      enonce: 'Sur un moteur diesel, d\'où vient en général la dépression utilisée par le servofrein ?',
+      choix: ['D\'une pompe à vide', 'Du turbo', 'Du maître-cylindre', 'Du réservoir de carburant'],
+      bonne: 0,
+      explication: 'Un diesel crée peu de dépression à l\'admission : une **pompe à vide** la fournit au servofrein.'
+    },
+    {
+      id: 'frein-q23', sousTheme: 'assistance', type: 'qcm',
+      enonce: 'Quels capteurs l\'ABS utilise-t-il pour détecter qu\'une roue va se bloquer ?',
+      choix: ['Des capteurs de vitesse de roue', 'Des capteurs de pression des pneus', 'Le capteur de niveau de liquide de frein', 'La sonde de température moteur'],
+      bonne: 0,
+      explication: 'Le calculateur compare la vitesse des roues : une roue qui ralentit trop vite est sur le point de se bloquer.'
+    },
+    {
+      id: 'frein-q24', sousTheme: 'assistance', type: 'vf',
+      enonce: 'Vrai ou faux : l\'ABS raccourcit toujours la distance de freinage.',
+      choix: ['Vrai', 'Faux'],
+      bonne: 1,
+      explication: 'Faux : l\'ABS sert surtout à garder la **direction** en freinant fort. Sur certains sols (gravier, neige fraîche), la distance peut même être un peu plus longue.'
     }
   ]
 });
