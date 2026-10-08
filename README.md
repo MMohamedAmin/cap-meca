@@ -26,6 +26,7 @@ Ta progression est enregistrée dans le navigateur. Pour la sauvegarder ou la tr
 - **Lexique** : 74 mots du métier, avec un filtre et des photos.
 - **Recherche** (loupe en haut) : dans le lexique, le formulaire, les fiches, les cartes et les questions, sans se soucier des accents.
 - **Installation sur le téléphone** et fonctionnement **sans connexion**, une fois le site mis en ligne.
+- **Assistant IA** (avec un code d'accès) : « Explique-moi mon erreur » après une mauvaise réponse, questions inventées sur les points faibles, bilan personnalisé en fin de séance. Chaque contenu de l'IA a un bouton « Signaler une erreur ».
 - Mode clair et sombre, affichage adapté au téléphone.
 
 ## Organisation des fichiers
@@ -53,6 +54,10 @@ images/icones/             les icônes de l'appli
 outils/verifier-donnees.js vérification automatique du contenu
 outils/maj-hors-ligne.js   met à jour sw.js après une modification
 outils/preparer-site.js    assemble le site à publier dans _site/ (mise en ligne)
+outils/tests-ia.mjs        tests de l'assistant IA (npm run test-ia), sans clé API
+netlify/functions/ia.mjs   fonction Netlify de l'assistant IA (garde la clé API)
+netlify/ia/coeur.mjs       consignes envoyées à Claude et contrôle des réponses
+netlify.toml, package.json configuration Netlify et dépendance de la fonction
 .github/workflows/         mise en ligne automatique sur GitHub Pages
 ```
 
@@ -79,10 +84,6 @@ node outils/maj-hors-ligne.js
 node outils/verifier-donnees.js
 ```
 
-## Suite prévue
-
-- **V4** : branchement de l'IA (questions générées sur les points faibles, bouton « Explique-moi »), avec un petit intermédiaire serveur qui garde la clé API cachée.
-
 ## Mettre en ligne (GitHub Pages)
 
 Le site est publié automatiquement par GitHub à chaque envoi sur la branche `main` (fichier `.github/workflows/mise-en-ligne.yml`). Avant de publier, GitHub lance `node outils/verifier-donnees.js` : si le contenu a une erreur ou si `sw.js` n'est pas à jour, rien n'est publié et l'ancienne version reste en ligne. Seuls les fichiers du site sont publiés (`outils/preparer-site.js`), pas les outils ni la documentation.
@@ -103,3 +104,21 @@ Le site est publié automatiquement par GitHub à chaque envoi sur la branche `m
 **Ensuite, à chaque modification :** `node outils/maj-hors-ligne.js`, `node outils/verifier-donnees.js`, un commit, puis `git push`. Sur un téléphone où le site est installé, la nouvelle version arrive à l'ouverture suivante.
 
 Le site doit être servi en **https** : c'est ce qui permet de l'installer sur le téléphone et de l'utiliser sans connexion. En double-cliquant sur `index.html`, tout marche aussi, sauf l'installation.
+
+## Assistant IA (Netlify)
+
+L'assistant passe par une petite fonction hébergée sur Netlify, qui garde la clé API Anthropic cachée : elle n'est jamais dans le code du site. L'élève l'active une fois avec un **code d'accès**, pour que personne d'autre ne puisse l'utiliser à tes frais.
+
+**Mise en route (une seule fois) :**
+
+1. Sur [platform.claude.com](https://platform.claude.com), crée une clé API. Dans les réglages de dépenses de la console, fixe une **limite mensuelle** (par exemple 5 €) : c'est la vraie protection contre une mauvaise surprise.
+2. Sur [netlify.com](https://www.netlify.com), crée un compte, puis **Add new project → Import an existing project → GitHub → cap-meca**. Les réglages de construction sont lus dans `netlify.toml` : il n'y a rien à changer.
+3. Dans le projet Netlify : **Project configuration → Environment variables**, ajoute :
+   - `ANTHROPIC_API_KEY` : la clé API (coche « Contains secret values ») ;
+   - `CODE_ACCES` : un code de ton choix, à donner à l'élève.
+4. Relance le déploiement (**Deploys → Trigger deploy**). Le site est alors aussi à l'adresse `https://NOM.netlify.app`, avec l'assistant.
+5. Pour l'activer aussi sur la version GitHub Pages : mets l'adresse `https://NOM.netlify.app/api/ia` dans `URL_FONCTION` (`js/ia.js`), puis `node outils/maj-hors-ligne.js`, commit et `git push`.
+
+**Utilisation :** sur le site, **Assistant IA** → saisir le code. Les signalements d'erreur se lisent dans Netlify : **Logs → Functions → ia**, en cherchant `[signalement]`.
+
+**Coût indicatif** (modèle Claude Opus 5.5) : environ 1 à 2 centimes de dollar par explication ou bilan, 5 à 10 centimes pour une série de 5 questions inventées. Le modèle se change dans `netlify/ia/coeur.mjs` (`MODELE`).

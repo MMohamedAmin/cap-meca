@@ -394,3 +394,31 @@ details.resultat-recherche[open] summary strong::after { content: ' ▴'; }
   .nav a { padding: 6px 6px; }
   .bouton-theme { width: 34px; height: 34px; }
 }
+
+/* ===== V4 : assistant IA ===== */
+.etiquette-ia {
+  display: inline-block; font-size: .7rem; font-weight: 800; letter-spacing: .05em; padding: 1px 6px;
+  border-radius: 6px; background: var(--texte); color: var(--fond); vertical-align: 1px;
+}
+.bouton-ia { border-style: dashed; border-color: var(--accent); color: var(--accent); }
+.reponse-ia {
+  background: var(--surface); border: 1px solid var(--bordure); border-left: 4px solid var(--texte-doux);
+  border-radius: 12px; padding: 12px 14px; margin: 0 0 14px;
+}
+.reponse-ia p:last-child { margin-bottom: 0; }
+.reponse-ia.chargement { animation: pulsation 1.4s ease-in-out infinite; }
+.reponse-ia.erreur-ia { border-left-color: var(--rouge); }
+@keyframes pulsation { 50% { opacity: .55; } }
+@media (prefers-reduced-motion: reduce) { .reponse-ia.chargement { animation: none; } }
+#zone-ia > div { margin-bottom: 12px; }
+.lien-bouton {
+  background: none; border: 0; padding: 4px 0; color: var(--accent); font-weight: 600;
+  cursor: pointer; text-decoration: underline; font-size: .9rem;
+}
+.signalement { margin-top: 8px; }
+.signalement textarea {
+  width: 100%; font: inherit; font-weight: 400; padding: 10px 12px; border-radius: 12px;
+  border: 2px solid var(--bordure); background: var(--fond); color: var(--texte); resize: vertical;
+}
+.signalement .bouton { margin-top: 8px; }
+#message-code { margin: 10px 0 0; }

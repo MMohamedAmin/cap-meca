@@ -68,6 +68,74 @@
   }
   function illustration(q, petite) { return photo(q.image, petite); }
 
+  // ---------- Assistant IA : éléments communs ----------
+  const AVERTISSEMENT_IA = 'Écrit par une IA : elle peut se tromper. En cas de doute, ta fiche de cours fait foi.';
+
+  function paragraphes(t) {
+    return String(t).split(/\n+/).map(p => p.trim()).filter(Boolean).map(p => `<p>${fmt(p)}</p>`).join('');
+  }
+
+  // Bouton « Signaler une erreur », qui ouvre un petit formulaire.
+  // q : la question concernée ; texteIA : la réponse de l'IA signalée (facultatif).
+  function zoneSignalement(conteneur, q, origine, texteIA) {
+    const bloc = document.createElement('div');
+    bloc.className = 'signalement';
+    bloc.innerHTML = '<button class="lien-bouton" type="button">⚑ Signaler une erreur</button>';
+    conteneur.appendChild(bloc);
+    bloc.querySelector('button').addEventListener('click', () => {
+      bloc.innerHTML = `
+        <label class="champ"><span>Qu'est-ce qui ne va pas ?</span>
+          <textarea rows="3" maxlength="500" placeholder="Ex. : la réponse B est aussi juste"></textarea>
+        </label>
+        <button class="bouton" type="button">Envoyer le signalement</button>`;
+      const zone = bloc.querySelector('textarea');
+      zone.focus();
+      bloc.querySelector('.bouton').addEventListener('click', async e => {
+        e.target.disabled = true;
+        try {
+          await CAP.ia.signaler(q, origine, texteIA, zone.value);
+          bloc.innerHTML = '<p class="petit">Merci, c\'est signalé.</p>';
+        } catch (err) {
+          bloc.innerHTML = `<p class="petit">${echapper(err.message)} Ton signalement est gardé sur cet appareil.</p>`;
+        }
+      });
+    });
+  }
+
+  // Demande quelque chose à l'IA et affiche la réponse dans conteneur.
+  // demande : fonction qui renvoie (une promesse de) texte ; q : question liée, pour le signalement.
+  async function afficherReponseIA(conteneur, titre, attente, demande, q) {
+    conteneur.innerHTML = `<div class="reponse-ia chargement" role="status"><span class="etiquette-ia">IA</span> ${echapper(attente)}</div>`;
+    try {
+      const texte = await demande();
+      const bloc = document.createElement('div');
+      bloc.className = 'reponse-ia';
+      bloc.innerHTML = `<p><span class="etiquette-ia">IA</span> <strong>${echapper(titre)}</strong></p>${paragraphes(texte)}<p class="petit">${AVERTISSEMENT_IA}</p>`;
+      conteneur.replaceChildren(bloc);
+      if (q) zoneSignalement(bloc, q, 'explication', texte);
+    } catch (e) {
+      conteneur.innerHTML = `<div class="reponse-ia erreur-ia">${echapper(e.message)} <button class="lien-bouton" type="button">Réessayer</button></div>`;
+      conteneur.querySelector('.lien-bouton').addEventListener('click', () => afficherReponseIA(conteneur, titre, attente, demande, q));
+    }
+  }
+
+  // Panneau « Bilan de l'IA » en fin de séance. erreurs : [{ q, ch, choisie }].
+  function panneauBilanIA() {
+    if (!CAP.ia.actif()) return '';
+    return `
+      <section class="panneau">
+        <h2>Bilan de l'IA</h2>
+        <div id="bilan-ia"><button class="bouton bouton-ia" type="button" id="demander-bilan">Demander mon bilan personnalisé</button></div>
+      </section>`;
+  }
+  function brancherBilanIA(seance, score, total, erreurs) {
+    const b = document.getElementById('demander-bilan');
+    if (!b) return;
+    b.addEventListener('click', () => afficherReponseIA(document.getElementById('bilan-ia'),
+      'Bilan de ta séance', 'L\'IA analyse ta séance…',
+      () => CAP.ia.bilan(seance, score, total, erreurs, CAP.stats.pointsFaibles(8))));
+  }
+
   // Séance en cours qui ne doit pas être quittée par erreur (examen blanc).
   let garde = null;      // fonction qui renvoie true si on peut quitter
   let nettoyer = null;   // appelée quand on change d'écran (arrêt du chrono…)
@@ -133,6 +201,9 @@
           <strong>Reconnaître les pièces</strong>
           <span>${CAP.series.nbPieces()} photos de pièces</span>
         </a>
+        ${CAP.ia.disponible() ? (CAP.ia.actif()
+          ? '<a class="mode mode-ia" href="#/ia"><strong>Questions de l\'IA</strong><span>Inventées sur tes points faibles</span></a>'
+          : '<a class="mode mode-ia" href="#/assistant"><strong>Assistant IA</strong><span>À activer avec ton code</span></a>') : ''}
         <a class="mode" href="#/melange">
           <strong>Quiz mélangé</strong>
           <span>20 questions au hasard</span>
@@ -325,6 +396,7 @@
   // ---------- Quiz ----------
   // o.items : [{ q, ch }] ; o.retour : lien HTML ; o.seance : identifiant enregistré ;
   // o.plusieursChapitres ; o.sansEtiquette : cache le thème (il donnerait un indice) ;
+  // o.sansSuivi : réponses non enregistrées dans la progression (questions de l'IA) ;
   // o.bandeau : texte au-dessus des questions ;
   // o.liensFin : HTML ajouté sous le résultat ; o.refaire : relance une série.
   function lancerQuiz(o) {
@@ -350,6 +422,7 @@
             ${item.choix.map((c, k) => `<button class="choix" data-k="${k}">${fmt(c.texte)}</button>`).join('')}
           </div>
           <div class="retour-reponse" id="retour" hidden></div>
+          <div id="zone-ia"></div>
           <button class="bouton bouton-principal bouton-large" id="suivant" hidden>
             ${i + 1 < nb ? 'Question suivante' : 'Voir mon résultat'}
           </button>
@@ -365,8 +438,9 @@
     function repondre(k) {
       const item = serie[i];
       const juste = item.choix[k].juste;
+      item.choisie = item.choix[k].texte;
       if (juste) score++; else erreurs.push(item);
-      CAP.stockage.reponseQuestion(item.q.id, juste);
+      if (!o.sansSuivi) CAP.stockage.reponseQuestion(item.q.id, juste);
 
       app.querySelectorAll('.choix').forEach((b, idx) => {
         b.disabled = true;
@@ -377,6 +451,17 @@
       r.className = 'retour-reponse ' + (juste ? 'retour-bon' : 'retour-faux');
       r.innerHTML = `<strong>${juste ? 'Bonne réponse !' : 'Raté.'}</strong> ${fmt(item.q.explication)}`;
       r.hidden = false;
+
+      const zoneIA = document.getElementById('zone-ia');
+      if (!juste && CAP.ia.actif()) {
+        const cadre = document.createElement('div');
+        cadre.innerHTML = '<button class="bouton bouton-ia" type="button">Explique-moi mon erreur</button>';
+        zoneIA.appendChild(cadre);
+        cadre.querySelector('button').addEventListener('click', () => afficherReponseIA(cadre,
+          'Pourquoi c\'est faux', 'L\'IA prépare une explication…',
+          () => CAP.ia.expliquer(item.q, item.ch, item.choisie), item.q));
+      }
+      if (item.q.ia) zoneSignalement(zoneIA, item.q, 'question');
       const s = document.getElementById('suivant');
       s.hidden = false;
       s.focus();
@@ -391,6 +476,7 @@
           <p class="gros-score">${noteSur20(score, nb)} / 20</p>
           <p>${score} bonne${score > 1 ? 's' : ''} réponse${score > 1 ? 's' : ''} sur ${nb}</p>
         </section>
+        ${panneauBilanIA()}
         ${erreurs.length ? `
           <section class="panneau">
             <h2>Tes erreurs à revoir</h2>
@@ -408,6 +494,8 @@
         </div>
       `);
       document.getElementById('refaire').addEventListener('click', o.refaire);
+      brancherBilanIA(libelleSeance({ type: 'quiz', chapitre: o.seance }), score, nb,
+        erreurs.map(e => ({ q: e.q, ch: e.ch, choisie: e.choisie })));
     }
 
     if (!nb) { afficher(`${o.retour}<p>Pas encore de questions ici.</p>`); return; }
@@ -645,6 +733,7 @@
           <p class="gros-score">${noteSur20(score, nb)} / 20</p>
           <p>${score} sur ${nb} · en ${minutesSecondes(duree)} min</p>
         </section>
+        ${panneauBilanIA()}
         <section class="panneau">
           <h2>Par chapitre</h2>
           ${parChapitre.map(x => {
@@ -674,6 +763,8 @@
         </div>
       `);
       document.getElementById('refaire').addEventListener('click', vueExamen);
+      brancherBilanIA('Examen blanc', score, nb,
+        fautes.map(r => ({ q: r.item.q, ch: r.item.ch, choisie: r.reponse ? r.reponse.texte : '' })));
     }
 
     montrer();
@@ -900,6 +991,114 @@
     if (!requete) champ.focus();
   }
 
+  // ---------- Assistant IA ----------
+  const NB_QUESTIONS_IA = 5;
+
+  function vueAssistant() {
+    const dispo = CAP.ia.disponible(), actif = CAP.ia.actif();
+    afficher(`
+      ${lienRetour('#/', 'Accueil')}
+      <h1>Assistant IA</h1>
+      <p class="description">L'assistant utilise une IA (Claude, d'Anthropic) pour t'expliquer tes erreurs, inventer des questions sur tes points faibles et faire le bilan de tes séances.</p>
+      ${!dispo ? '<p class="retour-reponse retour-faux">L\'assistant n\'est pas disponible sur cette version du site. Ouvre le site depuis Internet.</p>' : ''}
+      ${dispo && actif ? `
+        <p class="retour-reponse retour-bon"><strong>Assistant activé sur cet appareil.</strong></p>
+        <div class="pied-actions">
+          <a class="bouton bouton-principal" href="#/ia">Questions de l'IA</a>
+          <button class="bouton bouton-rouge" type="button" id="desactiver">Désactiver</button>
+        </div>` : ''}
+      ${dispo && !actif ? `
+        <form class="section-fiche" id="form-code" novalidate>
+          <label class="champ">
+            <span>Code d'accès</span>
+            <span class="saisie"><input type="text" id="code" autocomplete="off" autocapitalize="off" spellcheck="false"></span>
+          </label>
+          <p class="petit">Le code est donné par la personne qui gère le site. Il évite que n'importe qui utilise l'assistant.</p>
+          <button class="bouton bouton-principal" type="submit">Activer l'assistant</button>
+          <p id="message-code" aria-live="polite"></p>
+        </form>` : ''}
+      <section class="panneau">
+        <h2>Bon à savoir</h2>
+        <ul class="regles">
+          <li>L'IA peut se tromper. En cas de doute, ta fiche de cours fait foi.</li>
+          <li>Chaque réponse de l'IA a un bouton « Signaler une erreur ».</li>
+          <li>Ce qui est envoyé : la question, ta réponse et tes scores. Rien d'autre (ni nom, ni adresse e-mail).</li>
+          <li>Il faut une connexion Internet. Le reste du site marche sans.</li>
+          <li>Les questions de l'IA ne comptent pas dans ta progression.</li>
+        </ul>
+      </section>
+    `);
+    const des = document.getElementById('desactiver');
+    if (des) des.addEventListener('click', () => { CAP.ia.desactiver(); vueAssistant(); });
+    const form = document.getElementById('form-code');
+    if (form) form.addEventListener('submit', async e => {
+      e.preventDefault();
+      const msg = document.getElementById('message-code');
+      const bouton = form.querySelector('[type=submit]');
+      bouton.disabled = true;
+      msg.className = 'petit';
+      msg.textContent = 'Vérification…';
+      try {
+        await CAP.ia.activer(document.getElementById('code').value);
+        vueAssistant();
+      } catch (err) {
+        msg.className = 'retour-reponse retour-faux';
+        msg.textContent = err.message;
+        bouton.disabled = false;
+      }
+    });
+  }
+
+  // Thèmes à travailler : les plus faibles, sinon des thèmes pas encore vus, sinon au hasard.
+  function ciblesIA() {
+    const faibles = CAP.stats.pointsFaibles(4).map(s => ({ ch: s.chapitre, sousTheme: s.id, nom: s.nom }));
+    if (faibles.length) return faibles;
+    const tous = CAP.chapitres.flatMap(ch => CAP.stats.sousThemes(ch).map(s => ({ ch, sousTheme: s.id, nom: s.nom, vues: s.vues })));
+    const jamais = tous.filter(s => !s.vues);
+    return melanger(jamais.length ? jamais : tous).slice(0, 3);
+  }
+
+  async function vueQuestionsIA() {
+    const retour = lienRetour('#/', 'Accueil');
+    if (!CAP.ia.actif()) return vueAssistant();
+    const cibles = ciblesIA();
+    const ici = location.hash;
+    afficher(`
+      ${retour}
+      <h1>Questions de l'IA</h1>
+      <div class="reponse-ia chargement" role="status">
+        <span class="etiquette-ia">IA</span> L'IA invente ${NB_QUESTIONS_IA} questions sur :
+        <strong>${cibles.map(c => echapper(c.nom)).join(', ')}</strong>. Ça prend environ 20 secondes…
+      </div>
+    `);
+    try {
+      const items = await CAP.ia.genererQuestions(cibles, NB_QUESTIONS_IA);
+      if (location.hash !== ici) return; // l'élève est parti ailleurs entre-temps
+      lancerQuiz({
+        items,
+        retour,
+        seance: 'ia',
+        plusieursChapitres: true,
+        sansSuivi: true,
+        bandeau: 'Questions inventées par l\'IA. Elles peuvent contenir des erreurs : signale-les avec le bouton sous la réponse.',
+        libelleRefaire: 'Nouvelles questions',
+        refaire: vueQuestionsIA
+      });
+    } catch (e) {
+      if (location.hash !== ici) return;
+      afficher(`
+        ${retour}
+        <h1>Questions de l'IA</h1>
+        <p class="retour-reponse retour-faux">${echapper(e.message)}</p>
+        <div class="pied-actions">
+          <button class="bouton bouton-principal" type="button" id="reessayer">Réessayer</button>
+          <a class="bouton" href="#/entrainement">Entraînement ciblé (sans IA)</a>
+        </div>
+      `);
+      document.getElementById('reessayer').addEventListener('click', vueQuestionsIA);
+    }
+  }
+
   // ---------- Installer sur le téléphone ----------
   function vueInstaller() {
     const bouton = CAP.pwa.boutonDisponible();
@@ -938,6 +1137,7 @@
     erreurs: 'Révision des erreurs',
     jour: 'Cartes du jour',
     pieces: 'Reconnaître les pièces',
+    ia: 'Questions de l\'IA',
     examen: 'Examen blanc'
   };
   function libelleSeance(s) {
@@ -1131,6 +1331,8 @@
       return vueRecherche(q);
     }
     if (p[0] === 'installer') return vueInstaller();
+    if (p[0] === 'assistant') return vueAssistant();
+    if (p[0] === 'ia') return vueQuestionsIA();
     if (p[0] === 'chapitre') {
       const ch = trouverChapitre(p[1]);
       if (ch) {

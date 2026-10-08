@@ -1,0 +1,12 @@
+{
+  "name": "cap-meca",
+  "private": true,
+  "description": "Révisions CAP Maintenance des véhicules. Le site n'a aucune dépendance : celles-ci servent seulement à la fonction Netlify de l'assistant IA (netlify/functions).",
+  "scripts": {
+    "verifier": "node outils/maj-hors-ligne.js && node outils/verifier-donnees.js",
+    "test-ia": "node --test outils/tests-ia.mjs"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "0.132.1"
+  }
+}
