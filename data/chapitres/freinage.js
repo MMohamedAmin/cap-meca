@@ -132,6 +132,69 @@ CAP.ajouterChapitre({
       choix: ['Le cylindre de roue', 'L\'étrier', 'Le maître-cylindre', 'Le ressort de rappel'],
       bonne: 0,
       explication: 'La pression pousse les pistons du cylindre de roue, qui plaquent les mâchoires contre le tambour. Les ressorts les ramènent ensuite.'
+    },
+    {
+      id: 'frein-q11', sousTheme: 'hydraulique', type: 'qcm',
+      enonce: 'Pourquoi utilise-t-on un liquide pour transmettre l\'effort de freinage ?',
+      choix: ['Parce qu\'un liquide ne se comprime presque pas', 'Parce qu\'il refroidit les disques', 'Parce qu\'il lubrifie les plaquettes', 'Parce qu\'il est plus léger que l\'air'],
+      bonne: 0,
+      explication: 'La pression créée au maître-cylindre arrive intacte aux étriers. L\'air, lui, se comprime : c\'est ce qui rend la pédale molle.'
+    },
+    {
+      id: 'frein-q12', sousTheme: 'hydraulique', type: 'vf',
+      enonce: 'Vrai ou faux : le niveau de liquide de frein baisse légèrement à mesure que les plaquettes s\'usent.',
+      choix: ['Vrai', 'Faux'],
+      bonne: 0,
+      explication: 'Vrai : les pistons d\'étrier sortent un peu plus pour compenser l\'usure, il y a donc plus de liquide dans les étriers. Une baisse rapide, elle, signale une fuite.'
+    },
+    {
+      id: 'frein-q13', sousTheme: 'assistance', type: 'qcm',
+      enonce: 'Moteur arrêté, après quelques appuis, la pédale de frein devient très dure. Pourquoi ?',
+      choix: ['La réserve de dépression du servofrein est épuisée', 'Le liquide de frein est trop vieux', 'Les plaquettes sont neuves', 'L\'ABS est en panne'],
+      bonne: 0,
+      explication: 'Sans moteur, plus de dépression : le servofrein n\'aide plus et il faut appuyer bien plus fort. C\'est normal, et c\'est même un test simple du servofrein.'
+    },
+    {
+      id: 'frein-q14', sousTheme: 'organes', type: 'qcm', image: 'etrier',
+      enonce: 'Quelle est la pièce grise qu\'on voit derrière les rayons de la jante ?',
+      choix: ['L\'étrier de frein', 'Le tambour de frein', 'Le maître-cylindre', 'L\'amortisseur'],
+      bonne: 0,
+      explication: 'L\'étrier contient le ou les pistons qui serrent les plaquettes sur le disque. On aperçoit d\'ailleurs une plaquette à l\'intérieur.'
+    },
+    {
+      id: 'frein-q15', sousTheme: 'organes', type: 'qcm', image: 'disque-etrier',
+      enonce: 'Roue démontée : quelle est la grande pièce ronde fixée au moyeu ?',
+      choix: ['Le disque de frein', 'Le volant moteur', 'Le tambour de frein', 'La couronne du différentiel'],
+      bonne: 0,
+      explication: 'Le disque est fixé au moyeu et tourne avec la roue. L\'étrier, sur le côté, vient le pincer.'
+    },
+    {
+      id: 'frein-q16', sousTheme: 'organes', type: 'qcm', image: 'disque',
+      enonce: 'Quelle est cette pièce ?',
+      choix: ['Un disque de frein plein', 'Un disque d\'embrayage', 'Un volant moteur', 'Une poulie de vilebrequin'],
+      bonne: 0,
+      explication: 'Un disque plein est une seule galette d\'acier, souvent montée à l\'arrière. Les disques ventilés, avec des canaux entre deux faces, se montent surtout à l\'avant, qui freine le plus.'
+    },
+    {
+      id: 'frein-q17', sousTheme: 'organes', type: 'qcm', image: 'plaquette',
+      enonce: 'Quelle est cette pièce ?',
+      choix: ['Une plaquette de frein', 'Une mâchoire de frein à tambour', 'Un disque d\'embrayage', 'Un patin d\'essuie-glace'],
+      bonne: 0,
+      explication: 'Un support métallique et une garniture de friction. Le marquage « 90R » montre qu\'elle est homologuée selon le règlement européen R90.'
+    },
+    {
+      id: 'frein-q18', sousTheme: 'organes', type: 'qcm', image: 'tambour',
+      enonce: 'Sur ce frein à tambour (tambour retiré), quelle pièce se trouve en haut, entre les deux mâchoires ?',
+      choix: ['Le cylindre de roue', 'Le maître-cylindre', 'L\'étrier', 'Le servofrein'],
+      bonne: 0,
+      explication: 'Poussés par la pression hydraulique, ses deux pistons écartent les mâchoires contre le tambour. Les ressorts de rappel les ramènent ensuite.'
+    },
+    {
+      id: 'frein-q19', sousTheme: 'hydraulique', type: 'qcm', image: 'maitre-cylindre',
+      enonce: 'Quel ensemble voit-on : un bocal blanc et la pièce métallique en dessous ?',
+      choix: ['Le maître-cylindre et son réservoir de liquide de frein', 'Le vase d\'expansion du liquide de refroidissement', 'Le réservoir de lave-glace', 'Le filtre à carburant'],
+      bonne: 0,
+      explication: 'Le bocal contient le liquide de frein, dont le niveau doit être entre MINI et MAXI. Le maître-cylindre est fixé sur le servofrein, contre le tablier.'
     }
   ]
 });

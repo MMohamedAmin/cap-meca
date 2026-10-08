@@ -52,6 +52,12 @@ CAP.series = (function () {
       return { items: melanger(choisies.concat(reste)), cibles };
     },
 
+    // Questions illustrées par une photo (mode « Reconnaître les pièces »).
+    pieces(n) {
+      return melanger(prioriser(toutesQuestions().filter(x => x.q.image)).slice(0, n));
+    },
+    nbPieces() { return toutesQuestions().filter(x => x.q.image).length; },
+
     // Questions ratées à la dernière tentative.
     erreurs(limite) {
       return melanger(erreurs()).slice(0, limite || Infinity);

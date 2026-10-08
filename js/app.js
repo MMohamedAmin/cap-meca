@@ -7,6 +7,7 @@
   const NB_ERREURS = 20;
   const NB_CARTES_JOUR = 20;
   const NB_EXAMEN = 20;
+  const NB_PIECES = 10;
   const DUREE_EXAMEN = 20 * 60 * 1000; // 1 minute par question
 
   // ---------- Outils ----------
@@ -52,6 +53,17 @@
   function preparerChoix(q) {
     const choix = q.choix.map((t, k) => ({ texte: t, juste: k === q.bonne, k }));
     return q.type === 'vf' ? choix : melanger(choix);
+  }
+
+  // Photo d'une question, avec son crédit. Un appui l'ouvre en grand.
+  function illustration(q, petite) {
+    const im = q.image && CAP.images[q.image];
+    if (!im) return '';
+    return `
+      <figure class="illustration${petite ? ' petite' : ''}">
+        <a href="${echapper(im.fichier)}" target="_blank" rel="noopener"><img src="${echapper(im.fichier)}" alt="${echapper(im.description)}"></a>
+        <figcaption>Photo : ${echapper(im.auteur)} · ${echapper(im.licence)}</figcaption>
+      </figure>`;
   }
 
   // Séance en cours qui ne doit pas être quittée par erreur (examen blanc).
@@ -114,6 +126,10 @@
         <a class="mode" href="#/examen">
           <strong>Examen blanc</strong>
           <span>${NB_EXAMEN} questions · ${DUREE_EXAMEN / 60000} min</span>
+        </a>
+        <a class="mode" href="#/pieces">
+          <strong>Reconnaître les pièces</strong>
+          <span>${CAP.series.nbPieces()} photos de pièces</span>
         </a>
         <a class="mode" href="#/melange">
           <strong>Quiz mélangé</strong>
@@ -291,7 +307,8 @@
 
   // ---------- Quiz ----------
   // o.items : [{ q, ch }] ; o.retour : lien HTML ; o.seance : identifiant enregistré ;
-  // o.plusieursChapitres ; o.bandeau : texte au-dessus des questions ;
+  // o.plusieursChapitres ; o.sansEtiquette : cache le thème (il donnerait un indice) ;
+  // o.bandeau : texte au-dessus des questions ;
   // o.liensFin : HTML ajouté sous le résultat ; o.refaire : relance une série.
   function lancerQuiz(o) {
     const nb = o.items.length;
@@ -309,8 +326,9 @@
         </div>
         ${o.bandeau ? `<p class="bandeau">${o.bandeau}</p>` : ''}
         <section class="question">
-          <span class="etiquette">${o.plusieursChapitres ? echapper(item.ch.titre) + ' · ' : ''}${echapper(item.ch.sousThemes[item.q.sousTheme] || '')}</span>
+          ${o.sansEtiquette ? '' : `<span class="etiquette">${o.plusieursChapitres ? echapper(item.ch.titre) + ' · ' : ''}${echapper(item.ch.sousThemes[item.q.sousTheme] || '')}</span>`}
           <h2>${fmt(item.q.enonce)}</h2>
+          ${illustration(item.q)}
           <div class="liste-choix">
             ${item.choix.map((c, k) => `<button class="choix" data-k="${k}">${fmt(c.texte)}</button>`).join('')}
           </div>
@@ -362,6 +380,7 @@
             ${erreurs.map(e => `
               <div class="erreur">
                 <p class="erreur-question">${fmt(e.q.enonce)}</p>
+                ${illustration(e.q, true)}
                 <p class="erreur-reponse">✔ ${fmt(e.q.choix[e.q.bonne])}</p>
                 <p class="petit">${fmt(e.q.explication)}</p>
               </div>`).join('')}
@@ -442,6 +461,42 @@
     });
   }
 
+  function vuePieces() {
+    lancerQuiz({
+      items: CAP.series.pieces(NB_PIECES),
+      retour: lienRetour('#/', 'Accueil'),
+      seance: 'pieces',
+      plusieursChapitres: true,
+      sansEtiquette: true,
+      bandeau: 'Regarde bien la photo. Touche-la pour l\'agrandir.',
+      liensFin: '<a class="bouton" href="#/credits">Crédits photos</a>',
+      libelleRefaire: 'Nouvelles photos',
+      refaire: vuePieces
+    });
+  }
+
+  // ---------- Crédits photos ----------
+  function vueCredits() {
+    const images = Object.values(CAP.images);
+    afficher(`
+      ${lienRetour('#/', 'Accueil')}
+      <h1>Crédits photos</h1>
+      <p class="description">Les photos viennent de Wikimedia Commons. Elles sont dans le domaine public ou sous licence libre Creative Commons, qui permet de les réutiliser en citant leur auteur.</p>
+      <section class="panneau">
+        ${images.map(im => `
+          <div class="ligne-credit">
+            <img src="${echapper(im.fichier)}" alt="${echapper(im.description)}" loading="lazy">
+            <div>
+              <strong>${echapper(im.auteur)}</strong>
+              <span class="petit">${im.licenceUrl
+                ? `<a href="${echapper(im.licenceUrl)}" target="_blank" rel="noopener">${echapper(im.licence)}</a>`
+                : echapper(im.licence)} · <a href="${echapper(im.source)}" target="_blank" rel="noopener">voir la source</a></span>
+            </div>
+          </div>`).join('')}
+      </section>
+    `);
+  }
+
   // ---------- Examen blanc ----------
   function vueExamen() {
     const notes = CAP.stats.examens().slice(-3).reverse();
@@ -499,6 +554,7 @@
         <section class="question">
           <span class="etiquette">${echapper(item.ch.titre)}</span>
           <h2>${fmt(item.q.enonce)}</h2>
+          ${illustration(item.q)}
           <div class="liste-choix">
             ${item.choix.map((c, k) => `<button class="choix${reponses[i] === k ? ' choisi' : ''}" data-k="${k}" aria-pressed="${reponses[i] === k}">${fmt(c.texte)}</button>`).join('')}
           </div>
@@ -589,6 +645,7 @@
             ${fautes.map(r => `
               <div class="erreur">
                 <p class="erreur-question">${fmt(r.item.q.enonce)}</p>
+                ${illustration(r.item.q, true)}
                 <p class="erreur-choisie">${r.reponse ? '✘ ' + fmt(r.reponse.texte) : '✘ Pas de réponse'}</p>
                 <p class="erreur-reponse">✔ ${fmt(r.item.q.choix[r.item.q.bonne])}</p>
                 <p class="petit">${fmt(r.item.q.explication)}</p>
@@ -611,6 +668,7 @@
     entrainement: 'Entraînement ciblé',
     erreurs: 'Révision des erreurs',
     jour: 'Cartes du jour',
+    pieces: 'Reconnaître les pièces',
     examen: 'Examen blanc'
   };
   function libelleSeance(s) {
@@ -793,6 +851,8 @@
     if (p[0] === 'erreurs') return vueErreurs();
     if (p[0] === 'cartes') return vueCartesDuJour();
     if (p[0] === 'examen') return vueExamen();
+    if (p[0] === 'pieces') return vuePieces();
+    if (p[0] === 'credits') return vueCredits();
     if (p[0] === 'chapitre') {
       const ch = trouverChapitre(p[1]);
       if (ch) {

@@ -139,6 +139,62 @@ CAP.ajouterChapitre({
       choix: ['Vrai', 'Faux'],
       bonne: 1,
       explication: 'Faux : il se branche en série, le courant doit le traverser. En parallèle, on crée un court-circuit.'
+    },
+    {
+      id: 'elec-q11', sousTheme: 'bases', type: 'qcm',
+      enonce: 'Quelle est l\'unité de la résistance électrique ?',
+      choix: ['L\'ohm (Ω)', 'Le volt (V)', 'L\'ampère (A)', 'Le watt (W)'],
+      bonne: 0,
+      explication: 'Tension en volts, intensité en ampères, résistance en ohms, puissance en watts.'
+    },
+    {
+      id: 'elec-q12', sousTheme: 'batterie', type: 'qcm',
+      enonce: 'Sur une batterie marquée « 12 V 70 Ah 640 A », que représente 640 A ?',
+      choix: ['Le courant de démarrage qu\'elle peut fournir à froid', 'Sa capacité', 'Sa tension de charge', 'Le courant de charge de l\'alternateur'],
+      bonne: 0,
+      explication: '70 Ah, c\'est la capacité (la réserve d\'énergie). 640 A, c\'est l\'intensité qu\'elle peut débiter brièvement au démarrage par temps froid.'
+    },
+    {
+      id: 'elec-q13', sousTheme: 'charge', type: 'qcm',
+      enonce: 'Le voyant de charge reste allumé moteur tournant. Que suspecter en premier ?',
+      choix: ['Un défaut de charge : courroie d\'accessoires, alternateur ou régulateur', 'Un manque d\'huile moteur', 'Une ampoule de feu stop grillée', 'Un fusible d\'autoradio grillé'],
+      bonne: 0,
+      explication: 'Le voyant indique que l\'alternateur ne charge pas. On contrôle d\'abord la courroie, puis la tension de charge au voltmètre.'
+    },
+    {
+      id: 'elec-q14', sousTheme: 'charge', type: 'qcm',
+      enonce: 'Quel organe fait tourner le moteur thermique pour le démarrer ?',
+      choix: ['Le démarreur', 'L\'alternateur', 'Le motoventilateur', 'La pompe à eau'],
+      bonne: 0,
+      explication: 'Le démarreur est un moteur électrique : son pignon s\'engrène sur la couronne du volant moteur pour le lancer.'
+    },
+    {
+      id: 'elec-q15', sousTheme: 'charge', type: 'qcm', image: 'alternateur',
+      enonce: 'Quelle est cette pièce ?',
+      choix: ['Un alternateur', 'Un démarreur', 'Une pompe de direction assistée', 'Un compresseur de climatisation'],
+      bonne: 0,
+      explication: 'Entraîné par la courroie d\'accessoires (poulie striée à l\'avant), il recharge la batterie et alimente le véhicule quand le moteur tourne.'
+    },
+    {
+      id: 'elec-q16', sousTheme: 'charge', type: 'qcm', image: 'demarreur',
+      enonce: 'Quelle est cette pièce ?',
+      choix: ['Un démarreur', 'Un alternateur', 'Un moteur d\'essuie-glace', 'Une pompe à eau électrique'],
+      bonne: 0,
+      explication: 'On reconnaît le moteur électrique, le solénoïde (le petit cylindre au-dessus) et le pignon lanceur, qui s\'engrène sur la couronne du volant moteur.'
+    },
+    {
+      id: 'elec-q17', sousTheme: 'batterie', type: 'qcm', image: 'batterie',
+      enonce: 'L\'étiquette indique « 12 V 80 Ah 750 A (EN) ». Que veut dire « 80 Ah » ?',
+      choix: ['Sa capacité : la quantité d\'énergie qu\'elle stocke', 'Son courant de démarrage à froid', 'Sa tension', 'Sa puissance en watts'],
+      bonne: 0,
+      explication: '80 Ah : elle peut fournir environ 4 A pendant 20 heures. Les 750 A (norme EN) sont l\'intensité qu\'elle peut débiter au démarrage, à froid.'
+    },
+    {
+      id: 'elec-q18', sousTheme: 'mesures', type: 'qcm', image: 'multimetre',
+      enonce: 'Quel appareil voit-on ?',
+      choix: ['Un multimètre', 'Un réfractomètre', 'Un manomètre', 'Une valise de diagnostic'],
+      bonne: 0,
+      explication: 'Selon la position du sélecteur, il mesure une tension (voltmètre), une intensité (ampèremètre) ou une résistance (ohmmètre).'
     }
   ]
 });

@@ -305,3 +305,23 @@ main { max-width: 760px; margin: 0 auto; padding: 16px 16px 48px; }
 .boite-3 span, .boite-4 span { background: color-mix(in srgb, var(--vert) 70%, var(--jaune)); }
 .boite-5 span { background: var(--vert); }
 .panneau > .bouton { margin-top: 8px; }
+
+/* ===== Photos des pièces ===== */
+.modes .mode:nth-child(even):last-child { grid-column: 1 / -1; }
+.illustration { margin: 0 0 12px; }
+.illustration a { display: block; }
+.illustration img {
+  display: block; width: 100%; max-height: 300px; object-fit: contain;
+  background: var(--surface-2); border-radius: 12px;
+}
+.illustration figcaption { font-size: .72rem; color: var(--texte-doux); margin-top: 4px; }
+.illustration.petite { margin: 4px 0 6px; }
+.illustration.petite img { max-height: 140px; width: auto; max-width: 100%; }
+.ligne-credit {
+  display: grid; grid-template-columns: 72px 1fr; gap: 12px; align-items: center;
+  padding: 10px 0; border-bottom: 1px solid var(--bordure);
+}
+.ligne-credit:last-child { border-bottom: 0; }
+.ligne-credit img { width: 72px; height: 54px; object-fit: cover; border-radius: 8px; background: var(--surface-2); }
+.ligne-credit div { display: flex; flex-direction: column; min-width: 0; overflow-wrap: anywhere; }
+.pied-page a { color: var(--texte-doux); }

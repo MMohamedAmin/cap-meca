@@ -146,6 +146,48 @@ CAP.ajouterChapitre({
       choix: ['Les biellettes et les rotules de direction', 'Les silentblocs', 'Les amortisseurs', 'Les arbres de transmission'],
       bonne: 0,
       explication: 'La crémaillère coulisse et pousse ou tire les biellettes, qui orientent les roues via les rotules.'
+    },
+    {
+      id: 'sol-q11', sousTheme: 'geometrie', type: 'qcm',
+      enonce: 'Qu\'est-ce que le parallélisme ?',
+      choix: ['Le pincement ou l\'ouverture des roues d\'un même essieu, vues de dessus', 'L\'inclinaison de la roue vue de face', 'L\'inclinaison de l\'axe de pivot vue de côté', 'La hauteur de caisse du véhicule'],
+      bonne: 0,
+      explication: 'Vu de dessus : roues plus rapprochées à l\'avant = pincement, plus écartées = ouverture. Vue de face, c\'est le carrossage ; vue de côté, la chasse.'
+    },
+    {
+      id: 'sol-q12', sousTheme: 'geometrie', type: 'qcm',
+      enonce: 'Après quelle intervention faut-il contrôler le parallélisme ?',
+      choix: ['Le remplacement d\'une biellette ou d\'une rotule de direction', 'Une vidange moteur', 'Le remplacement des plaquettes de frein', 'Le remplacement de la batterie'],
+      bonne: 0,
+      explication: 'Une biellette ou une rotule neuve modifie le réglage : on contrôle et on règle la géométrie au banc.'
+    },
+    {
+      id: 'sol-q13', sousTheme: 'direction', type: 'qcm',
+      enonce: 'Quel est le rôle de la direction assistée ?',
+      choix: ['Réduire l\'effort à fournir au volant', 'Ramener seule les roues en ligne droite', 'Augmenter le rayon de braquage', 'Régler le parallélisme en roulant'],
+      bonne: 0,
+      explication: 'L\'assistance est hydraulique (pompe) ou électrique (moteur électrique). Elle aide surtout à basse vitesse et pour les manœuvres.'
+    },
+    {
+      id: 'sol-q14', sousTheme: 'direction', type: 'qcm',
+      enonce: 'Direction imprécise et claquements sur les bosses. Que contrôle-t-on en premier ?',
+      choix: ['Les rotules et biellettes de direction', 'Le niveau de liquide de frein', 'La tension de la courroie d\'accessoires', 'L\'embrayage'],
+      bonne: 0,
+      explication: 'Une rotule usée prend du jeu : direction floue, bruits et usure des pneus. On la contrôle roue levée, en secouant la roue.'
+    },
+    {
+      id: 'sol-q15', sousTheme: 'suspension', type: 'qcm', image: 'amortisseur',
+      enonce: 'Quel ensemble a été déposé ?',
+      choix: ['Une jambe de force : ressort et amortisseur, avec le pivot et le disque', 'Une crémaillère de direction', 'Un arbre de transmission', 'Un triangle de suspension seul'],
+      bonne: 0,
+      explication: 'Sur une suspension de type McPherson, le ressort entoure l\'amortisseur. Pour démonter le ressort, il faut un compresseur de ressort : il est sous tension, c\'est dangereux.'
+    },
+    {
+      id: 'sol-q16', sousTheme: 'direction', type: 'qcm', image: 'rotule-direction',
+      enonce: 'Quelle pièce voit-on au centre, avec l\'écrou en haut ?',
+      choix: ['Une rotule de direction', 'Un silentbloc', 'Une biellette de barre stabilisatrice', 'Un amortisseur'],
+      bonne: 0,
+      explication: 'Vissée au bout de la biellette, elle relie la direction au pivot de la roue. Usée, elle prend du jeu : direction floue et usure des pneus.'
     }
   ]
 });

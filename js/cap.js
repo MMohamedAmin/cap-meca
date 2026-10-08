@@ -1,9 +1,14 @@
 // Espace de noms global du site. Chargé en premier.
 // Les fichiers de data/chapitres/ appellent CAP.ajouterChapitre({...}).
-window.CAP = window.CAP || { chapitres: [] };
+window.CAP = window.CAP || { chapitres: [], images: {} };
 
 CAP.ajouterChapitre = function (chapitre) {
   CAP.chapitres.push(chapitre);
+};
+
+// Photos et leurs crédits (data/images.js). Une question y renvoie par `image: 'cle'`.
+CAP.ajouterImages = function (images) {
+  Object.assign(CAP.images, images);
 };
 
 // Mélange une copie de la liste (Fisher-Yates).

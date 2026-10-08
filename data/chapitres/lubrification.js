@@ -126,6 +126,41 @@ CAP.ajouterChapitre({
       choix: ['Carter, crépine, pompe, filtre, rampe principale', 'Pompe, carter, filtre, crépine, rampe', 'Filtre, pompe, carter, crépine, rampe', 'Carter, filtre, crépine, pompe, rampe'],
       bonne: 0,
       explication: 'La pompe aspire dans le carter à travers la crépine, puis envoie l\'huile au filtre et dans la rampe principale.'
+    },
+    {
+      id: 'lubri-q10', sousTheme: 'huiles', type: 'qcm',
+      enonce: 'Sur une huile 5W30, que représente le « 30 » ?',
+      choix: ['La viscosité à chaud', 'La viscosité à froid', 'La température maximale d\'utilisation', 'Le nombre de kilomètres entre deux vidanges (30 000 km)'],
+      bonne: 0,
+      explication: 'Le nombre avec W concerne le froid (démarrage), le second nombre la viscosité moteur chaud.'
+    },
+    {
+      id: 'lubri-q11', sousTheme: 'huiles', type: 'qcm',
+      enonce: 'Quelle huile met-on lors d\'une vidange ?',
+      choix: ['Celle qui respecte la viscosité et la norme préconisées par le constructeur', 'La plus épaisse possible, pour mieux protéger', 'N\'importe laquelle, elles se valent toutes', 'La moins chère, puisqu\'on la change souvent'],
+      bonne: 0,
+      explication: 'Le constructeur impose une viscosité et une norme (ACEA ou norme maison). Une huile non conforme peut abîmer le moteur ou le filtre à particules.'
+    },
+    {
+      id: 'lubri-q12', sousTheme: 'role', type: 'qcm',
+      enonce: 'Lequel de ces rôles n\'est PAS un rôle de l\'huile moteur ?',
+      choix: ['Alimenter les injecteurs', 'Réduire les frottements', 'Évacuer une partie de la chaleur', 'Protéger contre la corrosion'],
+      bonne: 0,
+      explication: 'Les injecteurs sont alimentés en carburant, pas en huile. L\'huile lubrifie, refroidit, nettoie, assure l\'étanchéité et protège.'
+    },
+    {
+      id: 'lubri-q13', sousTheme: 'role', type: 'vf',
+      enonce: 'Vrai ou faux : on peut garder le même filtre à huile pendant plusieurs vidanges.',
+      choix: ['Vrai', 'Faux'],
+      bonne: 1,
+      explication: 'Faux : l\'huile nettoie le moteur et transporte les impuretés jusqu\'au filtre, qui se charge. On le change à chaque vidange.'
+    },
+    {
+      id: 'lubri-q14', sousTheme: 'entretien', type: 'qcm', image: 'jauge-huile',
+      enonce: 'Que fait cette personne ?',
+      choix: ['Elle sort la jauge pour contrôler le niveau d\'huile moteur', 'Elle contrôle le niveau de liquide de frein', 'Elle vérifie le niveau de liquide de refroidissement', 'Elle remplit le réservoir de lave-glace'],
+      bonne: 0,
+      explication: 'On essuie la jauge, on la replonge à fond, puis on lit le niveau entre les repères mini et maxi. Véhicule à plat, moteur arrêté depuis quelques minutes.'
     }
   ]
 });

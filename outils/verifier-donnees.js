@@ -1,12 +1,12 @@
 // Vérifie le contenu des chapitres : node outils/verifier-donnees.js
-// Contrôle les identifiants, les sous-thèmes et les bonnes réponses.
+// Contrôle les identifiants, les sous-thèmes, les bonnes réponses et les images.
 const fs = require('fs');
 const path = require('path');
 const vm = require('vm');
 
 const racine = path.join(__dirname, '..');
 const html = fs.readFileSync(path.join(racine, 'index.html'), 'utf8');
-const fichiers = [...html.matchAll(/src="(data\/chapitres\/[^"]+)"/g)].map(m => m[1]);
+const fichiers = [...html.matchAll(/src="(data\/[^"]+)"/g)].map(m => m[1]);
 
 const contexte = { window: {} };
 contexte.window = contexte;
@@ -15,6 +15,7 @@ vm.runInContext(fs.readFileSync(path.join(racine, 'js/cap.js'), 'utf8'), context
 
 const erreurs = [];
 const ids = new Set();
+const imagesUtilisees = new Set();
 
 for (const f of fichiers) {
   try {
@@ -22,6 +23,14 @@ for (const f of fichiers) {
   } catch (e) {
     erreurs.push(`${f} : erreur de syntaxe → ${e.message}`);
   }
+}
+
+const images = contexte.CAP.images || {};
+for (const [cle, im] of Object.entries(images)) {
+  for (const champ of ['fichier', 'description', 'auteur', 'licence', 'source']) {
+    if (!im[champ]) erreurs.push(`[images] ${cle} : champ manquant : ${champ}`);
+  }
+  if (im.fichier && !fs.existsSync(path.join(racine, im.fichier))) erreurs.push(`[images] ${cle} : fichier introuvable ${im.fichier}`);
 }
 
 for (const ch of contexte.CAP.chapitres) {
@@ -50,6 +59,10 @@ for (const ch of contexte.CAP.chapitres) {
     if (!Array.isArray(q.choix) || q.choix.length < 2) erreurs.push(`${p} ${q.id} : il faut au moins 2 choix`);
     else if (!(q.bonne >= 0 && q.bonne < q.choix.length)) erreurs.push(`${p} ${q.id} : « bonne » hors des choix`);
     if (!q.explication) erreurs.push(`${p} ${q.id} : explication manquante`);
+    if (q.image !== undefined) {
+      if (!images[q.image]) erreurs.push(`${p} ${q.id} : image inconnue « ${q.image} » (à déclarer dans data/images.js)`);
+      else imagesUtilisees.add(q.image);
+    }
   });
   Object.keys(st).forEach(s => {
     if (!(ch.questions || []).some(q => q.sousTheme === s)) erreurs.push(`${p} sous-thème sans question : ${s}`);
@@ -58,7 +71,9 @@ for (const ch of contexte.CAP.chapitres) {
 
 const nbQ = contexte.CAP.chapitres.reduce((n, c) => n + c.questions.length, 0);
 const nbC = contexte.CAP.chapitres.reduce((n, c) => n + c.cartes.length, 0);
-console.log(`${contexte.CAP.chapitres.length} chapitres, ${nbQ} questions, ${nbC} cartes.`);
+console.log(`${contexte.CAP.chapitres.length} chapitres, ${nbQ} questions, ${nbC} cartes, ${imagesUtilisees.size} images.`);
+const inutilisees = Object.keys(images).filter(k => !imagesUtilisees.has(k));
+if (inutilisees.length) console.log('Images déclarées mais pas utilisées : ' + inutilisees.join(', '));
 if (erreurs.length) {
   console.log(`\n${erreurs.length} problème(s) :`);
   erreurs.forEach(e => console.log(' - ' + e));

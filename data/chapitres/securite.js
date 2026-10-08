@@ -125,6 +125,41 @@ CAP.ajouterChapitre({
       choix: ['Vrai', 'Faux'],
       bonne: 1,
       explication: 'Faux : il contient du glycol, toxique. Il part en collecte de déchets dangereux.'
+    },
+    {
+      id: 'secu-q10', sousTheme: 'epi', type: 'qcm',
+      enonce: 'En meulant, quel équipement protège des projections dans les yeux ?',
+      choix: ['Des lunettes de protection ou un écran facial', 'Un gilet haute visibilité', 'Des gants en latex', 'Un masque à poussières seul'],
+      bonne: 0,
+      explication: 'Les étincelles et particules peuvent blesser l\'œil gravement : lunettes ou écran obligatoires, même pour un travail court.'
+    },
+    {
+      id: 'secu-q11', sousTheme: 'epi', type: 'qcm',
+      enonce: 'Pourquoi porte-t-on des chaussures de sécurité à l\'atelier ?',
+      choix: ['Pour protéger les pieds des chutes d\'objets lourds et éviter de glisser', 'Pour se protéger du bruit', 'Pour éviter de salir le véhicule', 'Pour être isolé de la haute tension sans habilitation'],
+      bonne: 0,
+      explication: 'Coque renforcée contre l\'écrasement, semelle antidérapante et résistante aux hydrocarbures. Elles ne remplacent pas l\'habilitation électrique.'
+    },
+    {
+      id: 'secu-q12', sousTheme: 'levage', type: 'vf',
+      enonce: 'Vrai ou faux : au pont élévateur, on lève d\'abord de quelques centimètres pour vérifier que le véhicule est stable.',
+      choix: ['Vrai', 'Faux'],
+      bonne: 0,
+      explication: 'Vrai : on contrôle que les bras sont bien en place et que le véhicule ne bascule pas avant de le monter plus haut.'
+    },
+    {
+      id: 'secu-q13', sousTheme: 'dechets', type: 'qcm',
+      enonce: 'Que fait-on d\'une batterie au plomb usagée ?',
+      choix: ['On la stocke à part pour une filière de recyclage agréée', 'On la met dans la benne à ferraille', 'On vide l\'acide à l\'évier puis on la jette', 'On la met aux ordures ménagères'],
+      bonne: 0,
+      explication: 'Plomb et acide sulfurique : c\'est un déchet dangereux, stocké debout à l\'abri et repris par une filière agréée.'
+    },
+    {
+      id: 'secu-q14', sousTheme: 'levage', type: 'qcm', image: 'chandelles',
+      enonce: 'À quoi servent les supports rouges rangés sur l\'étagère ?',
+      choix: ['Ce sont des chandelles : elles maintiennent le véhicule levé en sécurité', 'Ce sont des crics : ils servent à lever le véhicule', 'Ce sont des cales de roue', 'Ce sont des supports de moteur'],
+      bonne: 0,
+      explication: 'Le cric rouleur (au sol) sert seulement à lever. On pose ensuite le véhicule sur des chandelles, aux points prévus, avant de passer dessous.'
     }
   ]
 });

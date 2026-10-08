@@ -134,6 +134,34 @@ CAP.ajouterChapitre({
       choix: ['Vrai', 'Faux'],
       bonne: 0,
       explication: 'Vrai : c\'est un petit radiateur traversé par le liquide chaud, l\'air soufflé dans l\'habitacle passe à travers.'
+    },
+    {
+      id: 'refroid-q10', sousTheme: 'composants', type: 'qcm',
+      enonce: 'Quel organe fait circuler le liquide de refroidissement ?',
+      choix: ['La pompe à eau', 'Le thermostat', 'Le vase d\'expansion', 'Le radiateur'],
+      bonne: 0,
+      explication: 'La pompe à eau est souvent entraînée par une courroie (parfois celle de distribution). Sur certains moteurs récents, elle est électrique.'
+    },
+    {
+      id: 'refroid-q11', sousTheme: 'role', type: 'qcm',
+      enonce: 'Où le liquide de refroidissement cède-t-il sa chaleur à l\'air extérieur ?',
+      choix: ['Dans le radiateur', 'Dans le vase d\'expansion', 'Dans la pompe à eau', 'Dans le thermostat'],
+      bonne: 0,
+      explication: 'L\'air qui traverse les ailettes du radiateur, aidé par le motoventilateur à l\'arrêt, refroidit le liquide.'
+    },
+    {
+      id: 'refroid-q12', sousTheme: 'pannes', type: 'qcm',
+      enonce: 'Fumée blanche à l\'échappement, liquide de refroidissement qui baisse sans fuite visible, dépôt « mayonnaise » sous le bouchon d\'huile. Que suspecter ?',
+      choix: ['Le joint de culasse', 'Le thermostat bloqué ouvert', 'Le motoventilateur', 'La sonde de température'],
+      bonne: 0,
+      explication: 'Un joint de culasse défectueux laisse passer le liquide dans les cylindres (fumée blanche) ou dans l\'huile (mélange crémeux).'
+    },
+    {
+      id: 'refroid-q13', sousTheme: 'liquide', type: 'qcm', image: 'bouchon-radiateur',
+      enonce: 'Bouchon retiré, on voit un liquide vert. Qu\'est-ce que c\'est ?',
+      choix: ['Du liquide de refroidissement', 'De l\'huile moteur', 'Du liquide de frein', 'Du carburant'],
+      bonne: 0,
+      explication: 'Sa couleur dépend du fabricant (vert, rose, bleu…). On choisit le liquide selon la norme du constructeur, pas selon la couleur. Et on n\'ouvre jamais ce bouchon moteur chaud.'
     }
   ]
 });

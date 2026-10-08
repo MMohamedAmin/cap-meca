@@ -126,6 +126,55 @@ CAP.ajouterChapitre({
       choix: ['Vrai', 'Faux'],
       bonne: 0,
       explication: 'Vrai : c\'est son rôle, pour démarrer et changer de vitesse.'
+    },
+    {
+      id: 'trans-q10', sousTheme: 'differentiel', type: 'qcm',
+      enonce: 'Une roue motrice patine sur la glace, l\'autre reste immobile. Pourquoi ?',
+      choix: ['Le différentiel envoie la rotation vers la roue qui résiste le moins', 'Le différentiel est cassé', 'L\'embrayage patine', 'La boîte est restée au point mort'],
+      bonne: 0,
+      explication: 'Un différentiel classique répartit le couple à égalité : si une roue n\'accroche pas, l\'autre ne reçoit presque rien. D\'où l\'antipatinage ou le différentiel à glissement limité.'
+    },
+    {
+      id: 'trans-q11', sousTheme: 'differentiel', type: 'qcm',
+      enonce: 'Où se trouve le différentiel sur une traction avant à moteur transversal ?',
+      choix: ['Dans le carter de la boîte de vitesses (boîte-pont)', 'Dans le carter moteur', 'Sous le plancher, au milieu du véhicule', 'Dans le moyeu de chaque roue'],
+      bonne: 0,
+      explication: 'Sur la plupart des tractions, la boîte et le différentiel forment un seul ensemble : la boîte-pont.'
+    },
+    {
+      id: 'trans-q12', sousTheme: 'transmissions', type: 'qcm',
+      enonce: 'Quel joint transmet la rotation à vitesse constante, même roue braquée ?',
+      choix: ['Le joint homocinétique', 'Le joint de cardan simple', 'Le silentbloc', 'Le joint spi'],
+      bonne: 0,
+      explication: '« Homocinétique » veut dire « même vitesse ». Un cardan simple, lui, crée des à-coups quand il travaille en angle.'
+    },
+    {
+      id: 'trans-q13', sousTheme: 'transmissions', type: 'vf',
+      enonce: 'Vrai ou faux : sur une traction avant, chaque roue avant reçoit le mouvement par son propre arbre de transmission.',
+      choix: ['Vrai', 'Faux'],
+      bonne: 0,
+      explication: 'Vrai : chaque arbre (appelé aussi « cardan ») a un joint côté boîte et un joint homocinétique côté roue.'
+    },
+    {
+      id: 'trans-q14', sousTheme: 'embrayage', type: 'qcm', image: 'kit-embrayage',
+      enonce: 'Que contient ce kit ?',
+      choix: ['Un mécanisme d\'embrayage, un disque et une butée', 'Des disques et des plaquettes de frein', 'Un kit de distribution', 'Un volant moteur et son démarreur'],
+      bonne: 0,
+      explication: 'Le mécanisme (la grosse pièce avec le diaphragme) serre le disque contre le volant moteur. La butée appuie sur le diaphragme pour débrayer.'
+    },
+    {
+      id: 'trans-q15', sousTheme: 'differentiel', type: 'qcm', image: 'differentiel',
+      enonce: 'Quel organe voit-on, avec sa grande couronne dentée ?',
+      choix: ['Un différentiel', 'Une boîte de vitesses', 'Un embrayage', 'Une pompe à huile'],
+      bonne: 0,
+      explication: 'La couronne est entraînée par le pignon d\'attaque. Dans le boîtier, les satellites et les planétaires permettent aux roues de tourner à des vitesses différentes.'
+    },
+    {
+      id: 'trans-q16', sousTheme: 'transmissions', type: 'qcm', image: 'soufflet-cardan',
+      enonce: 'Que constates-tu sur ce soufflet de transmission ?',
+      choix: ['Il est fendu : il faut le remplacer rapidement', 'Il est en bon état', 'Il est juste sale : un nettoyage suffit', 'C\'est normal, un soufflet se fend toujours avec le temps et ne sert à rien'],
+      bonne: 0,
+      explication: 'Par la fente, la graisse sort et la saleté entre : le joint homocinétique va s\'user puis claquer en virage. On remplace le soufflet et on regraisse dès qu\'on le voit.'
     }
   ]
 });
