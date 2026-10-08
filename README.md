@@ -107,6 +107,8 @@ Le site doit être servi en **https** : c'est ce qui permet de l'installer sur l
 
 ## Assistant IA (Netlify)
 
+**État actuel : en sommeil.** Le code est prêt mais l'assistant n'est pas branché, car l'API d'une IA est payante (l'offre gratuite de Gemini est interdite pour un site utilisé en Europe). Tant qu'il n'est pas branché, il est invisible et le reste du site marche normalement. Pour l'activer un jour, il suffit de suivre les étapes ci-dessous ; avec un modèle économique comme Claude Haiku 5.5 (à changer dans `MODELE`), quelques dollars de crédit sans recharge automatique durent très longtemps.
+
 L'assistant passe par une petite fonction hébergée sur Netlify, qui garde la clé API Anthropic cachée : elle n'est jamais dans le code du site. L'élève l'active une fois avec un **code d'accès**, pour que personne d'autre ne puisse l'utiliser à tes frais.
 
 **Mise en route (une seule fois) :**
