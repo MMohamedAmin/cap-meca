@@ -252,6 +252,20 @@ CAP.ajouterChapitre({
       choix: ['Le différentiel compense en permanence la différence de vitesse : il chauffe et s\'use', 'Le compteur de vitesse s\'arrête', 'L\'embrayage ne fonctionne plus', 'Ce n\'est pas un problème'],
       bonne: 0,
       explication: 'Même en ligne droite, les deux roues tourneraient à des vitesses différentes : le **différentiel** travaillerait sans arrêt, comme dans un virage permanent.'
+    },
+    {
+      id: 'trans-q28', sousTheme: 'boite', type: 'qcm', niveau: 3,
+      enonce: 'Une vitesse saute toute seule au point mort quand on accélère ou qu\'on relâche l\'accélérateur. Que suspecter ?',
+      choix: ['Une usure dans la boîte : crabots, fourchette ou verrouillage', 'L\'embrayage qui patine', 'Le différentiel', 'Un soufflet de transmission déchiré'],
+      bonne: 0,
+      explication: 'Ce sont les **crabots** et le **verrouillage** des baladeurs qui gardent la vitesse engagée. Usés, ils la laissent sortir sous l\'effort. On vérifie aussi les supports moteur.'
+    },
+    {
+      id: 'trans-q29', sousTheme: 'transmissions', type: 'qcm', niveau: 3,
+      enonce: 'Vibrations à l\'accélération entre 60 et 100 km/h, qui disparaissent dès qu\'on relâche l\'accélérateur. Que suspecter ?',
+      choix: ['Un joint de transmission côté boîte usé', 'Un mauvais équilibrage des roues', 'Un disque de frein voilé', 'Une rotule de direction'],
+      bonne: 0,
+      explication: 'Le défaut n\'apparaît que quand la transmission est **sous effort** : c\'est un joint de transmission. Un mauvais équilibrage vibre aussi quand on relâche, un disque voilé au freinage.'
     }
   ]
 });

@@ -56,7 +56,7 @@ CAP.ajouterChapitre({
 - Exactitude technique avant tout : niveau CAP, phrases simples, vocabulaire du métier.
 - Les mauvaises réponses doivent être plausibles. L'explication dit **pourquoi**.
 - Photos : uniquement sous licence libre (Wikimedia Commons : domaine public, CC0, CC BY, CC BY-SA), en 800 px de large environ, avec le crédit complet dans `data/images.js`. Pas de photo où le nom de la pièce est écrit.
-- Après toute modification du site (contenu, code, images) : `node outils/maj-hors-ligne.js`, puis `node outils/verifier-donnees.js`, qui doit afficher « Tout est bon ». Le vérificateur signale un `sw.js` pas à jour : sans lui, les téléphones garderaient l'ancienne version.
+- Après toute modification du site (contenu, code, images) : `node outils/maj-hors-ligne.js`, puis `node outils/verifier-donnees.js`, qui doit afficher « Tout est bon », et `node outils/tests-site.js` (tests de la logique : séries, niveaux, cartes, calculs, recherche ; à compléter quand on ajoute une fonctionnalité). Le vérificateur signale un `sw.js` pas à jour : sans lui, les téléphones garderaient l'ancienne version.
 
 ## Feuille de route
 

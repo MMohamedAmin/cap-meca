@@ -55,6 +55,7 @@ images/icones/             les icônes de l'appli
 outils/verifier-donnees.js vérification automatique du contenu
 outils/maj-hors-ligne.js   met à jour sw.js après une modification
 outils/preparer-site.js    assemble le site à publier dans _site/ (mise en ligne)
+outils/tests-site.js       tests de la logique du site (séries, niveaux, cartes, calculs, recherche)
 outils/tests-ia.mjs        tests de l'assistant IA (npm run test-ia), sans clé API
 netlify/functions/ia.mjs   fonction Netlify de l'assistant IA (garde la clé API)
 netlify/ia/coeur.mjs       consignes envoyées à Claude et contrôle des réponses
@@ -84,6 +85,7 @@ Ensuite (il faut avoir Node.js installé), mets à jour la liste des fichiers ga
 ```
 node outils/maj-hors-ligne.js
 node outils/verifier-donnees.js
+node outils/tests-site.js
 ```
 
 ## Mettre en ligne (GitHub Pages)

@@ -272,6 +272,13 @@ CAP.ajouterChapitre({
       choix: ['Une fuite interne au maître-cylindre (joints usés)', 'De l\'air dans le circuit', 'Des plaquettes neuves', 'Un servofrein trop puissant'],
       bonne: 0,
       explication: 'Sans fuite extérieure, le liquide passe à l\'intérieur du **maître-cylindre**, d\'une chambre à l\'autre. L\'air, lui, donne une pédale spongieuse, pas une pédale qui descend.'
+    },
+    {
+      id: 'frein-q31', sousTheme: 'entretien', type: 'qcm', niveau: 3,
+      enonce: 'Juste après un remplacement des plaquettes, au premier freinage, la pédale descend presque au plancher. Que s\'est-il passé ?',
+      choix: ['On a oublié de pomper la pédale pour ramener les pistons contre les plaquettes', 'Il y a forcément de l\'air dans le circuit', 'Les plaquettes sont montées à l\'envers', 'Les disques sont trop épais'],
+      bonne: 0,
+      explication: 'Pour monter les plaquettes neuves, on repousse les pistons d\'étrier. Il faut ensuite **pomper** plusieurs fois pour les ramener au contact, **avant** de rendre le véhicule.'
     }
   ]
 });

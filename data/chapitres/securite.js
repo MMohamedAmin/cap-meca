@@ -237,6 +237,27 @@ CAP.ajouterChapitre({
       choix: ['Les déchets doivent être triés : mélangés, ils ne peuvent plus partir dans la bonne filière', 'Aucun problème, ce sont deux liquides', 'Le liquide de frein va geler dans le fût', 'Au contraire, cela rend l\'huile plus fluide'],
       bonne: 0,
       explication: 'L\'huile usagée est collectée pour être **régénérée**. Mélangée à d\'autres produits, elle n\'est plus acceptée par la filière.'
+    },
+    {
+      id: 'secu-q26', sousTheme: 'epi', type: 'qcm', niveau: 2,
+      enonce: 'Pourquoi choisir des gants nitrile plutôt que des gants en latex pour manipuler du carburant ?',
+      choix: ['Le nitrile résiste aux hydrocarbures, le latex se dégrade à leur contact', 'Le latex est trop épais', 'Le nitrile protège de la haute tension', 'Il n\'y a aucune différence'],
+      bonne: 0,
+      explication: 'Le carburant et l\'huile traversent et abîment le latex. Le **nitrile** reste étanche. Pour la haute tension, il faut des gants isolants spécifiques.'
+    },
+    {
+      id: 'secu-q27', sousTheme: 'epi', type: 'qcm', niveau: 3,
+      enonce: 'Un collègue souffle la poussière des freins à l\'air comprimé, sans masque. Que lui conseiller ?',
+      choix: ['Ne pas souffler : nettoyer avec un nettoyant frein ou à l\'humide, et porter un masque', 'Souffler plus fort pour finir plus vite', 'Mettre seulement des gants', 'Rien : c\'est juste de la poussière de métal'],
+      bonne: 0,
+      explication: 'Souffler met en suspension une poussière **nocive** à respirer, qui se dépose partout dans l\'atelier. On la capte au lieu de la disperser.'
+    },
+    {
+      id: 'secu-q28', sousTheme: 'dechets', type: 'qcm', niveau: 2,
+      enonce: 'Pourquoi un filtre à huile usagé reste-t-il un déchet dangereux, même bien égoutté ?',
+      choix: ['Il reste imprégné d\'huile usagée', 'Il contient de l\'amiante', 'Il est radioactif', 'Ce n\'en est pas un : il va à la ferraille'],
+      bonne: 0,
+      explication: 'Même égoutté, le papier filtrant et le boîtier gardent de l\'**huile usagée** : le filtre part dans la filière des déchets dangereux.'
     }
   ]
 });

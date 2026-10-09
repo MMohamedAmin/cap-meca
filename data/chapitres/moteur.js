@@ -314,6 +314,20 @@ CAP.ajouterChapitre({
       choix: ['Des segments ou des guides de soupapes usés : le moteur brûle de l\'huile', 'Un joint de culasse qui laisse passer du liquide de refroidissement', 'Un mélange trop riche en carburant', 'Un filtre à air trop propre'],
       bonne: 0,
       explication: 'Couleur de fumée : **bleue** = huile brûlée, **blanche** épaisse = liquide de refroidissement, **noire** = excès de carburant.'
+    },
+    {
+      id: 'moteur-q35', sousTheme: 'cycle', type: 'qcm', niveau: 2,
+      enonce: 'Un moteur 4 temps tourne à 3 000 tr/min. Combien de cycles complets chaque cylindre fait-il en une minute ?',
+      choix: ['1 500', '3 000', '6 000', '750'],
+      bonne: 0,
+      explication: 'Un cycle complet = **2 tours** de vilebrequin. 3 000 ÷ 2 = **1 500** cycles par minute pour chaque cylindre.'
+    },
+    {
+      id: 'moteur-q36', sousTheme: 'caracteristiques', type: 'qcm', niveau: 3,
+      enonce: 'On remplace le joint de culasse par un joint plus épais. Quelle est la conséquence sur le rapport volumétrique ?',
+      choix: ['Il diminue, car le volume de la chambre augmente', 'Il augmente', 'Il ne change pas', 'C\'est la cylindrée qui augmente'],
+      bonne: 0,
+      explication: 'Un joint plus épais éloigne la culasse : la chambre (v) grandit. (V + v) ÷ v devient plus petit. La cylindrée, elle, ne change pas : la course et l\'alésage sont les mêmes.'
     }
   ]
 });

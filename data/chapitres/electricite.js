@@ -272,6 +272,20 @@ CAP.ajouterChapitre({
       choix: ['Une surcharge qui abîme la batterie et les ampoules : régulateur défectueux', 'Aucun risque : plus c\'est haut, mieux c\'est', 'La batterie est déchargée : il faut la changer', 'La courroie d\'accessoires patine'],
       bonne: 0,
       explication: 'Au-delà d\'environ 14,5 V, la batterie surchauffe et perd son électrolyte, les ampoules grillent. Le **régulateur** de l\'alternateur ne limite plus la tension.'
+    },
+    {
+      id: 'elec-q30', sousTheme: 'bases', type: 'qcm', niveau: 3,
+      enonce: 'Un phare de 55 W éclaire faiblement. La batterie fait 12,6 V, mais on mesure seulement 9 V aux bornes de l\'ampoule allumée. Cause la plus probable ?',
+      choix: ['Une chute de tension dans le circuit : mauvaise masse ou connexion oxydée', 'L\'ampoule est trop puissante', 'Le fusible est trop gros', 'La batterie est surchargée'],
+      bonne: 0,
+      explication: 'Il manque 3,6 V entre la batterie et l\'ampoule : une **résistance** parasite (oxydation, masse mal serrée) consomme cette tension. On la cherche en mesurant la chute de tension, morceau par morceau.'
+    },
+    {
+      id: 'elec-q31', sousTheme: 'mesures', type: 'qcm', niveau: 2,
+      enonce: 'On mesure la résistance d\'une ampoule débranchée. L\'ohmmètre affiche « OL » (hors limite). Conclusion ?',
+      choix: ['Le filament est coupé : le circuit est ouvert', 'L\'ampoule est en court-circuit', 'L\'ampoule est en bon état', 'Il fallait la mesurer branchée'],
+      bonne: 0,
+      explication: '« OL » veut dire une résistance trop grande pour être mesurée : le courant ne peut pas passer. Un filament en bon état a une résistance faible, de l\'ordre de quelques ohms au plus.'
     }
   ]
 });

@@ -1,6 +1,6 @@
 # Mise en ligne sur GitHub Pages à chaque envoi sur la branche main.
 # Le site n'est publié que si la vérification du contenu passe
-# (questions, images, lexique, sw.js à jour) et si les tests de l'assistant IA passent.
+# (questions, images, lexique, sw.js à jour) et si les tests du site et de l'assistant IA passent.
 name: Mise en ligne
 
 on:
@@ -32,6 +32,9 @@ jobs:
 
       - name: Vérifier le contenu
         run: node outils/verifier-donnees.js
+
+      - name: Tester le site
+        run: node outils/tests-site.js
 
       - name: Tester l'assistant IA (sans clé API)
         run: |

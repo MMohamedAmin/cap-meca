@@ -272,6 +272,20 @@ CAP.ajouterChapitre({
       choix: ['Remplacer les deux amortisseurs avant', 'Remplacer seulement l\'amortisseur qui fuit', 'Rajouter de l\'huile dans l\'amortisseur', 'Remplacer les plaquettes'],
       bonne: 0,
       explication: 'Un amortisseur qui fuit est hors service. Comme pour les freins, on remplace **par essieu**, pour garder un comportement équilibré.'
+    },
+    {
+      id: 'sol-q29', sousTheme: 'direction', type: 'qcm', niveau: 3,
+      enonce: 'Direction assistée hydraulique : direction dure à l\'arrêt et à basse vitesse, avec un sifflement en braquant. Que contrôler en premier ?',
+      choix: ['Le niveau de liquide de direction et la courroie qui entraîne la pompe', 'Le parallélisme', 'Les amortisseurs', 'La pression des pneus arrière'],
+      bonne: 0,
+      explication: 'L\'assistance est surtout utile à basse vitesse. Un manque de liquide ou une **courroie** qui patine (sifflement) réduit la pression fournie par la pompe.'
+    },
+    {
+      id: 'sol-q30', sousTheme: 'geometrie', type: 'qcm', niveau: 2,
+      enonce: 'Pourquoi contrôle-t-on la géométrie sur un sol plat, véhicule à vide et pneus à la bonne pression ?',
+      choix: ['Parce que la charge, le sol et la pression modifient les angles mesurés', 'Pour ne pas abîmer le banc', 'Pour aller plus vite', 'C\'est inutile : seule la position du volant compte'],
+      bonne: 0,
+      explication: 'Les angles changent quand la caisse s\'enfonce ou penche. Les valeurs du constructeur sont données dans des **conditions précises** : il faut les reproduire.'
     }
   ]
 });

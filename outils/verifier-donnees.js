@@ -108,6 +108,15 @@ const nbC = contexte.CAP.chapitres.reduce((n, c) => n + c.cartes.length, 0);
 const nbF = (contexte.CAP.formulaire || []).reduce((n, t) => n + t.formules.length, 0);
 const parNiveau = [1, 2, 3].map(n => contexte.CAP.chapitres.reduce((t, c) => t + c.questions.filter(q => (q.niveau || 1) === n).length, 0));
 console.log(`${contexte.CAP.chapitres.length} chapitres, ${nbQ} questions (niveaux 1 / 2 / 3 : ${parNiveau.join(' / ')}), ${nbC} cartes, ${imagesUtilisees.size} images, ${mots.size} mots, ${nbF} formules.`);
+// Conseil (pas une erreur) : chaque sous-thème devrait avoir des questions de niveaux 2 et 3,
+// sinon l'élève plafonne dans ce thème.
+const aCompleter = [];
+contexte.CAP.chapitres.forEach(ch => Object.keys(ch.sousThemes || {}).forEach(st => {
+  const niv = new Set((ch.questions || []).filter(q => q.sousTheme === st).map(q => q.niveau || 1));
+  const manque = [2, 3].filter(n => !niv.has(n));
+  if (manque.length) aCompleter.push(`${ch.id}/${st} (niveau ${manque.join(' et ')})`);
+}));
+if (aCompleter.length) console.log('À compléter, questions difficiles manquantes : ' + aCompleter.join(', '));
 const inutilisees = Object.keys(images).filter(k => !imagesUtilisees.has(k));
 if (inutilisees.length) console.log('Images déclarées mais pas utilisées : ' + inutilisees.join(', '));
 if (erreurs.length) {

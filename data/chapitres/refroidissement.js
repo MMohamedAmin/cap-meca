@@ -239,6 +239,20 @@ CAP.ajouterChapitre({
       choix: ['La purge de l\'air du circuit', 'Le serrage des roues', 'Le remplacement du thermostat', 'La vidange de l\'huile moteur'],
       bonne: 0,
       explication: 'Une **bulle d\'air** bloque la circulation : le liquide ne passe plus dans l\'aérotherme et le moteur refroidit mal. On purge selon la méthode du constructeur.'
+    },
+    {
+      id: 'refroid-q25', sousTheme: 'role', type: 'qcm', niveau: 3,
+      enonce: 'Le joint du bouchon de vase d\'expansion est abîmé : le bouchon ne tient plus la pression. Quel symptôme peut-on observer ?',
+      choix: ['Le liquide bout plus tôt : pertes de liquide et surchauffe quand le moteur travaille fort', 'Le moteur met plus de temps à chauffer', 'Le chauffage devient brûlant', 'Aucun, le bouchon ne sert qu\'à fermer'],
+      bonne: 0,
+      explication: 'Sans pression, le point d\'ébullition redescend vers 100 °C : le liquide **bout** et s\'échappe en vapeur. Un bouchon se contrôle avec un testeur de pression.'
+    },
+    {
+      id: 'refroid-q26', sousTheme: 'composants', type: 'qcm', niveau: 3,
+      enonce: 'Le moteur surchauffe, mais les deux durites du radiateur restent froides. Que suspecter ?',
+      choix: ['Le thermostat bloqué fermé : le liquide ne va pas au radiateur', 'Le motoventilateur', 'Un radiateur entartré', 'Un excès de liquide de refroidissement'],
+      bonne: 0,
+      explication: 'Si le liquide chaud n\'arrive pas au radiateur, ses durites restent froides : le **thermostat** ne s\'ouvre pas. Avec un radiateur bouché, la durite d\'entrée serait brûlante.'
     }
   ]
 });

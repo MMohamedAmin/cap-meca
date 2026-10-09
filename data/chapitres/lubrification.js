@@ -238,6 +238,20 @@ CAP.ajouterChapitre({
       choix: ['C\'est normal : le filtre neuf se remplit d\'huile', 'Il faut refaire la vidange', 'Le manocontact est forcément hors service', 'Il faut rouler pour que le voyant disparaisse'],
       bonne: 0,
       explication: 'Le filtre neuf est vide : la pression met quelques secondes à monter. En revanche, si le voyant reste allumé plus longtemps, on **coupe le moteur** et on cherche.'
+    },
+    {
+      id: 'lubri-q26', sousTheme: 'role', type: 'qcm', niveau: 3,
+      enonce: 'Voiture qui ne fait que de petits trajets en hiver : dépôt crémeux sous le bouchon de remplissage d\'huile, mais niveau de liquide de refroidissement stable. Que penser en premier ?',
+      choix: ['Probablement de la condensation qui ne s\'évapore pas sur trajets courts : faire un long trajet et vérifier que cela disparaît', 'Le joint de culasse est forcément hors service : le remplacer', 'L\'huile est en parfait état', 'Il faut rajouter de l\'huile'],
+      bonne: 0,
+      explication: 'L\'eau produite par la combustion se condense dans un moteur qui ne chauffe jamais vraiment. Si le liquide de refroidissement ne baisse pas, ce n\'est probablement pas le **joint de culasse**. Si le dépôt persiste après un long trajet, on cherche plus loin.'
+    },
+    {
+      id: 'lubri-q27', sousTheme: 'huiles', type: 'qcm', niveau: 3,
+      enonce: 'Par -10 °C, avec une huile 20W50 au lieu de la 5W30 préconisée, le voyant d\'huile reste allumé plusieurs secondes au démarrage. Pourquoi ?',
+      choix: ['L\'huile est trop épaisse à froid : elle circule lentement et le graissage arrive tard', 'La pompe à huile est forcément cassée', 'Le niveau d\'huile est trop haut', 'C\'est normal avec toutes les huiles'],
+      bonne: 0,
+      explication: 'Le chiffre avant le W indique la fluidité à froid : **20W** est beaucoup plus épais que **5W**. Pendant ces secondes, le moteur tourne mal graissé : c\'est là qu\'il s\'use le plus.'
     }
   ]
 });

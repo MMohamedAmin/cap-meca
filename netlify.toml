@@ -1,7 +1,7 @@
 # Netlify : héberge la fonction de l'assistant IA (netlify/functions/ia.mjs).
 # Le site est aussi publié ici (même contenu que GitHub Pages), après vérification.
 [build]
-  command = "node outils/verifier-donnees.js && npm run test-ia && node outils/preparer-site.js"
+  command = "node outils/verifier-donnees.js && npm test && node outils/preparer-site.js"
   publish = "_site"
 
 [functions]
