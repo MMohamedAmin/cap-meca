@@ -30,6 +30,14 @@ CAP.ajouterLexique([
   { mot: 'Rampe commune (common rail)', definition: 'Réservoir de gazole sous très haute pression qui alimente tous les injecteurs d\'un moteur diesel.', chapitre: 'alimentation' },
   { mot: 'Turbocompresseur', definition: 'Turbine entraînée par les gaz d\'échappement, qui fait tourner un compresseur pour pousser plus d\'air dans le moteur.', chapitre: 'alimentation' },
 
+  // Dépollution et échappement
+  { mot: 'AdBlue', definition: 'Solution d\'urée injectée dans l\'échappement des diesels équipés SCR, pour transformer les oxydes d\'azote en azote et en eau.', chapitre: 'depollution' },
+  { mot: 'Catalyseur', definition: 'Élément de la ligne d\'échappement qui transforme les gaz polluants (CO, HC, NOx) en gaz moins nocifs. Il ne fonctionne que chaud.', chapitre: 'depollution' },
+  { mot: 'Filtre à particules (FAP)', definition: 'Filtre de l\'échappement diesel qui retient les suies, puis les brûle pendant la régénération.', chapitre: 'depollution' },
+  { mot: 'OBD', definition: 'Autodiagnostic embarqué : le calculateur surveille le moteur et la dépollution, mémorise les défauts et allume le voyant moteur. Prise de diagnostic standard.', chapitre: 'depollution' },
+  { mot: 'Sonde lambda', definition: 'Capteur qui mesure l\'oxygène dans les gaz d\'échappement, pour que le calculateur règle le mélange air-carburant.', chapitre: 'depollution' },
+  { mot: 'Vanne EGR', definition: 'Vanne qui renvoie une partie des gaz d\'échappement à l\'admission pour réduire les oxydes d\'azote.', chapitre: 'depollution' },
+
   // Lubrification
   { mot: 'Carter d\'huile', definition: 'Réservoir fixé sous le moteur, qui contient l\'huile.', chapitre: 'lubrification' },
   { mot: 'Clapet de décharge', definition: 'Clapet du circuit de graissage qui limite la pression d\'huile maximale.', chapitre: 'lubrification' },
