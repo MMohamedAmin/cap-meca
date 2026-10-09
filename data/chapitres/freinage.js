@@ -129,7 +129,7 @@ CAP.ajouterChapitre({
       enonce: 'Pourquoi le circuit de freinage est-il doublé (par exemple en X) ?',
       choix: ['Pour qu\'il reste du freinage si un circuit fuit', 'Pour freiner deux fois plus fort', 'Pour alimenter l\'ABS', 'Pour refroidir le liquide'],
       bonne: 0,
-      explication: 'En X, chaque circuit freine une roue avant et la roue arrière opposée : le véhicule freine encore de façon équilibrée.'
+      explication: 'En X, chaque circuit freine une roue avant et la roue arrière opposée : le véhicule freine moins fort, mais il freine encore et reste stable.'
     },
     {
       id: 'frein-q9', sousTheme: 'assistance', type: 'qcm',

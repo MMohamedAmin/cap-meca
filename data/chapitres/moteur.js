@@ -269,7 +269,7 @@ CAP.ajouterChapitre({
       enonce: 'Vrai ou faux : dans un moteur 4 temps, chacun des 4 temps fournit de l\'énergie au vilebrequin.',
       choix: ['Vrai', 'Faux'],
       bonne: 1,
-      explication: 'Faux : seul le temps **combustion-détente** est moteur. Les trois autres utilisent l\'énergie gardée par le volant moteur.'
+      explication: 'Faux : seul le temps **combustion-détente** est moteur. Les trois autres consomment de l\'énergie : celle gardée par le volant moteur et celle fournie par les autres cylindres.'
     },
     {
       id: 'moteur-q27', sousTheme: 'cycle', type: 'qcm',
