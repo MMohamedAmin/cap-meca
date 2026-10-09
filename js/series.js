@@ -88,25 +88,34 @@ CAP.series = (function () {
     },
     nbErreurs() { return erreurs().length; },
 
-    // Examen blanc : le même nombre de questions dans chaque chapitre, complété au hasard.
-    // Tous les niveaux sont mélangés, comme dans une vraie épreuve : dans chaque chapitre,
-    // une question de niveau 1 et une question plus difficile (niveau 2 ou 3).
+    // Examen blanc : le même nombre de questions dans chaque chapitre (au moins une),
+    // complété au hasard. Tous les niveaux sont mélangés, comme dans une vraie épreuve :
+    // dans chaque chapitre, on alterne questions faciles (niveau 1) et difficiles (2 ou 3),
+    // en commençant par une difficile un chapitre sur deux ; le complément est pour moitié difficile.
     examen(n) {
-      const parChapitre = Math.floor(n / CAP.chapitres.length);
+      const parChapitre = Math.max(1, Math.floor(n / CAP.chapitres.length));
+      const difficile = x => CAP.stats.niveau(x.q) > 1;
       let choisies = [];
-      CAP.chapitres.forEach(ch => {
+      CAP.chapitres.forEach((ch, i) => {
         const faciles = melanger(ch.questions.filter(q => CAP.stats.niveau(q) === 1));
         const difficiles = melanger(ch.questions.filter(q => CAP.stats.niveau(q) > 1));
+        const [a, b] = i % 2 ? [faciles, difficiles] : [difficiles, faciles];
         const ordre = [];
         for (let k = 0; ordre.length < ch.questions.length; k++) {
-          if (k < faciles.length) ordre.push(faciles[k]);
-          if (k < difficiles.length) ordre.push(difficiles[k]);
+          if (k < a.length) ordre.push(a[k]);
+          if (k < b.length) ordre.push(b[k]);
         }
         choisies = choisies.concat(ordre.slice(0, parChapitre).map(q => ({ q, ch })));
       });
+      choisies = choisies.slice(0, n);
       const pris = new Set(choisies.map(x => x.q.id));
-      const reste = melanger(toutesQuestions().filter(x => !pris.has(x.q.id)));
-      return melanger(choisies.concat(reste.slice(0, n - choisies.length)));
+      const reste = toutesQuestions().filter(x => !pris.has(x.q.id));
+      const manque = n - choisies.length;
+      const restesDifficiles = melanger(reste.filter(difficile));
+      const restesFaciles = melanger(reste.filter(x => !difficile(x)));
+      const nDifficiles = Math.min(restesDifficiles.length, Math.ceil(manque / 2));
+      const complement = restesDifficiles.slice(0, nDifficiles).concat(restesFaciles).slice(0, manque);
+      return melanger(choisies.concat(complement));
     },
 
     // Cartes du jour : d'abord celles à revoir (boîtes basses en premier),

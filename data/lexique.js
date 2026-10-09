@@ -38,6 +38,12 @@ CAP.ajouterLexique([
   { mot: 'Sonde lambda', definition: 'Capteur qui mesure l\'oxygène dans les gaz d\'échappement, pour que le calculateur règle le mélange air-carburant.', chapitre: 'depollution' },
   { mot: 'Vanne EGR', definition: 'Vanne qui renvoie une partie des gaz d\'échappement à l\'admission pour réduire les oxydes d\'azote.', chapitre: 'depollution' },
 
+  // Éclairage et signalisation
+  { mot: 'Commodo', definition: 'Manette sous le volant qui commande les feux, les clignotants ou les essuie-glaces.', chapitre: 'eclairage' },
+  { mot: 'Relais', definition: 'Interrupteur commandé : un faible courant dans sa bobine (bornes 85-86) ferme un contact (30-87) qui laisse passer un fort courant.', chapitre: 'eclairage' },
+  { mot: 'Réglophare', definition: 'Appareil qui sert à contrôler et régler la hauteur et l\'orientation du faisceau des projecteurs.', chapitre: 'eclairage' },
+  { mot: 'Xénon', definition: 'Lampe de projecteur à décharge, alimentée par un ballast en très haute tension : on intervient toujours hors tension.', chapitre: 'eclairage' },
+
   // Lubrification
   { mot: 'Carter d\'huile', definition: 'Réservoir fixé sous le moteur, qui contient l\'huile.', chapitre: 'lubrification' },
   { mot: 'Clapet de décharge', definition: 'Clapet du circuit de graissage qui limite la pression d\'huile maximale.', chapitre: 'lubrification' },

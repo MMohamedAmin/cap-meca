@@ -24,7 +24,7 @@ let j = CAP.series.cartesDuJour(20);
 ok(j.paquet.length === 20 && j.dues === 0 && j.nouvelles === NB_CARTES, 'cartes du jour : 20 nouvelles');
 const ex = CAP.series.examen(20); const parCh = {}; ex.forEach(x => parCh[x.ch.id] = (parCh[x.ch.id] || 0) + 1);
 ok(ex.length === 20 && new Set(ex.map(x => x.q.id)).size === 20, 'examen : 20 questions distinctes');
-ok(Object.values(parCh).every(n => n >= 2), 'examen : au moins 2 questions par chapitre');
+ok(CAP.chapitres.every(ch => parCh[ch.id] >= Math.max(1, Math.floor(20 / CAP.chapitres.length))), 'examen : chaque chapitre est représenté');
 
 // On rate tout le freinage, on réussit le reste
 CAP.chapitres.forEach(ch => ch.questions.forEach(q => CAP.stockage.reponseQuestion(q.id, ch.id !== 'freinage')));
