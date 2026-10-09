@@ -44,6 +44,13 @@ CAP.ajouterLexique([
   { mot: 'Réglophare', definition: 'Appareil qui sert à contrôler et régler la hauteur et l\'orientation du faisceau des projecteurs.', chapitre: 'eclairage' },
   { mot: 'Xénon', definition: 'Lampe de projecteur à décharge, alimentée par un ballast en très haute tension : on intervient toujours hors tension.', chapitre: 'eclairage' },
 
+  // Climatisation
+  { mot: 'Condenseur', definition: 'Échangeur placé à l\'avant du véhicule, où le fluide de climatisation cède sa chaleur à l\'air et redevient liquide.', chapitre: 'climatisation' },
+  { mot: 'Détendeur', definition: 'Organe de la climatisation qui fait chuter la pression du fluide liquide, ce qui le refroidit fortement.', chapitre: 'climatisation' },
+  { mot: 'Évaporateur', definition: 'Échangeur placé dans la planche de bord, où le fluide de climatisation s\'évapore en prenant la chaleur de l\'air de l\'habitacle.', chapitre: 'climatisation' },
+  { mot: 'Fluide frigorigène', definition: 'Fluide qui transporte la chaleur dans la climatisation (R134a ou R1234yf). Il se récupère avec une station, jamais à l\'air libre.', chapitre: 'climatisation' },
+  { mot: 'Pressostat', definition: 'Capteur de pression qui coupe le compresseur de climatisation si la pression est trop basse ou trop haute.', chapitre: 'climatisation' },
+
   // Lubrification
   { mot: 'Carter d\'huile', definition: 'Réservoir fixé sous le moteur, qui contient l\'huile.', chapitre: 'lubrification' },
   { mot: 'Clapet de décharge', definition: 'Clapet du circuit de graissage qui limite la pression d\'huile maximale.', chapitre: 'lubrification' },
