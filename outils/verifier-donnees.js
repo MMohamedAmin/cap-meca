@@ -55,8 +55,13 @@ for (const ch of contexte.CAP.chapitres) {
   (ch.questions || []).forEach(q => {
     verifierId(q.id, 'question');
     if (!st[q.sousTheme]) erreurs.push(`${p} ${q.id} : sous-thème inconnu « ${q.sousTheme} »`);
-    if (!['qcm', 'vf'].includes(q.type)) erreurs.push(`${p} ${q.id} : type inconnu « ${q.type} »`);
-    if (!Array.isArray(q.choix) || q.choix.length < 2) erreurs.push(`${p} ${q.id} : il faut au moins 2 choix`);
+    if (!['qcm', 'vf', 'ordre'].includes(q.type)) erreurs.push(`${p} ${q.id} : type inconnu « ${q.type} »`);
+    if (q.type === 'ordre') {
+      // Étapes à remettre dans l'ordre : écrites dans le bon ordre, mélangées à l'affichage.
+      if (!Array.isArray(q.etapes) || q.etapes.length < 3 || q.etapes.length > 8) erreurs.push(`${p} ${q.id} : il faut de 3 à 8 étapes`);
+      else if (q.etapes.some(e => typeof e !== 'string' || !e.trim()) || new Set(q.etapes).size !== q.etapes.length) erreurs.push(`${p} ${q.id} : étapes vides ou en double`);
+      if (q.image) erreurs.push(`${p} ${q.id} : pas de photo sur une question à remettre dans l'ordre`);
+    } else if (!Array.isArray(q.choix) || q.choix.length < 2) erreurs.push(`${p} ${q.id} : il faut au moins 2 choix`);
     else if (!(q.bonne >= 0 && q.bonne < q.choix.length)) erreurs.push(`${p} ${q.id} : « bonne » hors des choix`);
     if (!q.explication) erreurs.push(`${p} ${q.id} : explication manquante`);
     if (q.niveau !== undefined && ![1, 2, 3].includes(q.niveau)) erreurs.push(`${p} ${q.id} : niveau doit être 1, 2 ou 3`);

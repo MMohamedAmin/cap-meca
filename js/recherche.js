@@ -88,7 +88,10 @@ CAP.recherche = (function () {
     CAP.chapitres.forEach(ch => {
       ch.fiche.forEach((s, i) => ajouter({ type: 'fiche', titre: s.titre, texte: s.contenu.map(texteBloc).join(' '), ch, section: i }));
       ch.cartes.forEach(c => ajouter({ type: 'carte', titre: c.recto, texte: c.verso, ch, carte: c }));
-      ch.questions.forEach(q => ajouter({ type: 'question', titre: q.enonce, texte: q.choix[q.bonne] + ' ' + q.explication, ch, question: q }));
+      ch.questions.forEach(q => ajouter({
+        type: 'question', titre: q.enonce, ch, question: q,
+        texte: (q.type === 'ordre' ? q.etapes.join(' ') : q.choix[q.bonne]) + ' ' + q.explication
+      }));
     });
   }
 

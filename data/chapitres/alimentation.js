@@ -213,6 +213,18 @@ CAP.ajouterChapitre({
       choix: ['Le circuit d\'air : filtre à air et durites du turbo (fuite d\'air comprimé)', 'Les bougies d\'allumage', 'Le liquide de frein', 'Le thermostat bloqué ouvert'],
       bonne: 0,
       explication: 'La fumée **noire** signale trop de gazole pour l\'air disponible. Une durite de turbo percée (sifflement) ou un filtre bouché prive le moteur d\'air.'
+    },
+    {
+      id: 'alim-q19', sousTheme: 'carburant', type: 'ordre', niveau: 2,
+      enonce: 'Remets dans l\'ordre le remplacement d\'un filtre à gazole.',
+      etapes: [
+        'Repérer le sens de circulation et placer un récupérateur',
+        'Déposer l\'ancien filtre',
+        'Poser le filtre neuf dans le bon sens',
+        'Réamorcer le circuit (pompe d\'amorçage ou mises sous contact répétées)',
+        'Démarrer et contrôler l\'absence de fuite'
+      ],
+      explication: 'Après l\'ouverture du circuit, de l\'**air** y est entré : sans **réamorçage**, le diesel peut refuser de démarrer.'
     }
   ]
 });

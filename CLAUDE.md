@@ -40,13 +40,15 @@ CAP.ajouterChapitre({
   sousThemes: { cle: 'Nom affiché' },
   fiche: [{ titre, sousTheme, contenu: [ 'paragraphe', {liste:[...]}, {formule}, {retenir}, {attention} ] }],
   cartes: [{ id, sousTheme, recto, verso }],
-  questions: [{ id, sousTheme, type: 'qcm'|'vf', niveau?, image?, enonce, choix: [...], bonne: index, explication }]
+  questions: [{ id, sousTheme, type: 'qcm'|'vf', niveau?, image?, enonce, choix: [...], bonne: index, explication }
+             | { id, sousTheme, type: 'ordre', niveau?, enonce, etapes: [...], explication }]
 });
 ```
 
 - Les `id` sont uniques sur tout le site et **ne doivent jamais changer**, car la progression y est rattachée.
 - `qcm` : les choix sont mélangés à l'affichage. Par convention, on met la bonne réponse en premier (`bonne: 0`).
 - `vf` : choix `['Vrai', 'Faux']`, non mélangés.
+- `ordre` : procédure à remettre dans l'ordre, 3 à 8 `etapes` écrites **dans le bon ordre** (mélangées à l'affichage, jamais déjà dans l'ordre). L'élève touche les étapes une à une. Pas d'image, pas dans l'examen blanc (réponse unique par question), pas d'explication IA. Utiliser `bonneReponse(q)` pour afficher une correction, quel que soit le type.
 - `niveau` (facultatif, 1 par défaut) : **1** connaître, **2** comprendre et calculer (souvent en plusieurs étapes), **3** diagnostiquer une situation d'atelier. Un niveau s'ouvre dans un sous-thème quand le niveau inférieur est maîtrisé (`CAP.stats.niveauSousTheme` : au moins 80 % des questions vues réussies à la dernière réponse) ; les séries (`CAP.series.adaptee`, `ciblee`) ne proposent pas un niveau verrouillé, l'examen blanc mélange tous les niveaux. Prévoir des questions de niveaux 2 et 3 dans chaque sous-thème.
 - `image` (facultatif) : clé d'une photo de `data/images.js`. Les questions avec photo forment le mode « Reconnaître les pièces ».
 - Chaque sous-thème doit avoir au moins une question. Le sous-thème est la base de l'entraînement ciblé.

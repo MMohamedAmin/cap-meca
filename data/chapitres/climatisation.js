@@ -211,6 +211,18 @@ CAP.ajouterChapitre({
       choix: ['Un traitement désinfectant de l\'évaporateur, et vérifier l\'écoulement de l\'eau condensée', 'Recharger le fluide', 'Remplacer le compresseur', 'Faire la vidange du moteur'],
       bonne: 0,
       explication: 'L\'évaporateur est humide : des moisissures peuvent s\'y développer. On le **désinfecte**, et on vérifie que l\'eau s\'écoule bien dehors.'
+    },
+    {
+      id: 'clim-q19', sousTheme: 'fluide', type: 'ordre', niveau: 2,
+      enonce: 'Remets dans l\'ordre une recharge de climatisation à la station.',
+      etapes: [
+        'Brancher la station sur les raccords basse et haute pression',
+        'Récupérer le fluide restant dans le circuit',
+        'Tirer au vide le circuit et vérifier qu\'il garde le vide (étanchéité)',
+        'Injecter la quantité de fluide prévue, en grammes',
+        'Contrôler le fonctionnement : température de l\'air aux aérateurs'
+      ],
+      explication: 'Le **tirage au vide** retire l\'air et l\'humidité, et un circuit qui ne garde pas le vide **fuit** : on répare avant de recharger. La quantité de fluide vient de l\'étiquette du constructeur.'
     }
   ]
 });

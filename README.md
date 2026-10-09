@@ -16,6 +16,7 @@ Ta progression est enregistrée dans le navigateur. Pour la sauvegarder ou la tr
 - **Quiz** : 10 questions par chapitre ou 20 en mélangé, explication après chaque réponse, note sur 20 et liste des erreurs.
 - **Progression** : réussite par chapitre et par sous-thème, points faibles, dernières séances, série de jours, export et import.
 - **Trois niveaux de difficulté** : 1 (connaître), 2 (comprendre, calculer), 3 (diagnostiquer comme à l'atelier). Quand un thème est maîtrisé, les questions du niveau suivant se débloquent ; une erreur peut faire redescendre. L'examen blanc mélange les trois niveaux.
+- **Procédures à remettre dans l'ordre** : vidange, plaquettes, purge, batterie, courroie de distribution, recharge de clim… On touche les étapes dans l'ordre.
 - **Entraînement ciblé** : 15 questions, dont environ 70 % sur tes sous-thèmes les plus faibles et le reste en mélange.
 - **Cartes du jour** : répétition espacée en 5 boîtes. Une carte sue revient de plus en plus tard (1, 2, 4, 8 puis 16 jours) et une carte ratée revient le lendemain.
 - **Mes erreurs** : les questions ratées la dernière fois. Une question réussie sort de la liste.

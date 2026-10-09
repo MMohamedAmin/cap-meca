@@ -298,6 +298,19 @@ CAP.ajouterChapitre({
       choix: ['Le filament est coupé : le circuit est ouvert', 'L\'ampoule est en court-circuit', 'L\'ampoule est en bon état', 'Il fallait la mesurer branchée'],
       bonne: 0,
       explication: '« OL » veut dire une résistance trop grande pour être mesurée : le courant ne peut pas passer. Un filament en bon état a une résistance faible, de l\'ordre de quelques ohms au plus.'
+    },
+    {
+      id: 'elec-q32', sousTheme: 'batterie', type: 'ordre', niveau: 1,
+      enonce: 'Remets dans l\'ordre le remplacement d\'une batterie.',
+      etapes: [
+        'Couper le contact et tous les consommateurs',
+        'Débrancher la borne négative',
+        'Débrancher la borne positive',
+        'Déposer l\'ancienne batterie et poser la neuve',
+        'Rebrancher la borne positive',
+        'Rebrancher la borne négative en dernier'
+      ],
+      explication: 'Le **négatif en premier** au démontage et **en dernier** au remontage : si la clé touche la caisse en serrant le positif, il n\'y a pas de court-circuit.'
     }
   ]
 });

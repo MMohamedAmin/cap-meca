@@ -209,6 +209,18 @@ CAP.ajouterChapitre({
       choix: ['Le défaut est toujours présent : la cause n\'a pas été réparée', 'La valise de diagnostic est en panne', 'Il suffit d\'effacer encore', 'C\'est normal après un effacement'],
       bonne: 0,
       explication: 'Effacer le code ne répare rien. Si le calculateur détecte encore le défaut, il le **mémorise à nouveau**. Il faut chercher la vraie cause.'
+    },
+    {
+      id: 'depol-q19', sousTheme: 'controle', type: 'ordre', niveau: 3,
+      enonce: 'Remets dans l\'ordre la démarche face à un voyant moteur allumé.',
+      etapes: [
+        'Écouter le client et noter quand le voyant s\'allume',
+        'Brancher la valise et lire les codes défauts',
+        'Contrôler l\'élément mis en cause (mesures, état, connexions)',
+        'Réparer la cause',
+        'Effacer les codes, puis faire un essai pour vérifier que le voyant ne revient pas'
+      ],
+      explication: 'Le code **oriente** le diagnostic, il ne le remplace pas : on contrôle l\'élément avant de changer une pièce. On **efface** à la fin, et l\'essai confirme la réparation.'
     }
   ]
 });

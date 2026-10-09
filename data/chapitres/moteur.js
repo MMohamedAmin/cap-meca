@@ -340,6 +340,19 @@ CAP.ajouterChapitre({
       choix: ['Il diminue, car le volume de la chambre augmente', 'Il augmente', 'Il ne change pas', 'C\'est la cylindrée qui augmente'],
       bonne: 0,
       explication: 'Un joint plus épais éloigne la culasse : la chambre (v) grandit. (V + v) ÷ v devient plus petit. La cylindrée, elle, ne change pas : la course et l\'alésage sont les mêmes.'
+    },
+    {
+      id: 'moteur-q37', sousTheme: 'distribution', type: 'ordre', niveau: 2,
+      enonce: 'Remets dans l\'ordre le remplacement d\'une courroie de distribution.',
+      etapes: [
+        'Déposer les carters de distribution',
+        'Caler le moteur aux repères (vilebrequin et arbre à cames) avec les outils de calage',
+        'Détendre et déposer l\'ancienne courroie',
+        'Poser le kit neuf (galets et courroie) en respectant les repères et le sens de rotation',
+        'Tendre la courroie selon la méthode du constructeur, puis retirer les outils de calage',
+        'Faire deux tours de vilebrequin à la main et contrôler à nouveau le calage'
+      ],
+      explication: 'Le **calage** se fait avant de déposer l\'ancienne courroie, et se **contrôle** à la fin, après deux tours à la main : une dent d\'écart et le moteur tourne mal, ou casse.'
     }
   ]
 });

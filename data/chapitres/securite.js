@@ -270,6 +270,18 @@ CAP.ajouterChapitre({
       choix: ['Il reste imprégné d\'huile usagée', 'Il contient de l\'amiante', 'Il est radioactif', 'Ce n\'en est pas un : il va à la ferraille'],
       bonne: 0,
       explication: 'Même égoutté, le papier filtrant et le boîtier gardent de l\'**huile usagée** : le filtre part dans la filière des déchets dangereux.'
+    },
+    {
+      id: 'secu-q29', sousTheme: 'levage', type: 'ordre', niveau: 2,
+      enonce: 'Remets dans l\'ordre la mise en place d\'un véhicule sur un pont élévateur à deux colonnes.',
+      etapes: [
+        'Centrer le véhicule entre les colonnes',
+        'Placer les bras sous les points de levage prévus par le constructeur',
+        'Lever de quelques centimètres et vérifier la stabilité',
+        'Monter à la hauteur de travail',
+        'Vérifier que les sécurités du pont sont enclenchées avant de passer dessous'
+      ],
+      explication: 'L\'essai à **quelques centimètres** permet de corriger un bras mal placé sans danger. On ne passe dessous qu\'avec les **sécurités** enclenchées.'
     }
   ]
 });

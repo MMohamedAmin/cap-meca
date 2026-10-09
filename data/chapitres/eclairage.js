@@ -210,6 +210,17 @@ CAP.ajouterChapitre({
       choix: ['Le commodo : sa position « feux de route » ne fait plus contact', 'Les ampoules', 'Le fusible des feux de route', 'La batterie'],
       bonne: 0,
       explication: 'L\'appel de phares allume les **mêmes lampes** : ampoules et câblage fonctionnent. La différence se trouve dans la **commande**.'
+    },
+    {
+      id: 'ecl-q19', sousTheme: 'diagnostic', type: 'ordre', niveau: 1,
+      enonce: 'Remets dans l\'ordre le contrôle d\'une lampe qui ne s\'allume pas.',
+      etapes: [
+        'Contrôler l\'ampoule',
+        'Contrôler le fusible',
+        'Mesurer le 12 V au connecteur, commande actionnée',
+        'Contrôler la masse'
+      ],
+      explication: 'On va du **plus simple** au plus long : l\'ampoule, puis ce qui l\'alimente (fusible, tension), puis le retour du courant (masse).'
     }
   ]
 });

@@ -265,6 +265,18 @@ CAP.ajouterChapitre({
       choix: ['Le thermostat bloqué fermé : le liquide ne va pas au radiateur', 'Le motoventilateur', 'Un radiateur entartré', 'Un excès de liquide de refroidissement'],
       bonne: 0,
       explication: 'Si le liquide chaud n\'arrive pas au radiateur, ses durites restent froides : le **thermostat** ne s\'ouvre pas. Avec un radiateur bouché, la durite d\'entrée serait brûlante.'
+    },
+    {
+      id: 'refroid-q27', sousTheme: 'liquide', type: 'ordre', niveau: 2,
+      enonce: 'Remets dans l\'ordre le remplacement du liquide de refroidissement.',
+      etapes: [
+        'Attendre que le moteur soit froid, puis ouvrir le bouchon du vase d\'expansion',
+        'Vidanger le circuit dans un récupérateur',
+        'Remplir avec le liquide préconisé',
+        'Purger l\'air selon la méthode du constructeur',
+        'Faire chauffer jusqu\'au déclenchement du motoventilateur, puis compléter le niveau une fois le moteur froid'
+      ],
+      explication: 'On n\'ouvre **jamais** le vase moteur chaud. Après le remplissage, la **purge** chasse les bulles d\'air, sinon le moteur chauffe et le chauffage reste froid.'
     }
   ]
 });

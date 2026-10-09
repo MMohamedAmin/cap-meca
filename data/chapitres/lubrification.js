@@ -264,6 +264,19 @@ CAP.ajouterChapitre({
       choix: ['L\'huile est trop épaisse à froid : elle circule lentement et le graissage arrive tard', 'La pompe à huile est forcément cassée', 'Le niveau d\'huile est trop haut', 'C\'est normal avec toutes les huiles'],
       bonne: 0,
       explication: 'Le chiffre avant le W indique la fluidité à froid : **20W** est beaucoup plus épais que **5W**. Pendant ces secondes, le moteur tourne mal graissé : c\'est là qu\'il s\'use le plus.'
+    },
+    {
+      id: 'lubri-q28', sousTheme: 'entretien', type: 'ordre', niveau: 1,
+      enonce: 'Remets dans l\'ordre une vidange du moteur.',
+      etapes: [
+        'Moteur tiède, véhicule levé en sécurité, placer le récupérateur',
+        'Déposer le bouchon de vidange et laisser l\'huile s\'écouler',
+        'Remplacer le filtre à huile (joint du filtre huilé)',
+        'Reposer le bouchon avec un joint neuf, au couple',
+        'Remplir avec l\'huile préconisée, à la bonne quantité',
+        'Faire tourner le moteur, contrôler l\'absence de fuite, puis le niveau à la jauge'
+      ],
+      explication: 'L\'huile **tiède** s\'écoule mieux. On contrôle le niveau **après** avoir fait tourner le moteur : le filtre neuf s\'est rempli entre-temps.'
     }
   ]
 });

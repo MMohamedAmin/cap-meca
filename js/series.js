@@ -92,16 +92,18 @@ CAP.series = (function () {
     // complété au hasard. Tous les niveaux sont mélangés, comme dans une vraie épreuve :
     // dans chaque chapitre, on alterne questions faciles (niveau 1) et difficiles (2 ou 3),
     // en commençant par une difficile un chapitre sur deux ; le complément est pour moitié difficile.
+    // Les questions « remettre dans l'ordre » n'y figurent pas (réponse unique par question dans l'examen).
     examen(n) {
       const parChapitre = Math.max(1, Math.floor(n / CAP.chapitres.length));
       const difficile = x => CAP.stats.niveau(x.q) > 1;
+      const aChoix = q => q.type !== 'ordre';
       let choisies = [];
       CAP.chapitres.forEach((ch, i) => {
-        const faciles = melanger(ch.questions.filter(q => CAP.stats.niveau(q) === 1));
-        const difficiles = melanger(ch.questions.filter(q => CAP.stats.niveau(q) > 1));
+        const faciles = melanger(ch.questions.filter(q => aChoix(q) && CAP.stats.niveau(q) === 1));
+        const difficiles = melanger(ch.questions.filter(q => aChoix(q) && CAP.stats.niveau(q) > 1));
         const [a, b] = i % 2 ? [faciles, difficiles] : [difficiles, faciles];
         const ordre = [];
-        for (let k = 0; ordre.length < ch.questions.length; k++) {
+        for (let k = 0; k < Math.max(a.length, b.length); k++) {
           if (k < a.length) ordre.push(a[k]);
           if (k < b.length) ordre.push(b[k]);
         }
@@ -109,7 +111,7 @@ CAP.series = (function () {
       });
       choisies = choisies.slice(0, n);
       const pris = new Set(choisies.map(x => x.q.id));
-      const reste = toutesQuestions().filter(x => !pris.has(x.q.id));
+      const reste = toutesQuestions().filter(x => aChoix(x.q) && !pris.has(x.q.id));
       const manque = n - choisies.length;
       const restesDifficiles = melanger(reste.filter(difficile));
       const restesFaciles = melanger(reste.filter(x => !difficile(x)));

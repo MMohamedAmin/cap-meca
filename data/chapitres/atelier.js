@@ -203,6 +203,18 @@ CAP.ajouterChapitre({
       choix: ['Le bouchon de vidange (joint, serrage) et le serrage du filtre à huile', 'Le liquide de frein', 'La pression des pneus', 'La batterie'],
       bonne: 0,
       explication: 'Ce sont les deux éléments touchés pendant la vidange. Un joint de bouchon non remplacé ou un filtre mal serré suffit à faire fuir.'
+    },
+    {
+      id: 'atel-q19', sousTheme: 'ordre', type: 'ordre', niveau: 1,
+      enonce: 'Remets dans l\'ordre le passage d\'un véhicule au garage.',
+      etapes: [
+        'Accueillir le client et écouter sa demande',
+        'Établir l\'ordre de réparation et le faire signer',
+        'Réaliser les travaux',
+        'Contrôler le travail (essai si besoin)',
+        'Restituer le véhicule et expliquer les travaux au client'
+      ],
+      explication: 'Pas de travaux sans **ordre de réparation signé**, et pas de restitution sans **contrôle** du travail.'
     }
   ]
 });

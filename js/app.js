@@ -50,9 +50,22 @@
     return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
   }
   // Choix d'une question prêts à l'affichage (les QCM sont mélangés, pas les Vrai/Faux).
+  // Questions « ordre » : les étapes mélangées, jamais déjà dans le bon ordre ; pos = bonne place.
   function preparerChoix(q) {
+    if (q.type === 'ordre') {
+      const etapes = q.etapes.map((t, pos) => ({ texte: t, pos }));
+      let m = melanger(etapes);
+      while (m.every((e, k) => e.pos === k)) m = melanger(etapes);
+      return m;
+    }
     const choix = q.choix.map((t, k) => ({ texte: t, juste: k === q.bonne, k }));
     return q.type === 'vf' ? choix : melanger(choix);
+  }
+  // Bonne réponse dans les corrections. S : mise en forme du texte (fmt par défaut, surlignage dans la recherche).
+  function bonneReponse(q, S) {
+    S = S || fmt;
+    if (q.type === 'ordre') return `<ol class="erreur-reponse ordre-correct">${q.etapes.map(e => `<li>${S(e)}</li>`).join('')}</ol>`;
+    return `<p class="erreur-reponse">✔ ${S(q.choix[q.bonne])}</p>`;
   }
 
   // Photo d'une question, avec son crédit. Un appui l'ouvre en grand.
@@ -443,9 +456,15 @@
           ${badgeNiveau(CAP.stats.niveau(item.q))}
           <h2>${fmt(item.q.enonce)}</h2>
           ${illustration(item.q)}
+          ${item.q.type === 'ordre' ? `
+          <p class="petit">Touche les étapes dans le bon ordre. Touche une étape déjà choisie pour l'enlever.</p>
+          <div class="liste-choix">
+            ${item.choix.map((c, k) => `<button class="choix etape" data-k="${k}" aria-pressed="false"><span class="numero" aria-hidden="true"></span><span>${fmt(c.texte)}</span></button>`).join('')}
+          </div>
+          <button class="bouton bouton-principal bouton-large" id="valider-ordre" disabled>Valider l'ordre</button>` : `
           <div class="liste-choix">
             ${item.choix.map((c, k) => `<button class="choix" data-k="${k}">${fmt(c.texte)}</button>`).join('')}
-          </div>
+          </div>`}
           <div class="retour-reponse" id="retour" hidden></div>
           <div id="zone-ia"></div>
           <button class="bouton bouton-principal bouton-large" id="suivant" hidden>
@@ -453,7 +472,8 @@
           </button>
         </section>
       `);
-      app.querySelectorAll('.choix').forEach(b => b.addEventListener('click', () => repondre(+b.dataset.k)));
+      if (item.q.type === 'ordre') brancherOrdre(item);
+      else app.querySelectorAll('.choix').forEach(b => b.addEventListener('click', () => repondre(+b.dataset.k)));
       document.getElementById('suivant').addEventListener('click', () => {
         i++;
         if (i < nb) montrer(); else fin();
@@ -464,21 +484,59 @@
       const item = serie[i];
       const juste = item.choix[k].juste;
       item.choisie = item.choix[k].texte;
-      if (juste) score++; else erreurs.push(item);
-      if (!o.sansSuivi) CAP.stockage.reponseQuestion(item.q.id, juste);
-
       app.querySelectorAll('.choix').forEach((b, idx) => {
         b.disabled = true;
         if (item.choix[idx].juste) b.classList.add('bon');
         else if (idx === k) b.classList.add('faux');
       });
+      conclure(item, juste);
+    }
+
+    // Remettre dans l'ordre : l'élève touche les étapes une à une, elles se numérotent.
+    function brancherOrdre(item) {
+      const ordre = [];
+      const boutons = [...app.querySelectorAll('.etape')];
+      const valider = document.getElementById('valider-ordre');
+      const majNumeros = () => {
+        boutons.forEach((b, k) => {
+          const place = ordre.indexOf(k);
+          b.querySelector('.numero').textContent = place >= 0 ? place + 1 : '';
+          b.classList.toggle('choisi', place >= 0);
+          b.setAttribute('aria-pressed', place >= 0);
+        });
+        valider.disabled = ordre.length !== boutons.length;
+      };
+      boutons.forEach((b, k) => b.addEventListener('click', () => {
+        const place = ordre.indexOf(k);
+        if (place >= 0) ordre.splice(place, 1); else ordre.push(k);
+        majNumeros();
+      }));
+      valider.addEventListener('click', () => {
+        const juste = ordre.every((k, place) => item.choix[k].pos === place);
+        boutons.forEach((b, k) => {
+          b.disabled = true;
+          b.classList.remove('choisi');
+          b.classList.add(item.choix[k].pos === ordre.indexOf(k) ? 'bon' : 'faux');
+        });
+        valider.hidden = true;
+        item.choisie = ordre.map(k => item.choix[k].texte).join(' → ');
+        conclure(item, juste);
+      });
+    }
+
+    // Suite commune à tous les types de questions : score, progression, correction.
+    function conclure(item, juste) {
+      if (juste) score++; else erreurs.push(item);
+      if (!o.sansSuivi) CAP.stockage.reponseQuestion(item.q.id, juste);
+
       const r = document.getElementById('retour');
       r.className = 'retour-reponse ' + (juste ? 'retour-bon' : 'retour-faux');
-      r.innerHTML = `<strong>${juste ? 'Bonne réponse !' : 'Raté.'}</strong> ${fmt(item.q.explication)}`;
+      r.innerHTML = `<strong>${juste ? 'Bonne réponse !' : 'Raté.'}</strong> ${fmt(item.q.explication)}`
+        + (!juste && item.q.type === 'ordre' ? `<p class="titre-ordre">Le bon ordre :</p>${bonneReponse(item.q)}` : '');
       r.hidden = false;
 
       const zoneIA = document.getElementById('zone-ia');
-      if (!juste && CAP.ia.actif()) {
+      if (!juste && CAP.ia.actif() && item.q.type !== 'ordre') {
         const cadre = document.createElement('div');
         cadre.innerHTML = '<button class="bouton bouton-ia" type="button">Explique-moi mon erreur</button>';
         zoneIA.appendChild(cadre);
@@ -510,7 +568,7 @@
               <div class="erreur">
                 <p class="erreur-question">${fmt(e.q.enonce)}</p>
                 ${illustration(e.q, true)}
-                <p class="erreur-reponse">✔ ${fmt(e.q.choix[e.q.bonne])}</p>
+                ${bonneReponse(e.q)}
                 <p class="petit">${fmt(e.q.explication)}</p>
               </div>`).join('')}
           </section>` : ''}
@@ -521,7 +579,7 @@
       `);
       document.getElementById('refaire').addEventListener('click', o.refaire);
       brancherBilanIA(libelleSeance({ type: 'quiz', chapitre: o.seance }), score, nb,
-        erreurs.map(e => ({ q: e.q, ch: e.ch, choisie: e.choisie })));
+        erreurs.filter(e => e.q.type !== 'ordre').map(e => ({ q: e.q, ch: e.ch, choisie: e.choisie })));
     }
 
     if (!nb) { afficher(`${o.retour}<p>Pas encore de questions ici.</p>`); return; }
@@ -782,7 +840,7 @@
                 <p class="erreur-question">${fmt(r.item.q.enonce)}</p>
                 ${illustration(r.item.q, true)}
                 <p class="erreur-choisie">${r.reponse ? '✘ ' + fmt(r.reponse.texte) : '✘ Pas de réponse'}</p>
-                <p class="erreur-reponse">✔ ${fmt(r.item.q.choix[r.item.q.bonne])}</p>
+                ${bonneReponse(r.item.q)}
                 <p class="petit">${fmt(r.item.q.explication)}</p>
               </div>`).join('')}
           </section>` : ''}
@@ -970,7 +1028,7 @@
       case 'question':
         return `<details class="resultat-recherche"><summary>${lieu}<strong>${S(e.question.enonce, termes)}</strong></summary>
           ${illustration(e.question, true)}
-          <p class="erreur-reponse">✔ ${S(e.question.choix[e.question.bonne], termes)}</p>
+          ${bonneReponse(e.question, t => S(t, termes))}
           <p class="petit">${S(e.question.explication, termes)}</p></details>`;
     }
     return '';

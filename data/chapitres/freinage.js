@@ -291,6 +291,31 @@ CAP.ajouterChapitre({
       choix: ['On a oublié de pomper la pédale pour ramener les pistons contre les plaquettes', 'Il y a forcément de l\'air dans le circuit', 'Les plaquettes sont montées à l\'envers', 'Les disques sont trop épais'],
       bonne: 0,
       explication: 'Pour monter les plaquettes neuves, on repousse les pistons d\'étrier. Il faut ensuite **pomper** plusieurs fois pour les ramener au contact, **avant** de rendre le véhicule.'
+    },
+    {
+      id: 'frein-q32', sousTheme: 'organes', type: 'ordre', niveau: 2,
+      enonce: 'Remets dans l\'ordre le remplacement des plaquettes avant.',
+      etapes: [
+        'Lever le véhicule en sécurité et déposer les roues avant',
+        'Déposer l\'étrier (ou le faire pivoter) et retirer les plaquettes usées',
+        'Contrôler l\'épaisseur et l\'état des disques',
+        'Repousser les pistons en surveillant le niveau du bocal',
+        'Poser les plaquettes neuves et remonter l\'étrier au couple',
+        'Pomper la pédale, puis faire un essai avant de rendre le véhicule'
+      ],
+      explication: 'On contrôle les **disques** avant de poser des plaquettes neuves, on surveille le **bocal** en repoussant les pistons, et on **pompe** avant de rouler. Les deux côtés de l\'essieu sont faits.'
+    },
+    {
+      id: 'frein-q33', sousTheme: 'entretien', type: 'ordre', niveau: 3,
+      enonce: 'Remets dans l\'ordre une purge de freins à deux personnes (pédale).',
+      etapes: [
+        'Remplir le bocal avec le liquide préconisé',
+        'Commencer par la roue indiquée par le constructeur (souvent la plus éloignée du maître-cylindre)',
+        'Appuyer sur la pédale et la maintenir, ouvrir la vis de purge, la refermer, puis relâcher',
+        'Recommencer jusqu\'à ce que le liquide sorte sans bulles, en surveillant le niveau du bocal',
+        'Passer aux autres roues, puis contrôler la pédale et le niveau'
+      ],
+      explication: 'On **referme** la vis avant de relâcher la pédale, sinon de l\'air est réaspiré. Le bocal ne doit jamais se vider pendant la purge.'
     }
   ]
 });

@@ -298,6 +298,19 @@ CAP.ajouterChapitre({
       choix: ['Parce que la charge, le sol et la pression modifient les angles mesurés', 'Pour ne pas abîmer le banc', 'Pour aller plus vite', 'C\'est inutile : seule la position du volant compte'],
       bonne: 0,
       explication: 'Les angles changent quand la caisse s\'enfonce ou penche. Les valeurs du constructeur sont données dans des **conditions précises** : il faut les reproduire.'
+    },
+    {
+      id: 'sol-q31', sousTheme: 'pneus', type: 'ordre', niveau: 1,
+      enonce: 'Remets dans l\'ordre le remplacement d\'une roue.',
+      etapes: [
+        'Serrer le frein de parking et caler la roue opposée',
+        'Débloquer les écrous, roue encore au sol',
+        'Lever le véhicule par le point de levage prévu',
+        'Déposer la roue et poser l\'autre roue',
+        'Approcher les écrous, puis redescendre le véhicule',
+        'Serrer en croix, au couple, avec une clé dynamométrique'
+      ],
+      explication: 'On **débloque** roue au sol (elle ne tourne pas dans le vide) et on **serre au couple** roue au sol, en croix, pour plaquer la roue bien à plat.'
     }
   ]
 });

@@ -278,6 +278,18 @@ CAP.ajouterChapitre({
       choix: ['Un joint de transmission côté boîte usé', 'Un mauvais équilibrage des roues', 'Un disque de frein voilé', 'Une rotule de direction'],
       bonne: 0,
       explication: 'Le défaut n\'apparaît que quand la transmission est **sous effort** : c\'est un joint de transmission. Un mauvais équilibrage vibre aussi quand on relâche, un disque voilé au freinage.'
+    },
+    {
+      id: 'trans-q30', sousTheme: 'boite', type: 'ordre', niveau: 1,
+      enonce: 'Remets dans l\'ordre le contrôle du niveau d\'huile d\'une boîte de vitesses manuelle.',
+      etapes: [
+        'Mettre le véhicule à plat',
+        'Nettoyer autour du bouchon de remplissage, puis le déposer',
+        'Vérifier que l\'huile arrive au ras de l\'orifice',
+        'Compléter si besoin avec l\'huile préconisée',
+        'Reposer le bouchon avec un joint neuf, au couple'
+      ],
+      explication: 'Sur beaucoup de boîtes manuelles, le bon niveau est **au ras de l\'orifice** de remplissage. Le véhicule doit être **à plat**, sinon la mesure est fausse.'
     }
   ]
 });

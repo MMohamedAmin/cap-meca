@@ -101,4 +101,15 @@ ok(nivHydro() === 1, 'niveaux : une erreur au niveau 1 fait redescendre');
 const examenNiv = CAP.series.examen(20);
 ok(examenNiv.filter(x => CAP.stats.niveau(x.q) > 1).length >= 8, 'niveaux : l\'examen blanc contient au moins 8 questions difficiles');
 
+
+// Questions « remettre dans l'ordre »
+const questionsOrdre = CAP.chapitres.flatMap(ch => ch.questions.filter(q => q.type === 'ordre'));
+ok(questionsOrdre.length >= 10, 'ordre : des procédures à remettre dans l\'ordre existent');
+ok(CAP.series.examen(20).every(x => x.q.type !== 'ordre'), 'ordre : l\'examen blanc n\'en contient pas');
+const rechercheVidange = CAP.recherche.chercher('vidange');
+ok(rechercheVidange.groupes.some(g => g.resultats.some(e => e.question && e.question.type === 'ordre')), 'ordre : la recherche trouve les étapes');
+CAP.stockage.reinitialiser();
+const toutesItems = CAP.chapitres.flatMap(ch => ch.questions.map(q => ({ q, ch })));
+ok(CAP.series.adaptee(toutesItems, 300).some(x => x.q.type === 'ordre'), 'ordre : elles sont proposées dans les séries');
+
 console.log(nbEchecs ? `${nbEchecs} test(s) en échec, ${nbOk} réussi(s).` : `${nbOk} tests réussis.`);

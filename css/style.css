@@ -437,3 +437,18 @@ details.resultat-recherche[open] summary strong::after { content: ' ▴'; }
 .badge-niveau.n3 { color: var(--rouge); border-color: var(--rouge); background: var(--rouge-doux); }
 .niveau-gagne { border-color: var(--vert); background: var(--vert-doux); }
 .lien-ligne .petit { display: block; }
+
+/* ===== Questions « remettre dans l'ordre » ===== */
+.etape { display: flex; align-items: center; gap: 12px; }
+.etape .numero {
+  flex: 0 0 30px; height: 30px; border-radius: 50%; border: 2px dashed var(--bordure);
+  display: inline-flex; align-items: center; justify-content: center; font-weight: 800; color: var(--accent);
+}
+.etape.choisi { border-color: var(--accent); background: var(--accent-doux); }
+.etape.choisi .numero { border-style: solid; border-color: var(--accent); background: var(--surface); }
+.etape.bon .numero { border: 2px solid var(--vert); color: var(--vert); }
+.etape.faux .numero { border: 2px solid var(--rouge); color: var(--rouge); }
+#valider-ordre { margin-bottom: 14px; }
+.titre-ordre { margin: 8px 0 2px; font-weight: 700; }
+ol.erreur-reponse { margin: 4px 0; padding-left: 1.4rem; }
+ol.erreur-reponse li { margin-bottom: 2px; }
