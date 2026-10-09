@@ -22,6 +22,14 @@ CAP.ajouterLexique([
   { mot: 'Soupape', definition: 'Clapet de la culasse qui ouvre ou ferme le passage des gaz : admission ou échappement.', chapitre: 'moteur' },
   { mot: 'Vilebrequin', definition: 'Arbre qui transforme le mouvement alternatif des pistons en rotation.', chapitre: 'moteur', image: 'vilebrequin' },
 
+  // Alimentation et allumage
+  { mot: 'Avance à l\'allumage', definition: 'Fait de déclencher l\'étincelle un peu avant le PMH, car la combustion prend du temps.', chapitre: 'alimentation' },
+  { mot: 'Bobine d\'allumage', definition: 'Pièce qui transforme le 12 V en très haute tension pour faire jaillir l\'étincelle de la bougie.', chapitre: 'alimentation' },
+  { mot: 'Échangeur (intercooler)', definition: 'Radiateur qui refroidit l\'air comprimé par le turbo : plus dense, il contient plus d\'oxygène.', chapitre: 'alimentation' },
+  { mot: 'Filtre à air', definition: 'Filtre qui retient les poussières de l\'air admis. Encrassé, il fait perdre de la puissance.', chapitre: 'alimentation' },
+  { mot: 'Rampe commune (common rail)', definition: 'Réservoir de gazole sous très haute pression qui alimente tous les injecteurs d\'un moteur diesel.', chapitre: 'alimentation' },
+  { mot: 'Turbocompresseur', definition: 'Turbine entraînée par les gaz d\'échappement, qui fait tourner un compresseur pour pousser plus d\'air dans le moteur.', chapitre: 'alimentation' },
+
   // Lubrification
   { mot: 'Carter d\'huile', definition: 'Réservoir fixé sous le moteur, qui contient l\'huile.', chapitre: 'lubrification' },
   { mot: 'Clapet de décharge', definition: 'Clapet du circuit de graissage qui limite la pression d\'huile maximale.', chapitre: 'lubrification' },
