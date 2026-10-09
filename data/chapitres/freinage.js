@@ -59,7 +59,19 @@ CAP.ajouterChapitre({
     { id: 'frein-c4', sousTheme: 'assistance', recto: 'Sur quoi fonctionne le servofrein ?', verso: 'Sur la **dépression** (admission ou pompe à vide).' },
     { id: 'frein-c5', sousTheme: 'organes', recto: 'Remplacement des plaquettes : règle à respecter ?', verso: 'Toujours **par essieu** (les deux côtés).' },
     { id: 'frein-c6', sousTheme: 'entretien', recto: 'Quel liquide ne se mélange pas avec le DOT 4 ?', verso: 'Le **DOT 5** (silicone).' },
-    { id: 'frein-c7', sousTheme: 'hydraulique', recto: 'Intérêt du double circuit en X ?', verso: 'Si un circuit fuit, l\'autre freine encore **une roue avant et une roue arrière opposées**.' }
+    { id: 'frein-c7', sousTheme: 'hydraulique', recto: 'Intérêt du double circuit en X ?', verso: 'Si un circuit fuit, l\'autre freine encore **une roue avant et une roue arrière opposées**.' },
+    { id: 'frein-c8', sousTheme: 'hydraulique', recto: 'Trajet de l\'effort de freinage ?', verso: 'Pédale → **maître-cylindre** → canalisations → **étriers** ou **cylindres de roue**.' },
+    { id: 'frein-c9', sousTheme: 'hydraulique', recto: 'Pédale qui descend lentement au plancher, sans fuite visible ?', verso: 'Une **fuite interne** du maître-cylindre.' },
+    { id: 'frein-c10', sousTheme: 'hydraulique', recto: 'Pourquoi utiliser un liquide pour freiner ?', verso: 'Il est **incompressible** : la pression arrive intacte aux roues.' },
+    { id: 'frein-c11', sousTheme: 'organes', recto: 'Les pièces d\'un frein à disque ?', verso: '**Étrier, piston(s), plaquettes, disque**.' },
+    { id: 'frein-c12', sousTheme: 'organes', recto: 'Les pièces d\'un frein à tambour ?', verso: '**Tambour, mâchoires, cylindre de roue, ressorts de rappel**.' },
+    { id: 'frein-c13', sousTheme: 'organes', recto: 'Où lire l\'épaisseur minimale d\'un disque ?', verso: '**Gravée sur le disque**, ou dans les données du constructeur.' },
+    { id: 'frein-c14', sousTheme: 'organes', recto: 'Après un changement de plaquettes, avant de rendre la voiture ?', verso: '**Pomper** la pédale pour ramener les pistons.' },
+    { id: 'frein-c15', sousTheme: 'assistance', recto: 'D\'où vient la dépression du servofrein sur un diesel ?', verso: 'D\'une **pompe à vide**.' },
+    { id: 'frein-c16', sousTheme: 'assistance', recto: 'Quels capteurs utilise l\'ABS ?', verso: 'Des **capteurs de vitesse de roue**.' },
+    { id: 'frein-c17', sousTheme: 'assistance', recto: 'Test simple du servofrein ?', verso: 'Moteur arrêté, pomper, garder le pied sur la pédale, démarrer : la pédale **s\'enfonce un peu**.' },
+    { id: 'frein-c18', sousTheme: 'entretien', recto: 'Pédale molle et spongieuse ?', verso: 'De l\'**air** dans le circuit : il faut purger.' },
+    { id: 'frein-c19', sousTheme: 'entretien', recto: 'Tous les combien remplace-t-on le liquide de frein ?', verso: 'Souvent **tous les 2 ans** environ, selon le constructeur.' }
   ],
 
   questions: [

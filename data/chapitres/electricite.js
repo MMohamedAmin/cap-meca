@@ -66,7 +66,19 @@ CAP.ajouterChapitre({
     { id: 'elec-c4', sousTheme: 'mesures', recto: 'Ampèremètre : série ou parallèle ?', verso: 'En **série** (ou pince ampèremétrique).' },
     { id: 'elec-c5', sousTheme: 'charge', recto: 'Tension de charge correcte moteur tournant ?', verso: 'Environ **13,5 à 14,5 V**.' },
     { id: 'elec-c6', sousTheme: 'batterie', recto: 'Quelle borne débrancher en premier ?', verso: 'La borne **négative (–)**.' },
-    { id: 'elec-c7', sousTheme: 'charge', recto: 'Quel composant de l\'alternateur redresse le courant ?', verso: 'Le **pont de diodes**.' }
+    { id: 'elec-c7', sousTheme: 'charge', recto: 'Quel composant de l\'alternateur redresse le courant ?', verso: 'Le **pont de diodes**.' },
+    { id: 'elec-c8', sousTheme: 'bases', recto: 'Unités de U, I, R et P ?', verso: '**Volt (V), ampère (A), ohm (Ω), watt (W)**.' },
+    { id: 'elec-c9', sousTheme: 'bases', recto: 'Calculer I quand on connaît P et U ?', verso: '**I = P ÷ U**.' },
+    { id: 'elec-c10', sousTheme: 'bases', recto: 'Calculer R quand on connaît U et I ?', verso: '**R = U ÷ I**.' },
+    { id: 'elec-c11', sousTheme: 'batterie', recto: 'Tension d\'une batterie chargée, au repos ?', verso: 'Environ **12,6 V** ou un peu plus.' },
+    { id: 'elec-c12', sousTheme: 'batterie', recto: 'Batterie à 12,0 V au repos ?', verso: 'Elle est **nettement déchargée**.' },
+    { id: 'elec-c13', sousTheme: 'batterie', recto: 'Gaz dégagé par une batterie en charge ?', verso: 'De l\'**hydrogène**, explosif.' },
+    { id: 'elec-c14', sousTheme: 'batterie', recto: 'Que veut dire « Ah » sur une batterie ?', verso: 'La **capacité**, en ampères-heures.' },
+    { id: 'elec-c15', sousTheme: 'charge', recto: 'Rôle du régulateur de l\'alternateur ?', verso: '**Limiter la tension** de charge.' },
+    { id: 'elec-c16', sousTheme: 'charge', recto: 'Tension de charge de 15,5 V : diagnostic ?', verso: '**Surcharge** : régulateur défectueux.' },
+    { id: 'elec-c17', sousTheme: 'mesures', recto: 'Condition pour mesurer une résistance ?', verso: 'Circuit **hors tension**.' },
+    { id: 'elec-c18', sousTheme: 'mesures', recto: 'Remplacer un fusible grillé : règle ?', verso: 'Même **calibre**, après avoir **cherché la cause**.' },
+    { id: 'elec-c19', sousTheme: 'mesures', recto: 'L\'ohmmètre affiche « OL » ?', verso: 'Résistance infinie : le circuit est **ouvert** (coupé).' }
   ],
 
   questions: [

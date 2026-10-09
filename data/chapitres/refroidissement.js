@@ -68,7 +68,19 @@ CAP.ajouterChapitre({
     { id: 'refroid-c3', sousTheme: 'composants', recto: 'Qu\'est-ce que l\'aérotherme ?', verso: 'Le **radiateur de chauffage** de l\'habitacle.' },
     { id: 'refroid-c4', sousTheme: 'liquide', recto: 'Avec quel appareil contrôle-t-on la protection antigel ?', verso: 'Un **réfractomètre** (ou un pèse-antigel).' },
     { id: 'refroid-c5', sousTheme: 'pannes', recto: 'Symptômes d\'un thermostat bloqué ouvert ?', verso: 'Moteur **long à chauffer**, **chauffage faible**, consommation en hausse.' },
-    { id: 'refroid-c6', sousTheme: 'liquide', recto: 'Que faut-il faire après avoir rempli le circuit ?', verso: '**Purger** pour chasser l\'air.' }
+    { id: 'refroid-c6', sousTheme: 'liquide', recto: 'Que faut-il faire après avoir rempli le circuit ?', verso: '**Purger** pour chasser l\'air.' },
+    { id: 'refroid-c7', sousTheme: 'composants', recto: 'Rôle de la pompe à eau ?', verso: 'Faire **circuler** le liquide de refroidissement.' },
+    { id: 'refroid-c8', sousTheme: 'composants', recto: 'Rôle du vase d\'expansion ?', verso: 'Absorber la **dilatation** du liquide et porter le **bouchon taré**.' },
+    { id: 'refroid-c9', sousTheme: 'composants', recto: 'Quand le motoventilateur se met-il en marche ?', verso: 'Quand la vitesse ne suffit plus à refroidir (**arrêt, bouchons**). Il est commandé par une sonde ou le calculateur.' },
+    { id: 'refroid-c10', sousTheme: 'composants', recto: 'Rôle du radiateur ?', verso: 'Céder la chaleur du liquide à l\'**air**.' },
+    { id: 'refroid-c11', sousTheme: 'liquide', recto: 'Composition du liquide de refroidissement ?', verso: '**Eau + glycol + additifs**.' },
+    { id: 'refroid-c12', sousTheme: 'liquide', recto: 'Les trois protections du liquide de refroidissement ?', verso: 'Contre le **gel**, la **corrosion** et l\'**ébullition**.' },
+    { id: 'refroid-c13', sousTheme: 'liquide', recto: 'Danger : ouvrir le vase d\'expansion moteur chaud ?', verso: 'Le liquide sous pression **jaillit** : brûlures graves.' },
+    { id: 'refroid-c14', sousTheme: 'pannes', recto: 'Symptômes d\'un thermostat bloqué fermé ?', verso: '**Surchauffe rapide**, durites du radiateur froides.' },
+    { id: 'refroid-c15', sousTheme: 'pannes', recto: 'Surchauffe seulement dans les bouchons ?', verso: 'Suspecter le **motoventilateur**.' },
+    { id: 'refroid-c16', sousTheme: 'pannes', recto: 'Odeur sucrée et traces au sol ?', verso: 'Une **fuite de liquide de refroidissement**.' },
+    { id: 'refroid-c17', sousTheme: 'pannes', recto: 'Bulles dans le vase et durites dures moteur froid ?', verso: 'Le **joint de culasse** : des gaz de combustion passent dans le circuit.' },
+    { id: 'refroid-c18', sousTheme: 'role', recto: 'Pourquoi éviter qu\'un moteur fonctionne trop froid ?', verso: '**Usure, consommation et pollution** augmentent.' }
   ],
 
   questions: [

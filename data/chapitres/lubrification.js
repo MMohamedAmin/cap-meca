@@ -60,7 +60,19 @@ CAP.ajouterChapitre({
     { id: 'lubri-c3', sousTheme: 'circuit', recto: 'Rôle du clapet de décharge ?', verso: '**Limiter la pression** maximale dans le circuit d\'huile.' },
     { id: 'lubri-c4', sousTheme: 'circuit', recto: 'Rôle de la crépine ?', verso: 'Filtrer **grossièrement** l\'huile à l\'aspiration de la pompe.' },
     { id: 'lubri-c5', sousTheme: 'entretien', recto: 'Conditions pour contrôler le niveau d\'huile ?', verso: 'Véhicule **à plat**, moteur **arrêté** depuis quelques minutes.' },
-    { id: 'lubri-c6', sousTheme: 'circuit', recto: 'Quel élément allume le voyant de pression d\'huile ?', verso: 'Le **manocontact** de pression d\'huile.' }
+    { id: 'lubri-c6', sousTheme: 'circuit', recto: 'Quel élément allume le voyant de pression d\'huile ?', verso: 'Le **manocontact** de pression d\'huile.' },
+    { id: 'lubri-c7', sousTheme: 'circuit', recto: 'Trajet de l\'huile dans le moteur ?', verso: 'Carter → **crépine** → **pompe** → **filtre** → rampe principale → paliers, puis retour au carter.' },
+    { id: 'lubri-c8', sousTheme: 'circuit', recto: 'Rôle du clapet de dérivation (by-pass) du filtre ?', verso: 'Laisser passer l\'huile si le filtre est **colmaté** : le moteur reste graissé, mais avec de l\'huile non filtrée.' },
+    { id: 'lubri-c9', sousTheme: 'circuit', recto: 'Voyant de pression d\'huile allumé en roulant ?', verso: '**S\'arrêter et couper le moteur** au plus vite.' },
+    { id: 'lubri-c10', sousTheme: 'huiles', recto: 'Dans 5W30, que veut dire « 30 » ?', verso: 'La **viscosité à chaud**.' },
+    { id: 'lubri-c11', sousTheme: 'huiles', recto: 'Les trois types d\'huile moteur ?', verso: '**Minérale, semi-synthétique, synthétique**.' },
+    { id: 'lubri-c12', sousTheme: 'huiles', recto: 'Que faut-il respecter en plus de la viscosité ?', verso: 'La **norme** : ACEA, API ou norme du constructeur.' },
+    { id: 'lubri-c13', sousTheme: 'entretien', recto: 'Que remplace-t-on à chaque vidange, en plus de l\'huile ?', verso: 'Le **filtre à huile**, et le joint du bouchon de vidange.' },
+    { id: 'lubri-c14', sousTheme: 'entretien', recto: 'Danger d\'un niveau d\'huile au-dessus du maxi ?', verso: '**Pression trop forte, fuites aux joints, huile qui mousse**.' },
+    { id: 'lubri-c15', sousTheme: 'entretien', recto: 'Que fait-on de l\'huile usagée ?', verso: 'Une **collecte spécifique** (déchet dangereux), jamais à l\'égout.' },
+    { id: 'lubri-c16', sousTheme: 'entretien', recto: 'Diesel : le niveau d\'huile monte et sent le gazole. Cause fréquente ?', verso: 'Des régénérations du **filtre à particules** interrompues (petits trajets) : dilution de l\'huile.' },
+    { id: 'lubri-c17', sousTheme: 'role', recto: 'Qu\'est-ce que le serrage d\'un moteur ?', verso: 'Des pièces qui se **soudent** entre elles par manque de lubrification.' },
+    { id: 'lubri-c18', sousTheme: 'role', recto: 'Comment l\'huile nettoie-t-elle le moteur ?', verso: 'Elle **transporte les impuretés** jusqu\'au filtre.' }
   ],
 
   questions: [

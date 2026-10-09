@@ -73,7 +73,19 @@ CAP.ajouterChapitre({
     { id: 'moteur-c4', sousTheme: 'caracteristiques', recto: 'Formule de la cylindrée unitaire ?', verso: '**π × alésage² ÷ 4 × course**' },
     { id: 'moteur-c5', sousTheme: 'organes', recto: 'Les 3 rôles des segments ?', verso: '**Étanchéité** de la chambre, **raclage** de l\'huile, **évacuation** de la chaleur du piston.' },
     { id: 'moteur-c6', sousTheme: 'distribution', recto: 'À quelle vitesse tourne l\'arbre à cames par rapport au vilebrequin ?', verso: '**Deux fois moins vite.**' },
-    { id: 'moteur-c7', sousTheme: 'cycle', recto: 'Comment s\'enflamme le gazole dans un diesel ?', verso: 'Par **auto-inflammation** au contact de l\'air très chaud et comprimé.' }
+    { id: 'moteur-c7', sousTheme: 'cycle', recto: 'Comment s\'enflamme le gazole dans un diesel ?', verso: 'Par **auto-inflammation** au contact de l\'air très chaud et comprimé.' },
+    { id: 'moteur-c8', sousTheme: 'cycle', recto: 'Les 4 temps, dans l\'ordre ?', verso: '**Admission, compression, combustion-détente, échappement**.' },
+    { id: 'moteur-c9', sousTheme: 'cycle', recto: 'Position des soupapes pendant la compression ?', verso: 'Les **deux fermées**.' },
+    { id: 'moteur-c10', sousTheme: 'cycle', recto: 'Fumée bleue, blanche, noire : que veulent-elles dire ?', verso: 'Bleue = **huile** brûlée. Blanche épaisse = **liquide de refroidissement**. Noire = **trop de carburant**.' },
+    { id: 'moteur-c11', sousTheme: 'organes', recto: 'Les organes fixes du moteur ?', verso: '**Culasse, bloc-cylindres, carter d\'huile**, joint de culasse.' },
+    { id: 'moteur-c12', sousTheme: 'organes', recto: 'Les organes mobiles du moteur ?', verso: '**Pistons et segments, bielles, vilebrequin, volant moteur**.' },
+    { id: 'moteur-c13', sousTheme: 'organes', recto: 'Rôle du joint de culasse ?', verso: 'Assurer l\'**étanchéité** entre culasse et bloc : gaz, huile et liquide ne se mélangent pas.' },
+    { id: 'moteur-c14', sousTheme: 'organes', recto: 'Rôle du volant moteur ?', verso: '**Régulariser** la rotation et porter la **couronne** du démarreur.' },
+    { id: 'moteur-c15', sousTheme: 'distribution', recto: 'Trois façons d\'entraîner l\'arbre à cames ?', verso: 'Par **courroie**, par **chaîne** ou par **pignons**.' },
+    { id: 'moteur-c16', sousTheme: 'distribution', recto: 'Courroie de distribution cassée : risque ?', verso: 'Sur beaucoup de moteurs, les **soupapes touchent les pistons** : grosse casse.' },
+    { id: 'moteur-c17', sousTheme: 'caracteristiques', recto: 'Formule du rapport volumétrique ?', verso: '**(V + v) ÷ v**, avec V la cylindrée unitaire et v le volume de la chambre.' },
+    { id: 'moteur-c18', sousTheme: 'caracteristiques', recto: 'Rapport volumétrique : ordre de grandeur essence et diesel ?', verso: 'Essence **≈ 10 à 12**, diesel **≈ 16 à 20**.' },
+    { id: 'moteur-c19', sousTheme: 'caracteristiques', recto: 'Qu\'est-ce que l\'alésage ?', verso: 'Le **diamètre** du cylindre.' }
   ],
 
   questions: [

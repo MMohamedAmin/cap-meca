@@ -59,7 +59,19 @@ CAP.ajouterChapitre({
     { id: 'secu-c2', sousTheme: 'produits', recto: 'Que signifient des câbles orange sur un véhicule ?', verso: '**Haute tension** : habilitation électrique obligatoire.' },
     { id: 'secu-c3', sousTheme: 'produits', recto: 'Que veut dire FDS ?', verso: '**Fiche de données de sécurité** d\'un produit.' },
     { id: 'secu-c4', sousTheme: 'produits', recto: 'Quel gaz dangereux rejette un moteur qui tourne en atelier ?', verso: 'Le **monoxyde de carbone**, mortel et inodore.' },
-    { id: 'secu-c5', sousTheme: 'epi', recto: 'Quels gants pour manipuler de l\'huile ou du carburant ?', verso: 'Des gants **nitrile**.' }
+    { id: 'secu-c5', sousTheme: 'epi', recto: 'Quels gants pour manipuler de l\'huile ou du carburant ?', verso: 'Des gants **nitrile**.' },
+    { id: 'secu-c6', sousTheme: 'epi', recto: 'EPI pour manipuler une batterie ?', verso: '**Gants et lunettes** : l\'électrolyte est un acide.' },
+    { id: 'secu-c7', sousTheme: 'epi', recto: 'Pourquoi pas de bijoux à l\'atelier ?', verso: 'Ils peuvent **s\'accrocher** aux pièces en rotation, et le métal conduit le courant.' },
+    { id: 'secu-c8', sousTheme: 'epi', recto: 'Pourquoi ne pas souffler la poussière des freins ?', verso: 'Elle est **nocive à respirer** : on la nettoie à l\'humide ou au nettoyant frein, avec un masque.' },
+    { id: 'secu-c9', sousTheme: 'levage', recto: 'Où placer les bras du pont élévateur ?', verso: 'Sur les **points de levage** prévus par le constructeur.' },
+    { id: 'secu-c10', sousTheme: 'levage', recto: 'Avant de lever un véhicule au cric ?', verso: '**Sol plat et dur**, frein de parking serré, **roues calées**.' },
+    { id: 'secu-c11', sousTheme: 'levage', recto: 'Au pont, avant de monter le véhicule en hauteur ?', verso: 'Le lever de quelques centimètres et **vérifier sa stabilité**.' },
+    { id: 'secu-c12', sousTheme: 'produits', recto: 'Pictogramme avec une flamme ?', verso: 'Produit **inflammable**.' },
+    { id: 'secu-c13', sousTheme: 'produits', recto: 'Pictogramme avec une main et une surface rongées ?', verso: 'Produit **corrosif**.' },
+    { id: 'secu-c14', sousTheme: 'produits', recto: 'Qui peut intervenir sur la haute tension d\'un hybride ?', verso: 'Une personne **habilitée**, après **consignation** du circuit.' },
+    { id: 'secu-c15', sousTheme: 'dechets', recto: 'Document qui suit un déchet dangereux jusqu\'à son élimination ?', verso: 'Le **bordereau de suivi des déchets**.' },
+    { id: 'secu-c16', sousTheme: 'dechets', recto: 'Peut-on mélanger huile et liquide de frein usagés ?', verso: '**Non** : chaque déchet va dans sa propre filière.' },
+    { id: 'secu-c17', sousTheme: 'dechets', recto: 'Où mettre les chiffons souillés d\'huile ?', verso: 'Dans le bac des **déchets dangereux**.' }
   ],
 
   questions: [

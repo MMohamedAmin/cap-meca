@@ -73,7 +73,19 @@ CAP.ajouterChapitre({
     { id: 'sol-c4', sousTheme: 'suspension', recto: 'Rôle de l\'amortisseur ?', verso: '**Freiner les oscillations** du ressort et garder la roue au sol.' },
     { id: 'sol-c5', sousTheme: 'suspension', recto: 'Rôle de la barre stabilisatrice ?', verso: '**Limiter le roulis** en virage.' },
     { id: 'sol-c6', sousTheme: 'geometrie', recto: 'Conséquences d\'un mauvais parallélisme ?', verso: '**Usure anormale** des pneus et voiture qui **tire**.' },
-    { id: 'sol-c7', sousTheme: 'pneus', recto: 'Comment serrer les roues ?', verso: 'À la **clé dynamométrique**, au couple constructeur, **en croix**.' }
+    { id: 'sol-c7', sousTheme: 'pneus', recto: 'Comment serrer les roues ?', verso: 'À la **clé dynamométrique**, au couple constructeur, **en croix**.' },
+    { id: 'sol-c8', sousTheme: 'pneus', recto: '205/55 R16 91V : que veut dire 205 ?', verso: 'La **largeur** du pneu, en mm.' },
+    { id: 'sol-c9', sousTheme: 'pneus', recto: '205/55 R16 91V : que veut dire 55 ?', verso: 'La **série** : la hauteur du flanc vaut 55 % de la largeur.' },
+    { id: 'sol-c10', sousTheme: 'pneus', recto: '205/55 R16 91V : que veulent dire 91 et V ?', verso: '91 = **indice de charge**, V = **indice de vitesse**.' },
+    { id: 'sol-c11', sousTheme: 'pneus', recto: 'Pneu usé au centre ? Usé sur les deux bords ?', verso: 'Centre = **surgonflé**. Deux bords = **sous-gonflé**.' },
+    { id: 'sol-c12', sousTheme: 'pneus', recto: 'Où lire la pression de gonflage préconisée ?', verso: 'Sur l\'**étiquette** du constructeur : portière ou trappe à carburant.' },
+    { id: 'sol-c13', sousTheme: 'suspension', recto: 'Rôle des ressorts ?', verso: '**Porter** le poids du véhicule.' },
+    { id: 'sol-c14', sousTheme: 'suspension', recto: 'Test rapide d\'un amortisseur ?', verso: 'Appuyer sur l\'aile puis relâcher : **une seule oscillation** si l\'amortisseur est bon.' },
+    { id: 'sol-c15', sousTheme: 'direction', recto: 'Pièces qui relient la crémaillère aux roues ?', verso: 'Les **biellettes** et les **rotules** de direction.' },
+    { id: 'sol-c16', sousTheme: 'direction', recto: 'Les deux types de direction assistée ?', verso: '**Hydraulique** (pompe) ou **électrique**, aujourd\'hui la plus courante.' },
+    { id: 'sol-c17', sousTheme: 'geometrie', recto: 'Vue de face, vue de dessus, vue de côté : quels angles ?', verso: 'Face = **carrossage**. Dessus = **parallélisme**. Côté = **chasse**.' },
+    { id: 'sol-c18', sousTheme: 'geometrie', recto: 'Deux pneus avant usés sur le bord extérieur ?', verso: 'Un **pincement** excessif.' },
+    { id: 'sol-c19', sousTheme: 'geometrie', recto: 'Rôle de la chasse ?', verso: 'Ramener la direction en **ligne droite**.' }
   ],
 
   questions: [

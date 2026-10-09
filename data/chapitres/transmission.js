@@ -60,7 +60,19 @@ CAP.ajouterChapitre({
     { id: 'trans-c3', sousTheme: 'embrayage', recto: 'Symptômes d\'un embrayage qui patine ?', verso: 'Le **régime monte** mais la voiture **n\'accélère pas**, odeur de brûlé.' },
     { id: 'trans-c4', sousTheme: 'embrayage', recto: 'Rôle de la butée d\'embrayage ?', verso: 'Appuyer sur le **diaphragme** pour **débrayer**.' },
     { id: 'trans-c5', sousTheme: 'transmissions', recto: 'Symptôme d\'un joint homocinétique usé ?', verso: '**Claquements en virage** braqué.' },
-    { id: 'trans-c6', sousTheme: 'boite', recto: 'Comment la marche arrière inverse-t-elle le sens ?', verso: 'Grâce à un **pignon intermédiaire** (inverseur).' }
+    { id: 'trans-c6', sousTheme: 'boite', recto: 'Comment la marche arrière inverse-t-elle le sens ?', verso: 'Grâce à un **pignon intermédiaire** (inverseur).' },
+    { id: 'trans-c7', sousTheme: 'boite', recto: 'La chaîne de transmission, dans l\'ordre ?', verso: 'Moteur → **embrayage** → **boîte** → **différentiel** → **arbres de transmission** → roues.' },
+    { id: 'trans-c8', sousTheme: 'boite', recto: 'Quel rapport donne le plus de couple aux roues ?', verso: 'La **1re**.' },
+    { id: 'trans-c9', sousTheme: 'boite', recto: 'Une vitesse saute toute seule : cause ?', verso: '**Crabots, fourchette ou verrouillage** usés dans la boîte.' },
+    { id: 'trans-c10', sousTheme: 'embrayage', recto: 'Rôle de l\'embrayage ?', verso: '**Accoupler et désaccoupler progressivement** le moteur et la boîte.' },
+    { id: 'trans-c11', sousTheme: 'embrayage', recto: 'Que contient un kit d\'embrayage ?', verso: 'Le **mécanisme** (plateau et diaphragme), le **disque** et la **butée**.' },
+    { id: 'trans-c12', sousTheme: 'embrayage', recto: 'Les deux types de commande d\'embrayage ?', verso: 'Par **câble**, ou **hydraulique** (émetteur et récepteur).' },
+    { id: 'trans-c13', sousTheme: 'embrayage', recto: 'Disque d\'embrayage huilé : que réparer en plus du kit ?', verso: 'La **fuite d\'huile**, souvent un joint spi.' },
+    { id: 'trans-c14', sousTheme: 'differentiel', recto: 'En virage, quelle roue motrice tourne le plus vite ?', verso: 'La roue **extérieure**.' },
+    { id: 'trans-c15', sousTheme: 'differentiel', recto: 'Où se trouve le différentiel d\'une traction à moteur transversal ?', verso: 'Dans la **boîte-pont**, avec la boîte de vitesses.' },
+    { id: 'trans-c16', sousTheme: 'transmissions', recto: 'Rôle du soufflet de transmission ?', verso: 'Garder la **graisse** et empêcher la **saleté** d\'entrer.' },
+    { id: 'trans-c17', sousTheme: 'transmissions', recto: 'Vibrations seulement en accélérant ?', verso: 'Un joint de transmission **côté boîte** usé.' },
+    { id: 'trans-c18', sousTheme: 'transmissions', recto: 'Que veut dire « homocinétique » ?', verso: '« Même **vitesse** » : la rotation reste régulière malgré l\'angle.' }
   ],
 
   questions: [
