@@ -10,7 +10,7 @@ Ta progression est enregistrée dans le navigateur. Pour la sauvegarder ou la tr
 
 ## Ce que contient le site
 
-- **8 chapitres** : moteur, lubrification, refroidissement, électricité, freinage, transmission, liaison au sol, sécurité et environnement.
+- **13 chapitres** : moteur, lubrification, refroidissement, alimentation et allumage, dépollution et échappement, climatisation, électricité, éclairage et signalisation, freinage, transmission, liaison au sol, sécurité et environnement, accueil client et atelier.
 - **Fiche de cours** par chapitre, avec des encadrés « À retenir » et « Attention ».
 - **Cartes mémo** : question, puis retournement, puis « je savais / je ne savais pas ». À la fin, on peut revoir seulement les cartes ratées.
 - **Quiz** : 10 questions par chapitre ou 20 en mélangé, explication après chaque réponse, note sur 20 et liste des erreurs.

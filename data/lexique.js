@@ -51,6 +51,11 @@ CAP.ajouterLexique([
   { mot: 'Fluide frigorigène', definition: 'Fluide qui transporte la chaleur dans la climatisation (R134a ou R1234yf). Il se récupère avec une station, jamais à l\'air libre.', chapitre: 'climatisation' },
   { mot: 'Pressostat', definition: 'Capteur de pression qui coupe le compresseur de climatisation si la pression est trop basse ou trop haute.', chapitre: 'climatisation' },
 
+  // Accueil client et atelier
+  { mot: 'Carnet d\'entretien', definition: 'Document du constructeur qui indique les opérations d\'entretien et leurs échéances, en kilomètres ou en temps.', chapitre: 'atelier' },
+  { mot: 'Ordre de réparation', definition: 'Document qui décrit les travaux à faire sur un véhicule. Signé par le client, il autorise le garage à intervenir.', chapitre: 'atelier' },
+  { mot: 'VIN', definition: 'Numéro d\'identification du véhicule (17 caractères), sur le certificat d\'immatriculation et sur le véhicule. Il sert à commander les bonnes pièces.', chapitre: 'atelier' },
+
   // Lubrification
   { mot: 'Carter d\'huile', definition: 'Réservoir fixé sous le moteur, qui contient l\'huile.', chapitre: 'lubrification' },
   { mot: 'Clapet de décharge', definition: 'Clapet du circuit de graissage qui limite la pression d\'huile maximale.', chapitre: 'lubrification' },
