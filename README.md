@@ -22,6 +22,7 @@ Ta progression est enregistrée dans le navigateur. Pour la sauvegarder ou la tr
 - **Mes erreurs** : les questions ratées la dernière fois. Une question réussie sort de la liste.
 - **Reconnaître les pièces** : des questions sur photo (« Quelle est cette pièce ? », « Que constates-tu sur ce soufflet ? ») et schémas à légender.
 - **Schémas à légender** : coupe du moteur, circuit de climatisation, circuit de freinage, embrayage en vue éclatée, structure du pneu. On **glisse chaque nom à côté de sa pièce** (ou on touche un nom, puis une case). Dans la fiche, le schéma est affiché avec les noms et le rôle de chaque pièce.
+- **Cas d'atelier** : 14 pannes réelles (surchauffe, pédale molle, embrayage qui patine, clim qui ne refroidit plus…). Un client décrit son problème, et on trouve la panne étape par étape : hypothèse, contrôle, cause, réparation. Les étapes déjà faites restent affichées.
 - **Examen blanc** : 20 questions sur tous les chapitres en 20 minutes, sans correction pendant l'épreuve, avec la note sur 20 et une correction détaillée à la fin.
 - **Progression enrichie** : calendrier d'activité, courbe des examens blancs, répartition des cartes par boîte.
 - **Formulaire** : les formules à connaître (moteur, électricité, pneus, unités) avec un exemple chiffré.
@@ -53,6 +54,7 @@ data/formulaire.js         les formules à connaître
 data/lexique.js            les mots du métier
 data/schemas.js            les schémas à légender (position de chaque étiquette)
 images/schemas/            les images des schémas (Wikimedia Commons, noms d'origine retirés)
+data/cas.js                les cas d'atelier (plainte du client et étapes du diagnostic)
 data/chapitres/*.js        le contenu, un fichier par chapitre
 images/pieces/             les photos des pièces (Wikimedia Commons)
 images/icones/             les icônes de l'appli

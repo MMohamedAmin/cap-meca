@@ -1,6 +1,6 @@
 // Espace de noms global du site. Chargé en premier.
 // Les fichiers de data/chapitres/ appellent CAP.ajouterChapitre({...}).
-window.CAP = window.CAP || { chapitres: [], images: {}, formulaire: [], lexique: [], schemas: {} };
+window.CAP = window.CAP || { chapitres: [], images: {}, formulaire: [], lexique: [], schemas: {}, cas: {} };
 
 CAP.ajouterChapitre = function (chapitre) {
   CAP.chapitres.push(chapitre);
@@ -34,6 +34,23 @@ CAP.ajouterSchemas = function (schemas) {
       schema: s.id,
       enonce: 'Place les noms sur le schéma « ' + s.titre + ' ».',
       explication: s.explication
+    });
+  });
+};
+
+// Études de cas d'atelier (data/cas.js, chargé APRÈS les chapitres). Chaque cas devient une
+// question de niveau 3 du chapitre, de type « cas » : plusieurs étapes à choix, dans l'ordre.
+// L'id de la question (cas-id) ne doit jamais changer : ne pas renommer les id des cas.
+CAP.ajouterCas = function (liste) {
+  liste.forEach(c => {
+    CAP.cas[c.id] = c;
+    const ch = CAP.chapitres.find(x => x.id === c.chapitre);
+    if (!ch) return; // signalé par le vérificateur
+    ch.questions.push({
+      id: 'cas-' + c.id, sousTheme: c.sousTheme, type: 'cas', niveau: 3,
+      cas: c.id,
+      enonce: 'Cas d\'atelier : ' + c.titre,
+      explication: c.conclusion
     });
   });
 };

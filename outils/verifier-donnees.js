@@ -55,7 +55,7 @@ for (const ch of contexte.CAP.chapitres) {
   (ch.questions || []).forEach(q => {
     verifierId(q.id, 'question');
     if (!st[q.sousTheme]) erreurs.push(`${p} ${q.id} : sous-thème inconnu « ${q.sousTheme} »`);
-    if (!['qcm', 'vf', 'ordre', 'etiquettes'].includes(q.type)) erreurs.push(`${p} ${q.id} : type inconnu « ${q.type} »`);
+    if (!['qcm', 'vf', 'ordre', 'etiquettes', 'cas'].includes(q.type)) erreurs.push(`${p} ${q.id} : type inconnu « ${q.type} »`);
     if (q.type === 'ordre') {
       // Étapes à remettre dans l'ordre : écrites dans le bon ordre, mélangées à l'affichage.
       if (!Array.isArray(q.etapes) || q.etapes.length < 3 || q.etapes.length > 8) erreurs.push(`${p} ${q.id} : il faut de 3 à 8 étapes`);
@@ -64,6 +64,9 @@ for (const ch of contexte.CAP.chapitres) {
     } else if (q.type === 'etiquettes') {
       // Créée par CAP.ajouterSchemas : le schéma est contrôlé plus bas.
       if (!q.schema) erreurs.push(`${p} ${q.id} : question à étiquettes sans schéma (à déclarer dans data/schemas.js)`);
+    } else if (q.type === 'cas') {
+      // Créée par CAP.ajouterCas : le cas est contrôlé plus bas.
+      if (!q.cas) erreurs.push(`${p} ${q.id} : question « cas » sans cas (à déclarer dans data/cas.js)`);
     } else if (!Array.isArray(q.choix) || q.choix.length < 2) erreurs.push(`${p} ${q.id} : il faut au moins 2 choix`);
     else if (!(q.bonne >= 0 && q.bonne < q.choix.length)) erreurs.push(`${p} ${q.id} : « bonne » hors des choix`);
     if (!q.explication) erreurs.push(`${p} ${q.id} : explication manquante`);
@@ -101,6 +104,23 @@ for (const [id, s] of Object.entries(schemas)) {
     if ((z.px !== undefined || z.py !== undefined) && !(dansImage(z.px) && dansImage(z.py))) erreurs.push(`${p} : px et py vont ensemble, entre 0 et 100 (${z.id})`);
   });
 }
+// Cas d'atelier (leur question est déjà dans le chapitre)
+for (const [id, c] of Object.entries(contexte.CAP.cas || {})) {
+  const p = `[cas] ${id}`;
+  const ch = contexte.CAP.chapitres.find(x => x.id === c.chapitre);
+  if (!ch) erreurs.push(`${p} : chapitre inconnu « ${c.chapitre} »`);
+  else if (!(ch.sousThemes || {})[c.sousTheme]) erreurs.push(`${p} : sous-thème inconnu « ${c.sousTheme} »`);
+  if (!c.titre || !c.plainte || !c.conclusion) erreurs.push(`${p} : titre, plainte ou conclusion manquant`);
+  const etapes = c.etapes || [];
+  if (etapes.length < 3 || etapes.length > 6) erreurs.push(`${p} : il faut de 3 à 6 étapes`);
+  etapes.forEach((e, k) => {
+    const pe = `${p} étape ${k + 1}`;
+    if (!e.enonce || !e.explication) erreurs.push(`${pe} : énoncé ou explication manquant`);
+    if (!Array.isArray(e.choix) || e.choix.length < 2 || new Set(e.choix).size !== e.choix.length) erreurs.push(`${pe} : il faut au moins 2 choix différents`);
+    else if (!(e.bonne >= 0 && e.bonne < e.choix.length)) erreurs.push(`${pe} : « bonne » hors des choix`);
+  });
+}
+
 contexte.CAP.chapitres.forEach(ch => (ch.fiche || []).forEach(s => s.contenu.forEach(b => {
   if (b && b.schema && !schemas[b.schema]) erreurs.push(`[${ch.id}] fiche « ${s.titre} » : schéma inconnu « ${b.schema} »`);
 })));

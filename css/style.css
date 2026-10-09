@@ -515,3 +515,15 @@ button.zone:disabled { cursor: default; opacity: 1; }
 @media (max-width: 420px) {
   .zone { font-size: .68rem; max-width: 8em; padding: 2px 5px; }
 }
+
+/* ===== Cas d'atelier ===== */
+.plainte {
+  margin: 10px 0 4px; padding: 12px 14px; border-radius: 12px;
+  background: var(--surface-2); border-left: 4px solid var(--accent);
+}
+.plainte p { margin: 2px 0 0; }
+.etape-cas { margin-top: 18px; padding-top: 12px; border-top: 1px dashed var(--bordure); scroll-margin-top: 70px; }
+.etape-cas h3 { font-size: 1.05rem; line-height: 1.35; margin: 2px 0 0; }
+.numero-etape { margin: 0; font-size: .8rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: .03em; }
+.retour-etape { padding: 10px 12px; border-radius: 12px; margin-bottom: 12px; border-left: 4px solid; }
+.etape-cas > .bouton { margin-bottom: 4px; }

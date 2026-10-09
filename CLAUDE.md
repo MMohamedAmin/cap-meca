@@ -17,6 +17,7 @@ Site de révision pour un élève en **CAP Maintenance des véhicules, option vo
 - `data/formulaire.js` : formules par thème `{ nom, formule, unites?, exemple?, calcul? }` (`calcul` = clé d'une calculatrice).
 - `data/lexique.js` : mots du métier `{ mot, definition, chapitre?, image? }`.
 - `data/schemas.js` : schémas à légender, images dans `images/schemas/` (voir « Schémas »).
+- `data/cas.js` : études de cas d'atelier (voir « Cas d'atelier »).
 - `data/chapitres/*.js` : contenu. L'ordre des `<script>` dans `index.html` = l'ordre d'affichage.
 - `js/stockage.js` : `CAP.stockage`, la progression dans `localStorage` (clé `capmeca.progression.v1`). Par question : `{vu, ok, derniere, date}`. Par carte : `{sais, pas, derniere, date, boite, prochaine}` (boîtes de Leitner 1 à 5, `prochaine` = jour `AAAA-MM-JJ` où la carte revient ; les cartes sans `boite` venant de la V1 sont complétées à la lecture). Plus les `seances` et les `jours` de révision.
 - `js/stats.js` : `CAP.stats`, la réussite par chapitre et par sous-thème, `pointsFaibles()`, la répartition des boîtes, les notes d'examens et l'activité.
@@ -29,7 +30,7 @@ Site de révision pour un élève en **CAP Maintenance des véhicules, option vo
 - `js/ia.js` : `CAP.ia`, l'assistant IA côté navigateur. Il appelle la fonction Netlify (`/api/ia` sur Netlify, sinon `URL_FONCTION`, vide = assistant masqué). Code d'accès gardé dans `localStorage` (`capmeca.ia.code`), signalements aussi (`capmeca.ia.signalements`).
 - `netlify/functions/ia.mjs` : la fonction HTTP (CORS, taille max, code d'accès `CODE_ACCES`). `netlify/ia/coeur.mjs` : validation des données, consignes envoyées à Claude, contrôle des réponses. Les consignes sont **toujours écrites côté serveur** ; le navigateur n'envoie que des données. Modèle `claude-opus-5-5`, `fallbacks: "default"`, questions générées en JSON imposé (`betaJSONSchemaOutputFormat`) puis filtrées.
 - `package.json` : dépendance `@anthropic-ai/sdk` pour la fonction **uniquement** ; le site reste sans dépendance. `npm run test-ia` teste le serveur IA avec un faux client (aucune clé, aucun frais).
-- `js/app.js` : routeur par hash (`#/`, `#/chapitre/:id`, `#/chapitre/:id/fiche|cartes|quiz`, `#/melange`, `#/entrainement`, `#/cartes`, `#/erreurs`, `#/examen`, `#/pieces`, `#/credits`, `#/formulaire`, `#/calculs/:cle?`, `#/lexique`, `#/recherche/:texte?`, `#/installer`, `#/assistant`, `#/ia`, `#/chapitre/:id/fiche/:section`, `#/progression`) et rendu des vues avec des template strings.
+- `js/app.js` : routeur par hash (`#/`, `#/chapitre/:id`, `#/chapitre/:id/fiche|cartes|quiz`, `#/melange`, `#/entrainement`, `#/cartes`, `#/erreurs`, `#/examen`, `#/pieces`, `#/cas`, `#/credits`, `#/formulaire`, `#/calculs/:cle?`, `#/lexique`, `#/recherche/:texte?`, `#/installer`, `#/assistant`, `#/ia`, `#/chapitre/:id/fiche/:section`, `#/progression`) et rendu des vues avec des template strings.
 
 Tout texte venant du contenu passe par `fmt()` (échappement HTML, puis `**gras**`) ou `echapper()`. Ne jamais injecter du contenu brut.
 
@@ -68,6 +69,19 @@ CAP.ajouterSchemas([{ id, chapitre, sousTheme, niveau?, titre, image, explicatio
 - Zone : `x`, `y` = position de l'étiquette en % de l'image (là où était le nom d'origine, au bout de son trait) ; `cote` (`g`, `d`, `h`, `b`) = côté où s'affiche l'étiquette par rapport à ce point ; `px`, `py` = pièce visée, quand l'image n'a pas de trait de rappel (le site en dessine un).
 - `largeur` : largeur d'affichage maximale (px) ; `largeurMin` : en dessous, l'image défile de côté pour garder les étiquettes lisibles. Vérifier à 360 px qu'aucune étiquette n'en chevauche une autre.
 - Dans une fiche, le bloc `{ schema: 'id' }` affiche le schéma avec les noms posés et la légende des rôles.
+
+## Cas d'atelier
+
+`data/cas.js` (chargé **après** les chapitres) : un client arrive avec une plainte, l'élève trouve la panne étape par étape.
+
+```js
+CAP.ajouterCas([{ id, chapitre, sousTheme, titre, vehicule?, plainte,
+  etapes: [{ enonce, choix: [...], bonne, explication }], conclusion }]);
+```
+
+- `CAP.ajouterCas` crée une question de type `cas`, **niveau 3**, d'id `cas-<id>` : l'`id` du cas **ne doit jamais changer**. Le cas est réussi si toutes les étapes sont justes. Les étapes s'affichent l'une après l'autre et restent visibles ; les choix sont mélangés (bonne réponse en premier par convention).
+- 3 à 6 étapes, dans l'ordre d'un vrai diagnostic : hypothèse, contrôle (du plus simple au plus compliqué), cause, réparation et contrôle final. `conclusion` = la méthode à retenir.
+- Mode « Cas d'atelier » (`#/cas`, `CAP.series.cas`) : 3 cas, ratés et jamais faits d'abord, sans tenir compte du verrouillage des niveaux. Pas dans l'examen blanc, pas d'explication IA.
 
 ## Contenu
 

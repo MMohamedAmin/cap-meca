@@ -8,6 +8,7 @@
   const NB_CARTES_JOUR = 20;
   const NB_EXAMEN = 20;
   const NB_PIECES = 10;
+  const NB_CAS = 3;
   const DUREE_EXAMEN = 20 * 60 * 1000; // 1 minute par question
 
   // ---------- Outils ----------
@@ -53,8 +54,10 @@
   // Choix d'une question prêts à l'affichage (les QCM sont mélangés, pas les Vrai/Faux).
   // Questions « ordre » : les étapes mélangées, jamais déjà dans le bon ordre ; pos = bonne place.
   // Questions « etiquettes » : les numéros des zones du schéma, mélangés (ordre des noms à placer).
+  // Questions « cas » : pour chaque étape, ses choix mélangés.
   function preparerChoix(q) {
     if (q.type === 'etiquettes') return melanger(CAP.schemas[q.schema].zones.map((z, k) => k));
+    if (q.type === 'cas') return CAP.cas[q.cas].etapes.map(e => melanger(e.choix.map((t, k) => ({ texte: t, juste: k === e.bonne }))));
     if (q.type === 'ordre') {
       const etapes = q.etapes.map((t, pos) => ({ texte: t, pos }));
       let m = melanger(etapes);
@@ -69,6 +72,8 @@
     S = S || fmt;
     if (q.type === 'ordre') return `<ol class="erreur-reponse ordre-correct">${q.etapes.map(e => `<li>${S(e)}</li>`).join('')}</ol>`;
     if (q.type === 'etiquettes') return legendeSchema(CAP.schemas[q.schema]);
+    if (q.type === 'cas') return `<ol class="erreur-reponse">${CAP.cas[q.cas].etapes.map(e =>
+      `<li>${S(e.enonce)}<br>✔ ${S(e.choix[e.bonne])}</li>`).join('')}</ol>`;
     return `<p class="erreur-reponse">✔ ${S(q.choix[q.bonne])}</p>`;
   }
   // QCM et Vrai/Faux : une seule réponse choisie (examen blanc, explications de l'IA).
@@ -299,6 +304,10 @@
           <strong>Examen blanc</strong>
           <span>${NB_EXAMEN} questions · ${DUREE_EXAMEN / 60000} min</span>
         </a>
+        <a class="mode" href="#/cas">
+          <strong>Cas d'atelier</strong>
+          <span>${CAP.series.nbCas()} pannes à diagnostiquer, étape par étape</span>
+        </a>
         <a class="mode" href="#/pieces">
           <strong>Reconnaître les pièces</strong>
           <span>${CAP.series.nbPieces()} photos et schémas à légender</span>
@@ -523,22 +532,7 @@
           ${o.sansEtiquette ? '' : `<span class="etiquette">${o.plusieursChapitres ? echapper(item.ch.titre) + ' · ' : ''}${echapper(item.ch.sousThemes[item.q.sousTheme] || '')}</span>`}
           ${badgeNiveau(CAP.stats.niveau(item.q))}
           <h2>${fmt(item.q.enonce)}</h2>
-          ${item.q.type === 'etiquettes' ? `
-          ${planche(item.q.schema, true)}
-          <p class="petit">Glisse chaque nom sur sa case, ou touche un nom puis une case. Touche une case remplie pour la vider.</p>
-          <div class="banque-etiquettes" id="banque">
-            ${item.choix.map(e => `<button type="button" class="pastille" data-e="${e}" aria-pressed="false">${echapper(CAP.schemas[item.q.schema].zones[e].nom)}</button>`).join('')}
-          </div>
-          <button class="bouton bouton-principal bouton-large" id="valider-etiquettes" disabled>Valider</button>` : illustration(item.q)}
-          ${item.q.type === 'etiquettes' ? '' : item.q.type === 'ordre' ? `
-          <p class="petit">Touche les étapes dans le bon ordre. Touche une étape déjà choisie pour l'enlever.</p>
-          <div class="liste-choix">
-            ${item.choix.map((c, k) => `<button class="choix etape" data-k="${k}" aria-pressed="false"><span class="numero" aria-hidden="true"></span><span>${fmt(c.texte)}</span></button>`).join('')}
-          </div>
-          <button class="bouton bouton-principal bouton-large" id="valider-ordre" disabled>Valider l'ordre</button>` : `
-          <div class="liste-choix">
-            ${item.choix.map((c, k) => `<button class="choix" data-k="${k}">${fmt(c.texte)}</button>`).join('')}
-          </div>`}
+          ${corpsQuestion(item)}
           <div class="retour-reponse" id="retour" hidden></div>
           <div id="zone-ia"></div>
           <button class="bouton bouton-principal bouton-large" id="suivant" hidden>
@@ -548,11 +542,92 @@
       `);
       if (item.q.type === 'ordre') brancherOrdre(item);
       else if (item.q.type === 'etiquettes') brancherEtiquettes(item);
+      else if (item.q.type === 'cas') brancherCas(item);
       else app.querySelectorAll('.choix').forEach(b => b.addEventListener('click', () => repondre(+b.dataset.k)));
       document.getElementById('suivant').addEventListener('click', () => {
         i++;
         if (i < nb) montrer(); else fin();
       });
+    }
+
+    // Partie propre à chaque type de question (entre l'énoncé et la correction).
+    function corpsQuestion(item) {
+      const q = item.q;
+      if (q.type === 'etiquettes') return `
+          ${planche(q.schema, true)}
+          <p class="petit">Glisse chaque nom sur sa case, ou touche un nom puis une case. Touche une case remplie pour la vider.</p>
+          <div class="banque-etiquettes" id="banque">
+            ${item.choix.map(e => `<button type="button" class="pastille" data-e="${e}" aria-pressed="false">${echapper(CAP.schemas[q.schema].zones[e].nom)}</button>`).join('')}
+          </div>
+          <button class="bouton bouton-principal bouton-large" id="valider-etiquettes" disabled>Valider</button>`;
+      if (q.type === 'cas') {
+        const c = CAP.cas[q.cas];
+        return `
+          <div class="plainte">
+            ${c.vehicule ? `<span class="petit">${echapper(c.vehicule)}</span>` : ''}
+            <p><strong>Le client :</strong> « ${fmt(c.plainte)} »</p>
+          </div>
+          <div id="etapes-cas"></div>`;
+      }
+      if (q.type === 'ordre') return `${illustration(q)}
+          <p class="petit">Touche les étapes dans le bon ordre. Touche une étape déjà choisie pour l'enlever.</p>
+          <div class="liste-choix">
+            ${item.choix.map((c, k) => `<button class="choix etape" data-k="${k}" aria-pressed="false"><span class="numero" aria-hidden="true"></span><span>${fmt(c.texte)}</span></button>`).join('')}
+          </div>
+          <button class="bouton bouton-principal bouton-large" id="valider-ordre" disabled>Valider l'ordre</button>`;
+      return `${illustration(q)}
+          <div class="liste-choix">
+            ${item.choix.map((c, k) => `<button class="choix" data-k="${k}">${fmt(c.texte)}</button>`).join('')}
+          </div>`;
+    }
+
+    // Cas d'atelier : les étapes s'affichent l'une après l'autre et restent visibles.
+    // Le cas est réussi si toutes les étapes sont justes du premier coup.
+    function brancherCas(item) {
+      const c = CAP.cas[item.q.cas];
+      const zone = document.getElementById('etapes-cas');
+      let bonnes = 0;
+      function etape(n) {
+        const e = c.etapes[n], choix = item.choix[n];
+        const bloc = document.createElement('div');
+        bloc.className = 'etape-cas';
+        bloc.innerHTML = `
+          <p class="numero-etape">Étape ${n + 1} / ${c.etapes.length}</p>
+          <h3>${fmt(e.enonce)}</h3>
+          <div class="liste-choix">
+            ${choix.map((x, k) => `<button class="choix" data-k="${k}">${fmt(x.texte)}</button>`).join('')}
+          </div>
+          <div class="retour-etape" hidden></div>`;
+        zone.appendChild(bloc);
+        if (n > 0) bloc.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        const boutons = [...bloc.querySelectorAll('.choix')];
+        boutons.forEach((b, k) => b.addEventListener('click', () => {
+          const juste = choix[k].juste;
+          if (juste) bonnes++;
+          boutons.forEach((x, j) => {
+            x.disabled = true;
+            if (choix[j].juste) x.classList.add('bon');
+            else if (j === k) x.classList.add('faux');
+          });
+          const r = bloc.querySelector('.retour-etape');
+          r.className = 'retour-etape ' + (juste ? 'retour-bon' : 'retour-faux');
+          r.innerHTML = `<strong>${juste ? 'Oui.' : 'Non.'}</strong> ${fmt(e.explication)}`;
+          r.hidden = false;
+          if (n + 1 < c.etapes.length) {
+            const suite = document.createElement('button');
+            suite.className = 'bouton bouton-large';
+            suite.textContent = 'Étape suivante';
+            suite.addEventListener('click', () => { suite.remove(); etape(n + 1); });
+            bloc.appendChild(suite);
+            suite.focus();
+          } else {
+            item.bilan = bonnes + ' étape' + (bonnes > 1 ? 's' : '') + ' réussie' + (bonnes > 1 ? 's' : '') + ' sur ' + c.etapes.length;
+            item.choisie = item.bilan;
+            conclure(item, bonnes === c.etapes.length);
+          }
+        }));
+      }
+      etape(0);
     }
 
     function repondre(k) {
@@ -725,7 +800,9 @@
 
       const r = document.getElementById('retour');
       r.className = 'retour-reponse ' + (juste ? 'retour-bon' : 'retour-faux');
-      r.innerHTML = `<strong>${juste ? 'Bonne réponse !' : 'Raté.'}</strong> ${fmt(item.q.explication)}`
+      r.innerHTML = item.q.type === 'cas'
+        ? `<strong>${juste ? 'Cas résolu !' : 'Cas terminé : ' + echapper(item.bilan) + '.'}</strong> <span class="titre-ordre">À retenir :</span> ${fmt(item.q.explication)}`
+        : `<strong>${juste ? 'Bonne réponse !' : 'Raté.'}</strong> ${fmt(item.q.explication)}`
         + (!juste && item.q.type === 'ordre' ? `<p class="titre-ordre">Le bon ordre :</p>${bonneReponse(item.q)}` : '')
         + (item.q.type === 'etiquettes' ? `<p class="titre-ordre">Étiquettes : ${echapper(item.bilan)}.</p>${bonneReponse(item.q)}` : '');
       r.hidden = false;
@@ -856,6 +933,19 @@
       liensFin: '<a class="bouton" href="#/credits">Crédits photos</a>',
       libelleRefaire: 'Nouvelle série',
       refaire: vuePieces
+    });
+  }
+
+  // ---------- Cas d'atelier ----------
+  function vueCas() {
+    lancerQuiz({
+      items: CAP.series.cas(NB_CAS),
+      retour: lienRetour('#/', 'Accueil'),
+      seance: 'cas',
+      plusieursChapitres: true,
+      bandeau: 'Un client arrive avec un problème. Trouve la panne étape par étape, comme à l\'atelier.',
+      libelleRefaire: 'Autres cas',
+      refaire: vueCas
     });
   }
 
@@ -1419,6 +1509,7 @@
     erreurs: 'Révision des erreurs',
     jour: 'Cartes du jour',
     pieces: 'Reconnaître les pièces',
+    cas: 'Cas d\'atelier',
     ia: 'Questions de l\'IA',
     examen: 'Examen blanc'
   };
@@ -1606,6 +1697,7 @@
     if (p[0] === 'cartes') return vueCartesDuJour();
     if (p[0] === 'examen') return vueExamen();
     if (p[0] === 'pieces') return vuePieces();
+    if (p[0] === 'cas') return vueCas();
     if (p[0] === 'credits') return vueCredits();
     if (p[0] === 'formulaire') return vueFormulaire();
     if (p[0] === 'calculs') return vueCalculs(p[1]);

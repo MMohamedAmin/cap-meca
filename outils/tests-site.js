@@ -122,4 +122,16 @@ ok(CAP.series.pieces(50).some(x => x.q.schema), 'schémas : proposés dans « Re
 ok(CAP.series.examen(20).every(x => x.q.type === 'qcm' || x.q.type === 'vf'), 'schémas : l\'examen blanc n\'en contient pas');
 ok(CAP.recherche.chercher('tringle').groupes.some(g => g.resultats.some(e => e.question && e.question.type === 'etiquettes')), 'schémas : la recherche trouve les noms des pièces');
 
+// Cas d'atelier : une question de niveau 3 par cas
+const questionsCas = CAP.chapitres.flatMap(ch => ch.questions.filter(q => q.type === 'cas'));
+ok(questionsCas.length >= 10 && questionsCas.length === Object.keys(CAP.cas).length, 'cas : une question par cas');
+ok(questionsCas.every(q => q.id === 'cas-' + q.cas && CAP.stats.niveau(q) === 3), 'cas : id stable et niveau 3');
+CAP.stockage.reinitialiser();
+const serieCas = CAP.series.cas(3);
+ok(serieCas.length === 3 && serieCas.every(x => x.q.type === 'cas') && CAP.series.nbCas() === questionsCas.length, 'cas : la série propose 3 cas');
+CAP.stockage.reponseQuestion(questionsCas[0].id, false);
+ok(CAP.series.cas(3)[0].q.id === questionsCas[0].id, 'cas : un cas raté revient en premier');
+ok(CAP.recherche.chercher('spongieuse').groupes.some(g => g.resultats.some(e => e.question && e.question.type === 'cas')), 'cas : la recherche trouve la plainte du client');
+CAP.stockage.reinitialiser();
+
 console.log(nbEchecs ? `${nbEchecs} test(s) en échec, ${nbOk} réussi(s).` : `${nbOk} tests réussis.`);

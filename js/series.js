@@ -83,6 +83,13 @@ CAP.series = (function () {
     },
     nbPieces() { return toutesQuestions().filter(x => x.q.image || x.q.schema).length; },
 
+    // Cas d'atelier : d'abord ceux ratés la dernière fois, puis ceux jamais faits.
+    // Tous les cas sont proposés, même si le niveau 3 n'est pas encore débloqué.
+    cas(n) {
+      return prioriser(toutesQuestions().filter(x => x.q.type === 'cas')).slice(0, n);
+    },
+    nbCas() { return toutesQuestions().filter(x => x.q.type === 'cas').length; },
+
     // Questions ratées à la dernière tentative.
     erreurs(limite) {
       return melanger(erreurs()).slice(0, limite || Infinity);
@@ -94,7 +101,7 @@ CAP.series = (function () {
     // dans chaque chapitre, on alterne questions faciles (niveau 1) et difficiles (2 ou 3),
     // en commençant par une difficile un chapitre sur deux ; le complément est pour moitié difficile.
     // Seuls les QCM et Vrai/Faux y figurent (réponse unique par question dans l'examen) :
-    // ni « remettre dans l'ordre » ni schémas à légender.
+    // ni « remettre dans l'ordre », ni schémas à légender, ni cas d'atelier.
     examen(n) {
       const parChapitre = Math.max(1, Math.floor(n / CAP.chapitres.length));
       const difficile = x => CAP.stats.niveau(x.q) > 1;

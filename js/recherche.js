@@ -92,6 +92,7 @@ CAP.recherche = (function () {
         type: 'question', titre: q.enonce, ch, question: q,
         texte: (q.type === 'ordre' ? q.etapes.join(' ')
           : q.type === 'etiquettes' ? CAP.schemas[q.schema].zones.map(z => z.nom).join(' ')
+          : q.type === 'cas' ? [CAP.cas[q.cas].plainte].concat(CAP.cas[q.cas].etapes.map(e => e.enonce + ' ' + e.choix[e.bonne])).join(' ')
           : q.choix[q.bonne]) + ' ' + q.explication
       }));
     });
