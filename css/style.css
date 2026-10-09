@@ -15,6 +15,7 @@
   --rouge-doux: #fbe0e0;
   --jaune: #e09f00;
   --jaune-doux: #fff3cc;
+  --froid: #1c7ed6;
   --ombre: 0 1px 2px rgba(0,0,0,.06), 0 2px 8px rgba(0,0,0,.05);
   --rayon: 14px;
   color-scheme: light;
@@ -24,7 +25,7 @@
     --fond: #15171a; --surface: #1f2226; --surface-2: #2a2e33; --texte: #eceef0;
     --texte-doux: #a3a9b1; --bordure: #353a40; --accent: #ff7a3d; --accent-texte: #1a0d05;
     --accent-doux: #3b2116; --vert: #51cf66; --vert-doux: #1b3323; --rouge: #ff6b6b;
-    --rouge-doux: #3d1d1f; --jaune: #fcc419; --jaune-doux: #3a3115;
+    --rouge-doux: #3d1d1f; --jaune: #fcc419; --jaune-doux: #3a3115; --froid: #4dabf7;
     --ombre: 0 1px 2px rgba(0,0,0,.4); color-scheme: dark;
   }
 }
@@ -32,7 +33,7 @@
   --fond: #15171a; --surface: #1f2226; --surface-2: #2a2e33; --texte: #eceef0;
   --texte-doux: #a3a9b1; --bordure: #353a40; --accent: #ff7a3d; --accent-texte: #1a0d05;
   --accent-doux: #3b2116; --vert: #51cf66; --vert-doux: #1b3323; --rouge: #ff6b6b;
-  --rouge-doux: #3d1d1f; --jaune: #fcc419; --jaune-doux: #3a3115;
+  --rouge-doux: #3d1d1f; --jaune: #fcc419; --jaune-doux: #3a3115; --froid: #4dabf7;
   --ombre: 0 1px 2px rgba(0,0,0,.4); color-scheme: dark;
 }
 
@@ -452,3 +453,32 @@ details.resultat-recherche[open] summary strong::after { content: ' ▴'; }
 .titre-ordre { margin: 8px 0 2px; font-weight: 700; }
 ol.erreur-reponse { margin: 4px 0; padding-left: 1.4rem; }
 ol.erreur-reponse li { margin-bottom: 2px; }
+
+/* ===== Schémas dessinés (data/schemas.js) ===== */
+.schema { margin: 0 0 12px; }
+.schema svg {
+  display: block; width: 100%; height: auto; max-height: 380px;
+  background: var(--surface); border: 1px solid var(--bordure); border-radius: 12px;
+}
+.schema.petite svg { max-height: 200px; }
+.schema figcaption { font-size: .85rem; font-weight: 700; margin: 6px 0 2px; }
+.sch-plein { fill: var(--surface-2); stroke: var(--texte); stroke-width: 2; }
+.sch-piece { fill: var(--texte-doux); stroke: var(--texte); stroke-width: 1.5; }
+.sch-trait { fill: none; stroke: var(--texte); stroke-width: 2; }
+.sch-trait-fin { fill: none; stroke: var(--texte-doux); stroke-width: 1; }
+.sch-pointille { stroke-dasharray: 5 4; }
+.sch-joint { fill: var(--accent); }
+.sch-huile { fill: var(--jaune); opacity: .6; }
+.sch-liquide { fill: var(--vert); opacity: .45; }
+.sch-tuyau { fill: none; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+.sch-tuyau-fin { fill: none; stroke: var(--texte-doux); stroke-width: 2; }
+.sch-chaud { stroke: var(--rouge); }
+.sch-froid { stroke: var(--froid); }
+.sch-texte { fill: var(--texte-doux); font-size: 11px; }
+.repere circle { fill: var(--surface); stroke: var(--accent); stroke-width: 2; }
+.repere text { fill: var(--accent); font-size: 11px; font-weight: 800; text-anchor: middle; dominant-baseline: central; }
+.repere.actif circle { fill: var(--accent); }
+.repere.actif text { fill: var(--accent-texte); }
+.repere.inactif { opacity: .3; }
+.legende-schema { margin: 6px 0 0; padding-left: 1.4rem; font-size: .9rem; }
+.legende-schema li { margin-bottom: 3px; }

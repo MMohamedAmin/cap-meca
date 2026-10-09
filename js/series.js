@@ -63,11 +63,12 @@ CAP.series = (function () {
       for (const st of CAP.stats.pointsFaibles(Infinity)) {
         if (pool.length >= nCible) break;
         cibles.push(st);
-        pool = pool.concat(st.chapitre.questions
+        // On ne compte que les questions proposables (niveau débloqué).
+        pool = pool.concat(accessibles(st.chapitre.questions
           .filter(q => q.sousTheme === st.id)
-          .map(q => ({ q, ch: st.chapitre })));
+          .map(q => ({ q, ch: st.chapitre })), niveaux));
       }
-      const choisies = prioriser(accessibles(pool, niveaux)).slice(0, nCible);
+      const choisies = prioriser(pool).slice(0, nCible);
       const pris = new Set(choisies.map(x => x.q.id));
       const jamaisVue = x => (CAP.stockage.question(x.q.id) ? 1 : 0);
       const reste = melanger(toutes.filter(x => !pris.has(x.q.id)))
@@ -77,10 +78,11 @@ CAP.series = (function () {
     },
 
     // Questions illustrées par une photo (mode « Reconnaître les pièces »).
+    // Photos et schémas.
     pieces(n) {
-      return melanger(prioriser(toutesQuestions().filter(x => x.q.image)).slice(0, n));
+      return melanger(prioriser(toutesQuestions().filter(x => x.q.image || x.q.schema)).slice(0, n));
     },
-    nbPieces() { return toutesQuestions().filter(x => x.q.image).length; },
+    nbPieces() { return toutesQuestions().filter(x => x.q.image || x.q.schema).length; },
 
     // Questions ratées à la dernière tentative.
     erreurs(limite) {

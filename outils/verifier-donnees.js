@@ -75,8 +75,29 @@ for (const ch of contexte.CAP.chapitres) {
   });
 }
 
-// Lexique
+// Schémas (leurs questions sont déjà dans les chapitres, contrôlées plus haut)
 const idsChapitres = new Set(contexte.CAP.chapitres.map(c => c.id));
+const schemas = contexte.CAP.schemas || {};
+for (const [id, s] of Object.entries(schemas)) {
+  const p = `[schéma] ${id}`;
+  const ch = contexte.CAP.chapitres.find(c => c.id === s.chapitre);
+  if (!ch) erreurs.push(`${p} : chapitre inconnu « ${s.chapitre} »`);
+  else if (!(ch.sousThemes || {})[s.sousTheme]) erreurs.push(`${p} : sous-thème inconnu « ${s.sousTheme} »`);
+  if (!s.titre || !s.viewBox || !s.svg) erreurs.push(`${p} : titre, viewBox ou svg manquant`);
+  if (/<script|\son\w+\s*=|javascript:/i.test(s.svg || '')) erreurs.push(`${p} : le SVG ne doit contenir ni script ni attribut on…`);
+  const reperes = s.reperes || [];
+  if (reperes.length < 4) erreurs.push(`${p} : il faut au moins 4 repères`);
+  if (new Set(reperes.map(r => r.id)).size !== reperes.length) erreurs.push(`${p} : id de repère en double`);
+  if (new Set(reperes.map(r => r.nom)).size !== reperes.length) erreurs.push(`${p} : nom de repère en double`);
+  reperes.forEach(r => {
+    if (!r.id || !r.nom || !r.role || !(r.x >= 0) || !(r.y >= 0)) erreurs.push(`${p} : repère incomplet (${r.id || '?'})`);
+  });
+}
+contexte.CAP.chapitres.forEach(ch => (ch.fiche || []).forEach(s => s.contenu.forEach(b => {
+  if (b && b.schema && !schemas[b.schema]) erreurs.push(`[${ch.id}] fiche « ${s.titre} » : schéma inconnu « ${b.schema} »`);
+})));
+
+// Lexique
 const mots = new Set();
 (contexte.CAP.lexique || []).forEach((m, i) => {
   const p = `[lexique] ${m.mot || 'n°' + (i + 1)}`;

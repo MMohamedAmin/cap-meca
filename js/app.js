@@ -79,7 +79,26 @@
         <figcaption>Photo : ${echapper(im.auteur)} · ${echapper(im.licence)}</figcaption>
       </figure>`;
   }
-  function illustration(q, petite) { return photo(q.image, petite); }
+  function illustration(q, petite) { return q.schema ? schema(q.schema, q.repere, false, petite) : photo(q.image, petite); }
+
+  // Schéma de data/schemas.js. actif : repère demandé (les autres sont estompés) ;
+  // legende : liste des éléments sous le schéma (fiches de cours).
+  function schema(id, actif, legende, petit) {
+    const s = CAP.schemas[id];
+    if (!s) return '';
+    const reperes = s.reperes.map((r, k) => {
+      const etat = actif ? (r.id === actif ? ' actif' : ' inactif') : '';
+      return `<g class="repere${etat}"><circle cx="${r.x}" cy="${r.y}" r="10"/><text x="${r.x}" y="${r.y}">${k + 1}</text></g>`;
+    }).join('');
+    // Le SVG du schéma est écrit dans le projet (data/schemas.js) et contrôlé par le vérificateur.
+    return `
+      <figure class="schema${petit ? ' petite' : ''}">
+        <svg viewBox="${echapper(s.viewBox)}" role="img" aria-label="${echapper(s.titre)}">${s.svg}${reperes}</svg>
+        ${legende
+          ? `<figcaption>${echapper(s.titre)}</figcaption><ol class="legende-schema">${s.reperes.map(r => `<li><strong>${echapper(r.nom)}</strong> : ${fmt(r.role)}</li>`).join('')}</ol>`
+          : ''}
+      </figure>`;
+  }
 
   // ---------- Niveaux de difficulté ----------
   const NOMS_NIVEAUX = ['', 'Connaître', 'Comprendre et calculer', 'Diagnostiquer'];
@@ -295,6 +314,7 @@
     if (b.formule) return `<div class="formule">${fmt(b.formule)}</div>`;
     if (b.retenir) return `<div class="encadre retenir"><span class="encadre-titre">À retenir</span>${fmt(b.retenir)}</div>`;
     if (b.attention) return `<div class="encadre attention"><span class="encadre-titre">Attention</span>${fmt(b.attention)}</div>`;
+    if (b.schema) return schema(b.schema, null, true);
     return '';
   }
 

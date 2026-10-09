@@ -16,6 +16,7 @@ Site de révision pour un élève en **CAP Maintenance des véhicules, option vo
 - `data/images.js` : les photos (`images/pieces/`) avec leurs crédits : `{ fichier, description, auteur, licence, licenceUrl, source }`. `description` sert de texte alternatif et ne doit pas donner la réponse.
 - `data/formulaire.js` : formules par thème `{ nom, formule, unites?, exemple?, calcul? }` (`calcul` = clé d'une calculatrice).
 - `data/lexique.js` : mots du métier `{ mot, definition, chapitre?, image? }`.
+- `data/schemas.js` : schémas SVG à repères numérotés (voir « Schémas »).
 - `data/chapitres/*.js` : contenu. L'ordre des `<script>` dans `index.html` = l'ordre d'affichage.
 - `js/stockage.js` : `CAP.stockage`, la progression dans `localStorage` (clé `capmeca.progression.v1`). Par question : `{vu, ok, derniere, date}`. Par carte : `{sais, pas, derniere, date, boite, prochaine}` (boîtes de Leitner 1 à 5, `prochaine` = jour `AAAA-MM-JJ` où la carte revient ; les cartes sans `boite` venant de la V1 sont complétées à la lecture). Plus les `seances` et les `jours` de révision.
 - `js/stats.js` : `CAP.stats`, la réussite par chapitre et par sous-thème, `pointsFaibles()`, la répartition des boîtes, les notes d'examens et l'activité.
@@ -38,7 +39,7 @@ Tout texte venant du contenu passe par `fmt()` (échappement HTML, puis `**gras*
 CAP.ajouterChapitre({
   id, titre, icone, description,
   sousThemes: { cle: 'Nom affiché' },
-  fiche: [{ titre, sousTheme, contenu: [ 'paragraphe', {liste:[...]}, {formule}, {retenir}, {attention} ] }],
+  fiche: [{ titre, sousTheme, contenu: [ 'paragraphe', {liste:[...]}, {formule}, {retenir}, {attention}, {schema} ] }],
   cartes: [{ id, sousTheme, recto, verso }],
   questions: [{ id, sousTheme, type: 'qcm'|'vf', niveau?, image?, enonce, choix: [...], bonne: index, explication }
              | { id, sousTheme, type: 'ordre', niveau?, enonce, etapes: [...], explication }]
@@ -52,6 +53,19 @@ CAP.ajouterChapitre({
 - `niveau` (facultatif, 1 par défaut) : **1** connaître, **2** comprendre et calculer (souvent en plusieurs étapes), **3** diagnostiquer une situation d'atelier. Un niveau s'ouvre dans un sous-thème quand le niveau inférieur est maîtrisé (`CAP.stats.niveauSousTheme` : au moins 80 % des questions vues réussies à la dernière réponse) ; les séries (`CAP.series.adaptee`, `ciblee`) ne proposent pas un niveau verrouillé, l'examen blanc mélange tous les niveaux. Prévoir des questions de niveaux 2 et 3 dans chaque sous-thème.
 - `image` (facultatif) : clé d'une photo de `data/images.js`. Les questions avec photo forment le mode « Reconnaître les pièces ».
 - Chaque sous-thème doit avoir au moins une question. Le sous-thème est la base de l'entraînement ciblé.
+
+## Schémas
+
+`data/schemas.js` (chargé **après** les chapitres) : schémas SVG dessinés à la main, avec des repères numérotés.
+
+```js
+CAP.ajouterSchemas([{ id, chapitre, sousTheme, titre, viewBox, svg, reperes: [{ id, nom, role, x, y, niveau? }] }]);
+```
+
+- `CAP.ajouterSchemas` crée une question « comment s'appelle l'élément n° … ? » par repère, d'id `sch-<schéma>-<repère>` : les `id` des schémas et des repères **ne doivent jamais changer**. Les mauvais choix sont les noms des 3 repères suivants.
+- `svg` : le contenu du dessin (sans la balise `<svg>`), avec les classes `sch-*` de `css/style.css` (couleurs adaptées au mode sombre). Ni script ni attribut `on…` (contrôlé par le vérificateur). Ne pas écrire le nom des pièces sur le dessin.
+- Dans une fiche, le bloc `{ schema: 'id' }` affiche le schéma avec sa légende. En question, seul le repère demandé est en surbrillance. Les questions sur schéma font partie du mode « Reconnaître les pièces ».
+- `x`, `y` : centre du repère dans le `viewBox`, à côté de la pièce et sans chevaucher un autre repère.
 
 ## Contenu
 

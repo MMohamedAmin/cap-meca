@@ -1,6 +1,6 @@
 // Service worker : garde le site en mémoire pour qu'il marche sans connexion.
 // FICHIER GÉNÉRÉ par « node outils/maj-hors-ligne.js » : ne pas modifier à la main.
-const VERSION = 'capmeca-f9558040ce21';
+const VERSION = 'capmeca-f5cae5041de9';
 const FICHIERS = [
   './',
   'css/style.css',
@@ -20,6 +20,7 @@ const FICHIERS = [
   'data/formulaire.js',
   'data/images.js',
   'data/lexique.js',
+  'data/schemas.js',
   'images/icones/apple-touch-icon.png',
   'images/icones/icone-192.png',
   'images/icones/icone-512.png',

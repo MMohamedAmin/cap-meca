@@ -22,7 +22,8 @@ CAP.ajouterChapitre({
           '**Détendeur** : fait chuter la pression du liquide, qui devient très froid.',
           '**Évaporateur** (dans la planche de bord) : le fluide s\'évapore en absorbant la chaleur de l\'air envoyé dans l\'habitacle, puis retourne au compresseur.'
         ] },
-        { retenir: 'L\'évaporateur froid condense aussi l\'**humidité** de l\'air : la climatisation sèche l\'air et aide à **désembuer**, même en hiver.' }
+        { retenir: 'L\'évaporateur froid condense aussi l\'**humidité** de l\'air : la climatisation sèche l\'air et aide à **désembuer**, même en hiver.' },
+        { schema: 'circuit-clim' }
       ]
     },
     {

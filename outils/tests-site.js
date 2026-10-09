@@ -14,7 +14,7 @@ const CAP = c.CAP, ok = (cond, msg) => {
   nbEchecs++; console.log('ÉCHEC : ' + msg); process.exitCode = 1;
 };
 const NB_CARTES = CAP.chapitres.reduce((n, ch) => n + ch.cartes.length, 0);
-const NB_PHOTOS = CAP.chapitres.reduce((n, ch) => n + ch.questions.filter(q => q.image).length, 0);
+const NB_PHOTOS = CAP.chapitres.reduce((n, ch) => n + ch.questions.filter(q => q.image || q.schema).length, 0);
 
 // Sans progression
 let r = CAP.series.ciblee(15);
@@ -63,7 +63,7 @@ ok(act.length === 35 && act.find(d => d.jour === CAP.stockage.aujourdhui()).sean
 
 // Reconnaître les pièces
 const p = CAP.series.pieces(10);
-ok(p.length === 10 && p.every(x => x.q.image && CAP.images[x.q.image]), 'pièces : 10 questions, toutes avec une photo déclarée');
+ok(p.length === 10 && p.every(x => (x.q.image && CAP.images[x.q.image]) || (x.q.schema && CAP.schemas[x.q.schema])), 'pièces : 10 questions, toutes avec une photo ou un schéma déclaré');
 ok(new Set(p.map(x => x.q.id)).size === 10, 'pièces : pas de doublon');
 ok(CAP.series.nbPieces() === NB_PHOTOS && NB_PHOTOS >= 10, 'pièces : toutes les questions avec photo');
 
@@ -96,8 +96,9 @@ hydro(2).forEach(q => CAP.stockage.reponseQuestion(q.id, true));
 ok(nivHydro() === 3, 'niveaux : niveau 2 réussi → niveau 3');
 const serieHydro = CAP.series.adaptee(items.filter(x => x.ch === frein && x.q.sousTheme === 'hydraulique'), 5);
 ok(serieHydro.filter(x => CAP.stats.niveau(x.q) === 3).length >= Math.min(4, hydro(3).length), 'niveaux : la série privilégie le niveau en cours (3)');
-CAP.stockage.reponseQuestion(hydro(1)[0].id, false);
-ok(nivHydro() === 1, 'niveaux : une erreur au niveau 1 fait redescendre');
+// Assez d'erreurs pour passer sous 80 % de réussite au niveau 1 (quel que soit le nombre de questions)
+hydro(1).slice(0, Math.floor(hydro(1).length * 0.2) + 1).forEach(q => CAP.stockage.reponseQuestion(q.id, false));
+ok(nivHydro() === 1, 'niveaux : des erreurs au niveau 1 font redescendre');
 const examenNiv = CAP.series.examen(20);
 ok(examenNiv.filter(x => CAP.stats.niveau(x.q) > 1).length >= 8, 'niveaux : l\'examen blanc contient au moins 8 questions difficiles');
 
@@ -111,5 +112,12 @@ ok(rechercheVidange.groupes.some(g => g.resultats.some(e => e.question && e.ques
 CAP.stockage.reinitialiser();
 const toutesItems = CAP.chapitres.flatMap(ch => ch.questions.map(q => ({ q, ch })));
 ok(CAP.series.adaptee(toutesItems, 300).some(x => x.q.type === 'ordre'), 'ordre : elles sont proposées dans les séries');
+
+// Schémas : chaque repère devient une question
+const nbReperes = Object.values(CAP.schemas).reduce((n, sch) => n + sch.reperes.length, 0);
+const questionsSchemas = CAP.chapitres.flatMap(ch => ch.questions.filter(q => q.schema));
+ok(nbReperes >= 20 && questionsSchemas.length === nbReperes, 'schémas : une question par repère');
+ok(questionsSchemas.every(q => new Set(q.choix).size === 4 && q.choix[q.bonne] === CAP.schemas[q.schema].reperes.find(r => r.id === q.repere).nom), 'schémas : 4 choix distincts, la bonne réponse est le nom du repère');
+ok(CAP.series.pieces(50).some(x => x.q.schema), 'schémas : proposés dans « Reconnaître les pièces »');
 
 console.log(nbEchecs ? `${nbEchecs} test(s) en échec, ${nbOk} réussi(s).` : `${nbOk} tests réussis.`);
