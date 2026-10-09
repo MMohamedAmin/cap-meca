@@ -33,6 +33,7 @@ CAP.ajouterChapitre({
           '**Butée** : appuie sur le diaphragme pour débrayer.',
           '**Commande** par câble ou hydraulique (émetteur et récepteur).'
         ] },
+        { schema: 'embrayage-eclate' },
         { retenir: 'Embrayage qui **patine** : le régime moteur monte mais la voiture n\'accélère pas, odeur de brûlé possible. Garnitures usées ou huilées.' }
       ]
     },

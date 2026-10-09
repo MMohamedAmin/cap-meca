@@ -16,7 +16,7 @@ Site de révision pour un élève en **CAP Maintenance des véhicules, option vo
 - `data/images.js` : les photos (`images/pieces/`) avec leurs crédits : `{ fichier, description, auteur, licence, licenceUrl, source }`. `description` sert de texte alternatif et ne doit pas donner la réponse.
 - `data/formulaire.js` : formules par thème `{ nom, formule, unites?, exemple?, calcul? }` (`calcul` = clé d'une calculatrice).
 - `data/lexique.js` : mots du métier `{ mot, definition, chapitre?, image? }`.
-- `data/schemas.js` : schémas SVG à repères numérotés (voir « Schémas »).
+- `data/schemas.js` : schémas à légender, images dans `images/schemas/` (voir « Schémas »).
 - `data/chapitres/*.js` : contenu. L'ordre des `<script>` dans `index.html` = l'ordre d'affichage.
 - `js/stockage.js` : `CAP.stockage`, la progression dans `localStorage` (clé `capmeca.progression.v1`). Par question : `{vu, ok, derniere, date}`. Par carte : `{sais, pas, derniere, date, boite, prochaine}` (boîtes de Leitner 1 à 5, `prochaine` = jour `AAAA-MM-JJ` où la carte revient ; les cartes sans `boite` venant de la V1 sont complétées à la lecture). Plus les `seances` et les `jours` de révision.
 - `js/stats.js` : `CAP.stats`, la réussite par chapitre et par sous-thème, `pointsFaibles()`, la répartition des boîtes, les notes d'examens et l'activité.
@@ -56,16 +56,18 @@ CAP.ajouterChapitre({
 
 ## Schémas
 
-`data/schemas.js` (chargé **après** les chapitres) : schémas SVG dessinés à la main, avec des repères numérotés.
+`data/schemas.js` (chargé **après** les chapitres) : schémas **à légender**. L'élève glisse chaque nom à côté de sa pièce (ou touche un nom, puis une case).
 
 ```js
-CAP.ajouterSchemas([{ id, chapitre, sousTheme, titre, viewBox, svg, reperes: [{ id, nom, role, x, y, niveau? }] }]);
+CAP.ajouterSchemas([{ id, chapitre, sousTheme, niveau?, titre, image, explication, largeur?, largeurMin?,
+  zones: [{ id, nom, role, x, y, cote?, px?, py? }] }]);
 ```
 
-- `CAP.ajouterSchemas` crée une question « comment s'appelle l'élément n° … ? » par repère, d'id `sch-<schéma>-<repère>` : les `id` des schémas et des repères **ne doivent jamais changer**. Les mauvais choix sont les noms des 3 repères suivants.
-- `svg` : le contenu du dessin (sans la balise `<svg>`), avec les classes `sch-*` de `css/style.css` (couleurs adaptées au mode sombre). Ni script ni attribut `on…` (contrôlé par le vérificateur). Ne pas écrire le nom des pièces sur le dessin.
-- Dans une fiche, le bloc `{ schema: 'id' }` affiche le schéma avec sa légende. En question, seul le repère demandé est en surbrillance. Les questions sur schéma font partie du mode « Reconnaître les pièces ».
-- `x`, `y` : centre du repère dans le `viewBox`, à côté de la pièce et sans chevaucher un autre repère.
+- **Propre ou rien** : uniquement des schémas nets trouvés sous licence libre (Wikimedia Commons), jamais dessinés à la main. Les noms, lettres ou chiffres d'origine sont **retirés de l'image** (SVG : supprimer les `<text>` ou les tracés des lettres ; image : effacer en blanc), et la licence dans `data/images.js` le dit (« modifié : … »). Fichiers dans `images/schemas/`, crédits dans `data/images.js` (`image` = clé).
+- `CAP.ajouterSchemas` crée **une** question de type `etiquettes` par schéma, d'id `eti-<schéma>` : l'`id` du schéma **ne doit jamais changer**. Elle est juste si toutes les étiquettes sont bien placées. Pas dans l'examen blanc (comme `ordre`), pas d'explication IA ; elle fait partie du mode « Reconnaître les pièces ».
+- Zone : `x`, `y` = position de l'étiquette en % de l'image (là où était le nom d'origine, au bout de son trait) ; `cote` (`g`, `d`, `h`, `b`) = côté où s'affiche l'étiquette par rapport à ce point ; `px`, `py` = pièce visée, quand l'image n'a pas de trait de rappel (le site en dessine un).
+- `largeur` : largeur d'affichage maximale (px) ; `largeurMin` : en dessous, l'image défile de côté pour garder les étiquettes lisibles. Vérifier à 360 px qu'aucune étiquette n'en chevauche une autre.
+- Dans une fiche, le bloc `{ schema: 'id' }` affiche le schéma avec les noms posés et la légende des rôles.
 
 ## Contenu
 

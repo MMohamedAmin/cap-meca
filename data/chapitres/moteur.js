@@ -34,7 +34,7 @@ CAP.ajouterChapitre({
           '**Organes fixes** : culasse, bloc-cylindres (bloc moteur), carter inférieur (carter d\'huile), joint de culasse.',
           '**Organes mobiles** : pistons avec leurs segments, bielles, vilebrequin, volant moteur.'
         ] },
-        { schema: 'coupe-moteur' },
+        { schema: 'moteur-coupe' },
         'Le **joint de culasse** assure l\'étanchéité entre la culasse et le bloc : gaz de combustion, liquide de refroidissement et huile ne doivent pas se mélanger.',
         'Les **segments** assurent l\'étanchéité entre le piston et le cylindre, raclent l\'excès d\'huile sur la paroi et évacuent une partie de la chaleur du piston.',
         'Le **volant moteur** régularise la rotation du vilebrequin et porte la couronne du démarreur et l\'embrayage.'

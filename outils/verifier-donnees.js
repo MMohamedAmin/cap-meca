@@ -55,12 +55,15 @@ for (const ch of contexte.CAP.chapitres) {
   (ch.questions || []).forEach(q => {
     verifierId(q.id, 'question');
     if (!st[q.sousTheme]) erreurs.push(`${p} ${q.id} : sous-thème inconnu « ${q.sousTheme} »`);
-    if (!['qcm', 'vf', 'ordre'].includes(q.type)) erreurs.push(`${p} ${q.id} : type inconnu « ${q.type} »`);
+    if (!['qcm', 'vf', 'ordre', 'etiquettes'].includes(q.type)) erreurs.push(`${p} ${q.id} : type inconnu « ${q.type} »`);
     if (q.type === 'ordre') {
       // Étapes à remettre dans l'ordre : écrites dans le bon ordre, mélangées à l'affichage.
       if (!Array.isArray(q.etapes) || q.etapes.length < 3 || q.etapes.length > 8) erreurs.push(`${p} ${q.id} : il faut de 3 à 8 étapes`);
       else if (q.etapes.some(e => typeof e !== 'string' || !e.trim()) || new Set(q.etapes).size !== q.etapes.length) erreurs.push(`${p} ${q.id} : étapes vides ou en double`);
       if (q.image) erreurs.push(`${p} ${q.id} : pas de photo sur une question à remettre dans l'ordre`);
+    } else if (q.type === 'etiquettes') {
+      // Créée par CAP.ajouterSchemas : le schéma est contrôlé plus bas.
+      if (!q.schema) erreurs.push(`${p} ${q.id} : question à étiquettes sans schéma (à déclarer dans data/schemas.js)`);
     } else if (!Array.isArray(q.choix) || q.choix.length < 2) erreurs.push(`${p} ${q.id} : il faut au moins 2 choix`);
     else if (!(q.bonne >= 0 && q.bonne < q.choix.length)) erreurs.push(`${p} ${q.id} : « bonne » hors des choix`);
     if (!q.explication) erreurs.push(`${p} ${q.id} : explication manquante`);
@@ -75,7 +78,7 @@ for (const ch of contexte.CAP.chapitres) {
   });
 }
 
-// Schémas (leurs questions sont déjà dans les chapitres, contrôlées plus haut)
+// Schémas à légender (leur question est déjà dans le chapitre, contrôlée plus haut)
 const idsChapitres = new Set(contexte.CAP.chapitres.map(c => c.id));
 const schemas = contexte.CAP.schemas || {};
 for (const [id, s] of Object.entries(schemas)) {
@@ -83,14 +86,19 @@ for (const [id, s] of Object.entries(schemas)) {
   const ch = contexte.CAP.chapitres.find(c => c.id === s.chapitre);
   if (!ch) erreurs.push(`${p} : chapitre inconnu « ${s.chapitre} »`);
   else if (!(ch.sousThemes || {})[s.sousTheme]) erreurs.push(`${p} : sous-thème inconnu « ${s.sousTheme} »`);
-  if (!s.titre || !s.viewBox || !s.svg) erreurs.push(`${p} : titre, viewBox ou svg manquant`);
-  if (/<script|\son\w+\s*=|javascript:/i.test(s.svg || '')) erreurs.push(`${p} : le SVG ne doit contenir ni script ni attribut on…`);
-  const reperes = s.reperes || [];
-  if (reperes.length < 4) erreurs.push(`${p} : il faut au moins 4 repères`);
-  if (new Set(reperes.map(r => r.id)).size !== reperes.length) erreurs.push(`${p} : id de repère en double`);
-  if (new Set(reperes.map(r => r.nom)).size !== reperes.length) erreurs.push(`${p} : nom de repère en double`);
-  reperes.forEach(r => {
-    if (!r.id || !r.nom || !r.role || !(r.x >= 0) || !(r.y >= 0)) erreurs.push(`${p} : repère incomplet (${r.id || '?'})`);
+  if (!s.titre || !s.explication) erreurs.push(`${p} : titre ou explication manquant`);
+  if (s.niveau !== undefined && ![1, 2, 3].includes(s.niveau)) erreurs.push(`${p} : niveau doit être 1, 2 ou 3`);
+  if (!images[s.image]) erreurs.push(`${p} : image inconnue « ${s.image} » (à déclarer dans data/images.js)`);
+  else imagesUtilisees.add(s.image);
+  const zones = s.zones || [];
+  if (zones.length < 4) erreurs.push(`${p} : il faut au moins 4 zones`);
+  if (new Set(zones.map(z => z.id)).size !== zones.length) erreurs.push(`${p} : id de zone en double`);
+  if (new Set(zones.map(z => z.nom)).size !== zones.length) erreurs.push(`${p} : nom de zone en double`);
+  const dansImage = v => typeof v === 'number' && v >= 0 && v <= 100;
+  zones.forEach(z => {
+    if (!z.id || !z.nom || !z.role || !dansImage(z.x) || !dansImage(z.y)) erreurs.push(`${p} : zone incomplète ou hors de l'image (${z.id || '?'})`);
+    if (z.cote !== undefined && !['g', 'd', 'h', 'b'].includes(z.cote)) erreurs.push(`${p} : côté inconnu « ${z.cote} » (${z.id})`);
+    if ((z.px !== undefined || z.py !== undefined) && !(dansImage(z.px) && dansImage(z.py))) erreurs.push(`${p} : px et py vont ensemble, entre 0 et 100 (${z.id})`);
   });
 }
 contexte.CAP.chapitres.forEach(ch => (ch.fiche || []).forEach(s => s.contenu.forEach(b => {

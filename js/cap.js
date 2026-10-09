@@ -21,24 +21,19 @@ CAP.ajouterLexique = function (mots) {
   CAP.lexique.push(...mots);
 };
 
-// Schémas (data/schemas.js, chargé APRÈS les chapitres). Chaque repère numéroté devient
-// une question du chapitre : « comment s'appelle l'élément n° X ? ». Les mauvaises réponses
-// sont les noms des repères suivants du même schéma. L'id de la question (sch-schéma-repère)
-// ne doit jamais changer : ne pas renommer les id des schémas ni des repères.
+// Schémas à légender (data/schemas.js, chargé APRÈS les chapitres). Chaque schéma devient
+// une question du chapitre, de type « etiquettes » : placer chaque nom à côté de sa pièce.
+// L'id de la question (eti-schéma) ne doit jamais changer : ne pas renommer les id des schémas.
 CAP.ajouterSchemas = function (schemas) {
   schemas.forEach(s => {
     CAP.schemas[s.id] = s;
     const ch = CAP.chapitres.find(c => c.id === s.chapitre);
     if (!ch) return; // signalé par le vérificateur
-    s.reperes.forEach((r, k) => {
-      const autres = [1, 2, 3].map(d => s.reperes[(k + d) % s.reperes.length].nom);
-      ch.questions.push({
-        id: 'sch-' + s.id + '-' + r.id, sousTheme: s.sousTheme, type: 'qcm', niveau: r.niveau || s.niveau || 1,
-        schema: s.id, repere: r.id,
-        enonce: 'Schéma « ' + s.titre + ' » : comment s\'appelle l\'élément n° ' + (k + 1) + ' ?',
-        choix: [r.nom].concat(autres), bonne: 0,
-        explication: '**' + r.nom + '** : ' + r.role
-      });
+    ch.questions.push({
+      id: 'eti-' + s.id, sousTheme: s.sousTheme, type: 'etiquettes', niveau: s.niveau || 1,
+      schema: s.id,
+      enonce: 'Place les noms sur le schéma « ' + s.titre + ' ».',
+      explication: s.explication
     });
   });
 };

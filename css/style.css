@@ -15,7 +15,6 @@
   --rouge-doux: #fbe0e0;
   --jaune: #e09f00;
   --jaune-doux: #fff3cc;
-  --froid: #1c7ed6;
   --ombre: 0 1px 2px rgba(0,0,0,.06), 0 2px 8px rgba(0,0,0,.05);
   --rayon: 14px;
   color-scheme: light;
@@ -25,7 +24,7 @@
     --fond: #15171a; --surface: #1f2226; --surface-2: #2a2e33; --texte: #eceef0;
     --texte-doux: #a3a9b1; --bordure: #353a40; --accent: #ff7a3d; --accent-texte: #1a0d05;
     --accent-doux: #3b2116; --vert: #51cf66; --vert-doux: #1b3323; --rouge: #ff6b6b;
-    --rouge-doux: #3d1d1f; --jaune: #fcc419; --jaune-doux: #3a3115; --froid: #4dabf7;
+    --rouge-doux: #3d1d1f; --jaune: #fcc419; --jaune-doux: #3a3115;
     --ombre: 0 1px 2px rgba(0,0,0,.4); color-scheme: dark;
   }
 }
@@ -33,7 +32,7 @@
   --fond: #15171a; --surface: #1f2226; --surface-2: #2a2e33; --texte: #eceef0;
   --texte-doux: #a3a9b1; --bordure: #353a40; --accent: #ff7a3d; --accent-texte: #1a0d05;
   --accent-doux: #3b2116; --vert: #51cf66; --vert-doux: #1b3323; --rouge: #ff6b6b;
-  --rouge-doux: #3d1d1f; --jaune: #fcc419; --jaune-doux: #3a3115; --froid: #4dabf7;
+  --rouge-doux: #3d1d1f; --jaune: #fcc419; --jaune-doux: #3a3115;
   --ombre: 0 1px 2px rgba(0,0,0,.4); color-scheme: dark;
 }
 
@@ -454,31 +453,65 @@ details.resultat-recherche[open] summary strong::after { content: ' ▴'; }
 ol.erreur-reponse { margin: 4px 0; padding-left: 1.4rem; }
 ol.erreur-reponse li { margin-bottom: 2px; }
 
-/* ===== Schémas dessinés (data/schemas.js) ===== */
-.schema { margin: 0 0 12px; }
-.schema svg {
-  display: block; width: 100%; height: auto; max-height: 380px;
-  background: var(--surface); border: 1px solid var(--bordure); border-radius: 12px;
+/* ===== Schémas à légender (data/schemas.js) =====
+   L'image garde un fond blanc dans les deux thèmes : les étiquettes ont donc des couleurs fixes. */
+.planche-schema { margin: 0 0 12px; }
+.planche-schema .defile {
+  overflow-x: auto; background: #fff;
+  border: 1px solid var(--bordure); border-radius: 12px;
 }
-.schema.petite svg { max-height: 200px; }
-.schema figcaption { font-size: .85rem; font-weight: 700; margin: 6px 0 2px; }
-.sch-plein { fill: var(--surface-2); stroke: var(--texte); stroke-width: 2; }
-.sch-piece { fill: var(--texte-doux); stroke: var(--texte); stroke-width: 1.5; }
-.sch-trait { fill: none; stroke: var(--texte); stroke-width: 2; }
-.sch-trait-fin { fill: none; stroke: var(--texte-doux); stroke-width: 1; }
-.sch-pointille { stroke-dasharray: 5 4; }
-.sch-joint { fill: var(--accent); }
-.sch-huile { fill: var(--jaune); opacity: .6; }
-.sch-liquide { fill: var(--vert); opacity: .45; }
-.sch-tuyau { fill: none; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
-.sch-tuyau-fin { fill: none; stroke: var(--texte-doux); stroke-width: 2; }
-.sch-chaud { stroke: var(--rouge); }
-.sch-froid { stroke: var(--froid); }
-.sch-texte { fill: var(--texte-doux); font-size: 11px; }
-.repere circle { fill: var(--surface); stroke: var(--accent); stroke-width: 2; }
-.repere text { fill: var(--accent); font-size: 11px; font-weight: 800; text-anchor: middle; dominant-baseline: central; }
-.repere.actif circle { fill: var(--accent); }
-.repere.actif text { fill: var(--accent-texte); }
-.repere.inactif { opacity: .3; }
-.legende-schema { margin: 6px 0 0; padding-left: 1.4rem; font-size: .9rem; }
+.planche {
+  position: relative; margin: 0 auto;
+  max-width: var(--largeur, 100%); min-width: var(--largeur-min, 0);
+}
+.planche img { display: block; width: 100%; height: auto; user-select: none; -webkit-user-drag: none; }
+.planche .traits { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.planche .traits line { stroke: #1d1f22; stroke-width: 1.2; vector-effect: non-scaling-stroke; }
+.planche .point {
+  position: absolute; width: 7px; height: 7px; margin: -3.5px 0 0 -3.5px;
+  border-radius: 50%; background: #1d1f22; pointer-events: none;
+}
+.zone {
+  position: absolute; transform: translate(-50%, -50%);
+  max-width: 9.5em; padding: 3px 7px; border-radius: 8px;
+  font-family: inherit; font-size: .74rem; font-weight: 700; line-height: 1.15; text-align: center;
+  background: #fff; color: #1d1f22; border: 2px solid #d9480f;
+  box-shadow: 0 1px 3px rgba(0,0,0,.3);
+}
+.zone.cote-g { transform: translate(calc(-100% - 3px), -50%); }
+.zone.cote-d { transform: translate(3px, -50%); }
+.zone.cote-h { transform: translate(-50%, calc(-100% - 3px)); }
+.zone.cote-b { transform: translate(-50%, 3px); }
+button.zone { cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none; }
+button.zone.vide {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; padding: 0; border-radius: 50%; border-style: dashed;
+  color: #d9480f; font-size: .9rem; cursor: pointer;
+}
+.planche.attente button.zone.vide { background: #fde4d6; border-style: solid; }
+.zone.survol { outline: 3px solid #1c7ed6; outline-offset: 1px; }
+.zone.bon { border-color: #2b8a3e; background: #dcf3e1; }
+.zone.faux { border-color: #c92a2a; background: #fbe0e0; }
+.zone.faux s { display: block; color: #c92a2a; font-weight: 400; }
+button.zone:disabled { cursor: default; opacity: 1; }
+.planche-schema figcaption { font-size: .78rem; color: var(--texte-doux); margin-top: 4px; }
+.planche-schema.petite .planche { max-width: min(var(--largeur, 100%), 520px); }
+.banque-etiquettes { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 14px; }
+.pastille {
+  padding: 8px 12px; border-radius: 10px; border: 2px solid var(--bordure);
+  background: var(--surface); color: var(--texte);
+  font: inherit; font-size: .9rem; font-weight: 600;
+  cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none;
+}
+.pastille.choisie { border-color: var(--accent); background: var(--accent-doux); }
+.pastille.fantome {
+  position: fixed; z-index: 1000; pointer-events: none; margin: 0;
+  transform: translate(-50%, calc(-100% - 14px));
+  border-color: var(--accent); box-shadow: 0 4px 14px rgba(0,0,0,.25);
+}
+#valider-etiquettes { margin-bottom: 14px; }
+.legende-schema { margin: 6px 0 0; padding-left: 1.2rem; font-size: .9rem; }
 .legende-schema li { margin-bottom: 3px; }
+@media (max-width: 420px) {
+  .zone { font-size: .68rem; max-width: 8em; padding: 2px 5px; }
+}

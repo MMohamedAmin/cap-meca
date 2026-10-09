@@ -113,11 +113,13 @@ CAP.stockage.reinitialiser();
 const toutesItems = CAP.chapitres.flatMap(ch => ch.questions.map(q => ({ q, ch })));
 ok(CAP.series.adaptee(toutesItems, 300).some(x => x.q.type === 'ordre'), 'ordre : elles sont proposées dans les séries');
 
-// Schémas : chaque repère devient une question
-const nbReperes = Object.values(CAP.schemas).reduce((n, sch) => n + sch.reperes.length, 0);
+// Schémas à légender : chaque schéma devient une question « etiquettes »
+const schemas = Object.values(CAP.schemas);
 const questionsSchemas = CAP.chapitres.flatMap(ch => ch.questions.filter(q => q.schema));
-ok(nbReperes >= 20 && questionsSchemas.length === nbReperes, 'schémas : une question par repère');
-ok(questionsSchemas.every(q => new Set(q.choix).size === 4 && q.choix[q.bonne] === CAP.schemas[q.schema].reperes.find(r => r.id === q.repere).nom), 'schémas : 4 choix distincts, la bonne réponse est le nom du repère');
+ok(schemas.length >= 4 && questionsSchemas.length === schemas.length, 'schémas : une question par schéma');
+ok(questionsSchemas.every(q => q.type === 'etiquettes' && q.id === 'eti-' + q.schema && CAP.images[CAP.schemas[q.schema].image]), 'schémas : questions à étiquettes, avec leur image déclarée');
 ok(CAP.series.pieces(50).some(x => x.q.schema), 'schémas : proposés dans « Reconnaître les pièces »');
+ok(CAP.series.examen(20).every(x => x.q.type === 'qcm' || x.q.type === 'vf'), 'schémas : l\'examen blanc n\'en contient pas');
+ok(CAP.recherche.chercher('tringle').groupes.some(g => g.resultats.some(e => e.question && e.question.type === 'etiquettes')), 'schémas : la recherche trouve les noms des pièces');
 
 console.log(nbEchecs ? `${nbEchecs} test(s) en échec, ${nbOk} réussi(s).` : `${nbOk} tests réussis.`);

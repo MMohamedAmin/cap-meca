@@ -20,8 +20,8 @@ Ta progression est enregistrée dans le navigateur. Pour la sauvegarder ou la tr
 - **Entraînement ciblé** : 15 questions, dont environ 70 % sur tes sous-thèmes les plus faibles et le reste en mélange.
 - **Cartes du jour** : répétition espacée en 5 boîtes. Une carte sue revient de plus en plus tard (1, 2, 4, 8 puis 16 jours) et une carte ratée revient le lendemain.
 - **Mes erreurs** : les questions ratées la dernière fois. Une question réussie sort de la liste.
-- **Reconnaître les pièces** : des questions sur photo (« Quelle est cette pièce ? », « Que constates-tu sur ce soufflet ? ») et sur schéma numéroté.
-- **Schémas** dessinés pour le site : coupe du moteur, circuit de refroidissement, circuit de climatisation, freinage en X. Dans la fiche avec leur légende, et en questions (« Comment s'appelle l'élément n° 3 ? »).
+- **Reconnaître les pièces** : des questions sur photo (« Quelle est cette pièce ? », « Que constates-tu sur ce soufflet ? ») et schémas à légender.
+- **Schémas à légender** : coupe du moteur, circuit de climatisation, circuit de freinage, embrayage en vue éclatée, structure du pneu. On **glisse chaque nom à côté de sa pièce** (ou on touche un nom, puis une case). Dans la fiche, le schéma est affiché avec les noms et le rôle de chaque pièce.
 - **Examen blanc** : 20 questions sur tous les chapitres en 20 minutes, sans correction pendant l'épreuve, avec la note sur 20 et une correction détaillée à la fin.
 - **Progression enrichie** : calendrier d'activité, courbe des examens blancs, répartition des cartes par boîte.
 - **Formulaire** : les formules à connaître (moteur, électricité, pneus, unités) avec un exemple chiffré.
@@ -51,7 +51,8 @@ js/app.js                  écrans et navigation
 data/images.js             les photos et leurs crédits (auteur, licence, source)
 data/formulaire.js         les formules à connaître
 data/lexique.js            les mots du métier
-data/schemas.js            les schémas dessinés (SVG) et leurs repères numérotés
+data/schemas.js            les schémas à légender (position de chaque étiquette)
+images/schemas/            les images des schémas (Wikimedia Commons, noms d'origine retirés)
 data/chapitres/*.js        le contenu, un fichier par chapitre
 images/pieces/             les photos des pièces (Wikimedia Commons)
 images/icones/             les icônes de l'appli
@@ -79,7 +80,7 @@ Chaque chapitre est un fichier dans `data/chapitres/`. Pour ajouter une question
 
 Pour illustrer une question par une photo : place l'image dans `images/pieces/`, déclare-la dans `data/images.js` avec son auteur et sa licence, puis ajoute `image: 'sa-cle'` à la question.
 
-Pour un **schéma** : ajoute-le dans `data/schemas.js` (dessin SVG et repères avec leur position). Une question est créée automatiquement pour chaque repère. Pour l'afficher dans une fiche, ajoute `{ schema: 'son-id' }` dans le contenu d'une partie.
+Pour un **schéma à légender** : place l'image (propre, sous licence libre, noms d'origine retirés) dans `images/schemas/`, déclare-la dans `data/images.js`, puis ajoute le schéma dans `data/schemas.js` avec la position de chaque étiquette (en % de l'image). Une question « place les noms » est créée automatiquement. Pour l'afficher dans une fiche, ajoute `{ schema: 'son-id' }` dans le contenu d'une partie.
 
 Dans les textes, `**mot**` met le mot en gras. Les apostrophes s'écrivent `\'`.
 

@@ -217,5 +217,47 @@ CAP.ajouterImages({
     licence: 'CC BY-SA 4.0',
     licenceUrl: 'https://creativecommons.org/licenses/by-sa/4.0',
     source: 'https://commons.wikimedia.org/wiki/File:Trolley_jack_and_axle_stands.jpg'
+  },
+
+  // Schémas à légender (data/schemas.js). Les noms et lettres d'origine ont été retirés.
+  'schema-moteur-coupe': {
+    fichier: 'images/schemas/moteur-coupe.jpg',
+    description: 'Coupe colorée d\'un cylindre de moteur, de la culasse jusqu\'au bas',
+    auteur: 'Wapcaplet',
+    licence: 'CC BY-SA 3.0 (modifié : lettres retirées)',
+    licenceUrl: 'https://creativecommons.org/licenses/by-sa/3.0',
+    source: 'https://commons.wikimedia.org/wiki/File:Four_stroke_engine_diagram.jpg'
+  },
+  'schema-clim-circuit': {
+    fichier: 'images/schemas/clim-circuit.svg',
+    description: 'Boucle de tuyaux, rouge à gauche et bleue à droite, avec un boîtier en bas',
+    auteur: 'Ilmari Karonen',
+    licence: 'Domaine public (modifié : chiffres retirés)',
+    licenceUrl: '',
+    source: 'https://commons.wikimedia.org/wiki/File:Heatpump.svg'
+  },
+  'schema-freinage-circuit': {
+    fichier: 'images/schemas/freinage-circuit.svg',
+    description: 'Schéma à plat d\'une installation de freinage reliée par des tuyaux noirs',
+    auteur: 'A7N8X',
+    licence: 'CC BY-SA 4.0 (modifié : sigles retirés)',
+    licenceUrl: 'https://creativecommons.org/licenses/by-sa/4.0',
+    source: 'https://commons.wikimedia.org/wiki/File:Impianto_frenante.svg'
+  },
+  'schema-embrayage-eclate': {
+    fichier: 'images/schemas/embrayage-eclate.png',
+    description: 'Pièces en couleurs alignées sur un axe, écartées les unes des autres',
+    auteur: 'Genetics4good',
+    licence: 'CC BY-SA 3.0 (modifié : recadré)',
+    licenceUrl: 'https://creativecommons.org/licenses/by-sa/3.0',
+    source: 'https://commons.wikimedia.org/wiki/File:Car_clutch.png'
+  },
+  'schema-pneu-structure': {
+    fichier: 'images/schemas/pneu-structure.svg',
+    description: 'Coupe d\'un pneu en couches de couleur, avec un agrandissement des couches',
+    auteur: 'MagentaGreen',
+    licence: 'CC BY-SA 3.0 (modifié : textes retirés)',
+    licenceUrl: 'https://creativecommons.org/licenses/by-sa/3.0',
+    source: 'https://commons.wikimedia.org/wiki/File:Radial_Tire_(Structure).svg'
   }
 });

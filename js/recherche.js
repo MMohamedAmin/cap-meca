@@ -90,7 +90,9 @@ CAP.recherche = (function () {
       ch.cartes.forEach(c => ajouter({ type: 'carte', titre: c.recto, texte: c.verso, ch, carte: c }));
       ch.questions.forEach(q => ajouter({
         type: 'question', titre: q.enonce, ch, question: q,
-        texte: (q.type === 'ordre' ? q.etapes.join(' ') : q.choix[q.bonne]) + ' ' + q.explication
+        texte: (q.type === 'ordre' ? q.etapes.join(' ')
+          : q.type === 'etiquettes' ? CAP.schemas[q.schema].zones.map(z => z.nom).join(' ')
+          : q.choix[q.bonne]) + ' ' + q.explication
       }));
     });
   }

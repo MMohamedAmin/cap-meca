@@ -18,7 +18,7 @@ CAP.ajouterChapitre({
         'Freiner, c\'est transformer l\'**énergie de mouvement** du véhicule en **chaleur** par frottement.',
         'Trajet : **pédale** → **maître-cylindre** (transforme l\'effort en pression hydraulique) → **canalisations** → **étriers** ou **cylindres de roue**.',
         'Le circuit est **doublé** (souvent monté **en X** : avant gauche + arrière droit, avant droit + arrière gauche). Si un circuit fuit, l\'autre freine encore.',
-        { schema: 'freinage-x' }
+        { schema: 'freinage-circuit' }
       ]
     },
     {

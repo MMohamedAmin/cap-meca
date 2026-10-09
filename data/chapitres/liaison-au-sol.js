@@ -15,6 +15,7 @@ CAP.ajouterChapitre({
       titre: 'Pneumatiques et roues',
       sousTheme: 'pneus',
       contenu: [
+        { schema: 'pneu-structure' },
         'Exemple de marquage : **205/55 R16 91V**',
         { liste: [
           '**205** : largeur du pneu en mm.',

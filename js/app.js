@@ -41,6 +41,7 @@
   function afficher(html) {
     app.innerHTML = html;
     window.scrollTo(0, 0);
+    ajusterPlanches(app);
   }
   function dateCourte(d) {
     return new Date(d).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
@@ -51,7 +52,9 @@
   }
   // Choix d'une question prêts à l'affichage (les QCM sont mélangés, pas les Vrai/Faux).
   // Questions « ordre » : les étapes mélangées, jamais déjà dans le bon ordre ; pos = bonne place.
+  // Questions « etiquettes » : les numéros des zones du schéma, mélangés (ordre des noms à placer).
   function preparerChoix(q) {
+    if (q.type === 'etiquettes') return melanger(CAP.schemas[q.schema].zones.map((z, k) => k));
     if (q.type === 'ordre') {
       const etapes = q.etapes.map((t, pos) => ({ texte: t, pos }));
       let m = melanger(etapes);
@@ -65,8 +68,11 @@
   function bonneReponse(q, S) {
     S = S || fmt;
     if (q.type === 'ordre') return `<ol class="erreur-reponse ordre-correct">${q.etapes.map(e => `<li>${S(e)}</li>`).join('')}</ol>`;
+    if (q.type === 'etiquettes') return legendeSchema(CAP.schemas[q.schema]);
     return `<p class="erreur-reponse">✔ ${S(q.choix[q.bonne])}</p>`;
   }
+  // QCM et Vrai/Faux : une seule réponse choisie (examen blanc, explications de l'IA).
+  function aChoixUnique(q) { return q.type === 'qcm' || q.type === 'vf'; }
 
   // Photo d'une question, avec son crédit. Un appui l'ouvre en grand.
   // differe : chargement retardé, pour les longues listes (lexique).
@@ -79,26 +85,68 @@
         <figcaption>Photo : ${echapper(im.auteur)} · ${echapper(im.licence)}</figcaption>
       </figure>`;
   }
-  function illustration(q, petite) { return q.schema ? schema(q.schema, q.repere, false, petite) : photo(q.image, petite); }
+  function illustration(q, petite) { return q.schema ? planche(q.schema, false, false, petite) : photo(q.image, petite); }
 
-  // Schéma de data/schemas.js. actif : repère demandé (les autres sont estompés) ;
-  // legende : liste des éléments sous le schéma (fiches de cours).
-  function schema(id, actif, legende, petit) {
+  // Schéma à légender (data/schemas.js). exercice : cases vides à remplir (quiz) ;
+  // sinon les noms sont déjà posés (fiches, corrections). legende : titre et rôles en dessous.
+  function planche(id, exercice, legende, petit) {
     const s = CAP.schemas[id];
-    if (!s) return '';
-    const reperes = s.reperes.map((r, k) => {
-      const etat = actif ? (r.id === actif ? ' actif' : ' inactif') : '';
-      return `<g class="repere${etat}"><circle cx="${r.x}" cy="${r.y}" r="10"/><text x="${r.x}" y="${r.y}">${k + 1}</text></g>`;
-    }).join('');
-    // Le SVG du schéma est écrit dans le projet (data/schemas.js) et contrôlé par le vérificateur.
+    const im = s && CAP.images[s.image];
+    if (!im) return '';
+    const cote = z => z.cote ? ' cote-' + z.cote : '';
+    const pos = (x, y) => `left:${x}%;top:${y}%`;
+    // Traits de rappel ajoutés, quand l'image n'a pas les siens (px, py : pièce visée).
+    const rappels = s.zones.filter(z => z.px !== undefined);
+    const traits = rappels.length
+      ? `<svg class="traits" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">${rappels.map(z =>
+          `<line x1="${z.x}" y1="${z.y}" x2="${z.px}" y2="${z.py}"/>`).join('')}</svg>`
+        + rappels.map(z => `<span class="point" style="${pos(z.px, z.py)}"></span>`).join('')
+      : '';
+    const zones = s.zones.map((z, k) => exercice
+      ? `<button type="button" class="zone vide${cote(z)}" data-z="${k}" style="${pos(z.x, z.y)}" aria-label="Case ${k + 1}">?</button>`
+      : `<span class="zone${cote(z)}" style="${pos(z.x, z.y)}">${echapper(z.nom)}</span>`).join('');
+    const tailles = (s.largeur ? `--largeur:${s.largeur}px;` : '') + (s.largeurMin ? `--largeur-min:${s.largeurMin}px;` : '');
     return `
-      <figure class="schema${petit ? ' petite' : ''}">
-        <svg viewBox="${echapper(s.viewBox)}" role="img" aria-label="${echapper(s.titre)}">${s.svg}${reperes}</svg>
-        ${legende
-          ? `<figcaption>${echapper(s.titre)}</figcaption><ol class="legende-schema">${s.reperes.map(r => `<li><strong>${echapper(r.nom)}</strong> : ${fmt(r.role)}</li>`).join('')}</ol>`
-          : ''}
+      <figure class="planche-schema${petit ? ' petite' : ''}">
+        <div class="defile"><div class="planche" style="${tailles}">
+          <img src="${echapper(im.fichier)}" alt="${echapper(im.description)}" draggable="false">
+          ${traits}${zones}
+        </div></div>
+        <figcaption>${legende ? `<strong>${echapper(s.titre)}</strong> · ` : ''}Schéma : ${echapper(im.auteur)} · ${echapper(im.licence)}</figcaption>
+        ${legende ? legendeSchema(s) : ''}
       </figure>`;
   }
+  function legendeSchema(s) {
+    return `<ul class="legende-schema">${s.zones.map(z => `<li><strong>${echapper(z.nom)}</strong> : ${fmt(z.role)}</li>`).join('')}</ul>`;
+  }
+
+  // Garde les étiquettes d'un schéma dans le cadre de l'image (elles débordent près des bords).
+  function ajusterPlanche(p) {
+    const cadre = p.getBoundingClientRect();
+    if (!cadre.width) return;
+    p.querySelectorAll('.zone').forEach(z => {
+      z.style.marginLeft = z.style.marginTop = '';
+      const r = z.getBoundingClientRect();
+      const dx = Math.max(0, cadre.left - r.left) - Math.max(0, r.right - cadre.right);
+      const dy = Math.max(0, cadre.top - r.top) - Math.max(0, r.bottom - cadre.bottom);
+      if (dx) z.style.marginLeft = dx + 'px';
+      if (dy) z.style.marginTop = dy + 'px';
+    });
+  }
+  function ajusterPlanches(racine) {
+    racine.querySelectorAll('.planche').forEach(p => {
+      const img = p.querySelector('img');
+      if (img.complete) ajusterPlanche(p);
+      else img.addEventListener('load', () => ajusterPlanche(p), { once: true });
+    });
+  }
+  let attenteRedim = 0;
+  window.addEventListener('resize', () => {
+    clearTimeout(attenteRedim);
+    attenteRedim = setTimeout(() => ajusterPlanches(app), 150);
+  });
+  // Une planche dans un <details> fermé n'a pas de taille : on l'ajuste à l'ouverture.
+  document.addEventListener('toggle', e => { if (e.target.open) ajusterPlanches(e.target); }, true);
 
   // ---------- Niveaux de difficulté ----------
   const NOMS_NIVEAUX = ['', 'Connaître', 'Comprendre et calculer', 'Diagnostiquer'];
@@ -253,7 +301,7 @@
         </a>
         <a class="mode" href="#/pieces">
           <strong>Reconnaître les pièces</strong>
-          <span>${CAP.series.nbPieces()} photos de pièces</span>
+          <span>${CAP.series.nbPieces()} photos et schémas à légender</span>
         </a>
         ${CAP.ia.disponible() ? (CAP.ia.actif()
           ? '<a class="mode mode-ia" href="#/ia"><strong>Questions de l\'IA</strong><span>Inventées sur tes points faibles</span></a>'
@@ -314,7 +362,7 @@
     if (b.formule) return `<div class="formule">${fmt(b.formule)}</div>`;
     if (b.retenir) return `<div class="encadre retenir"><span class="encadre-titre">À retenir</span>${fmt(b.retenir)}</div>`;
     if (b.attention) return `<div class="encadre attention"><span class="encadre-titre">Attention</span>${fmt(b.attention)}</div>`;
-    if (b.schema) return schema(b.schema, null, true);
+    if (b.schema) return planche(b.schema, false, true);
     return '';
   }
 
@@ -475,8 +523,14 @@
           ${o.sansEtiquette ? '' : `<span class="etiquette">${o.plusieursChapitres ? echapper(item.ch.titre) + ' · ' : ''}${echapper(item.ch.sousThemes[item.q.sousTheme] || '')}</span>`}
           ${badgeNiveau(CAP.stats.niveau(item.q))}
           <h2>${fmt(item.q.enonce)}</h2>
-          ${illustration(item.q)}
-          ${item.q.type === 'ordre' ? `
+          ${item.q.type === 'etiquettes' ? `
+          ${planche(item.q.schema, true)}
+          <p class="petit">Glisse chaque nom sur sa case, ou touche un nom puis une case. Touche une case remplie pour la vider.</p>
+          <div class="banque-etiquettes" id="banque">
+            ${item.choix.map(e => `<button type="button" class="pastille" data-e="${e}" aria-pressed="false">${echapper(CAP.schemas[item.q.schema].zones[e].nom)}</button>`).join('')}
+          </div>
+          <button class="bouton bouton-principal bouton-large" id="valider-etiquettes" disabled>Valider</button>` : illustration(item.q)}
+          ${item.q.type === 'etiquettes' ? '' : item.q.type === 'ordre' ? `
           <p class="petit">Touche les étapes dans le bon ordre. Touche une étape déjà choisie pour l'enlever.</p>
           <div class="liste-choix">
             ${item.choix.map((c, k) => `<button class="choix etape" data-k="${k}" aria-pressed="false"><span class="numero" aria-hidden="true"></span><span>${fmt(c.texte)}</span></button>`).join('')}
@@ -493,6 +547,7 @@
         </section>
       `);
       if (item.q.type === 'ordre') brancherOrdre(item);
+      else if (item.q.type === 'etiquettes') brancherEtiquettes(item);
       else app.querySelectorAll('.choix').forEach(b => b.addEventListener('click', () => repondre(+b.dataset.k)));
       document.getElementById('suivant').addEventListener('click', () => {
         i++;
@@ -544,6 +599,125 @@
       });
     }
 
+    // Étiquettes : l'élève glisse chaque nom sur la case de sa pièce, ou touche un nom puis une case.
+    // L'étiquette n° e va dans la case n° e (même ordre que les zones du schéma).
+    function brancherEtiquettes(item) {
+      const s = CAP.schemas[item.q.schema];
+      const cadre = app.querySelector('.planche');
+      const cases = [...cadre.querySelectorAll('.zone')];
+      const banque = document.getElementById('banque');
+      const valider = document.getElementById('valider-etiquettes');
+      const pose = cases.map(() => -1); // pose[z] : étiquette posée dans la case z
+      let choisie = -1;                  // étiquette touchée, en attente d'une case
+      let glisse = null, ignorerClic = false;
+
+      function dessiner() {
+        cases.forEach((c, z) => {
+          const e = pose[z];
+          c.textContent = e < 0 ? '?' : s.zones[e].nom;
+          c.classList.toggle('vide', e < 0);
+          c.setAttribute('aria-label', e < 0 ? 'Case ' + (z + 1) + ', vide' : 'Case ' + (z + 1) + ' : ' + s.zones[e].nom);
+        });
+        banque.querySelectorAll('.pastille').forEach(b => {
+          const e = +b.dataset.e;
+          b.hidden = pose.includes(e);
+          b.classList.toggle('choisie', e === choisie);
+          b.setAttribute('aria-pressed', e === choisie);
+        });
+        cadre.classList.toggle('attente', choisie >= 0);
+        valider.disabled = pose.includes(-1);
+        ajusterPlanche(cadre);
+      }
+      // Pose l'étiquette e dans la case z (z = -1 : retour dans la liste des noms).
+      // Si la case était prise : échange quand e vient d'une autre case, sinon l'ancienne repart dans la liste.
+      function poser(e, z) {
+        const avant = pose.indexOf(e);
+        if (avant >= 0) pose[avant] = -1;
+        if (z >= 0) {
+          if (avant >= 0 && pose[z] >= 0) pose[avant] = pose[z];
+          pose[z] = e;
+        }
+        choisie = -1;
+        dessiner();
+      }
+
+      banque.addEventListener('click', ev => {
+        const b = ev.target.closest('.pastille');
+        if (!b || ignorerClic) return;
+        choisie = choisie === +b.dataset.e ? -1 : +b.dataset.e;
+        dessiner();
+      });
+      cases.forEach((c, z) => c.addEventListener('click', () => {
+        if (ignorerClic) return;
+        if (choisie >= 0) poser(choisie, z);
+        else if (pose[z] >= 0) poser(pose[z], -1);
+      }));
+
+      // Glisser-déposer (souris et doigt) : un nom de la liste ou d'une case remplie.
+      const caseSous = ev => {
+        const el = document.elementFromPoint(ev.clientX, ev.clientY);
+        return el && cases.includes(el) ? el : null;
+      };
+      function debut(ev, e) {
+        if (e < 0 || ev.button > 0 || valider.hidden) return;
+        glisse = { e, x: ev.clientX, y: ev.clientY, fantome: null };
+        try { ev.currentTarget.setPointerCapture(ev.pointerId); } catch (err) { /* navigateur ancien */ }
+      }
+      function bouge(ev) {
+        if (!glisse) return;
+        if (!glisse.fantome) {
+          if (Math.hypot(ev.clientX - glisse.x, ev.clientY - glisse.y) < 8) return;
+          glisse.fantome = document.createElement('div');
+          glisse.fantome.className = 'pastille fantome';
+          glisse.fantome.textContent = s.zones[glisse.e].nom;
+          document.body.appendChild(glisse.fantome);
+        }
+        glisse.fantome.style.left = ev.clientX + 'px';
+        glisse.fantome.style.top = ev.clientY + 'px';
+        const cible = caseSous(ev);
+        cases.forEach(c => c.classList.toggle('survol', c === cible));
+      }
+      function fin(ev, annule) {
+        if (!glisse) return;
+        const g = glisse;
+        glisse = null;
+        if (!g.fantome) return; // simple appui : traité par le clic
+        g.fantome.remove();
+        cases.forEach(c => c.classList.remove('survol'));
+        ignorerClic = true;
+        setTimeout(() => { ignorerClic = false; }, 0);
+        if (annule) return;
+        const cible = caseSous(ev);
+        poser(g.e, cible ? +cible.dataset.z : -1);
+      }
+      const brancher = (el, etiquette) => {
+        el.addEventListener('pointerdown', ev => debut(ev, etiquette()));
+        el.addEventListener('pointermove', bouge);
+        el.addEventListener('pointerup', ev => fin(ev, false));
+        el.addEventListener('pointercancel', ev => fin(ev, true));
+      };
+      banque.querySelectorAll('.pastille').forEach(b => brancher(b, () => +b.dataset.e));
+      cases.forEach((c, z) => brancher(c, () => pose[z]));
+
+      valider.addEventListener('click', () => {
+        const bonnes = pose.filter((e, z) => e === z).length;
+        cases.forEach((c, z) => {
+          c.disabled = true;
+          const ok = pose[z] === z;
+          c.classList.add(ok ? 'bon' : 'faux');
+          c.innerHTML = ok ? echapper(s.zones[z].nom) : `<s>${echapper(s.zones[pose[z]].nom)}</s>${echapper(s.zones[z].nom)}`;
+        });
+        cadre.classList.remove('attente');
+        ajusterPlanche(cadre);
+        banque.hidden = true;
+        valider.hidden = true;
+        item.bilan = bonnes + ' sur ' + cases.length + ' bien placée' + (bonnes > 1 ? 's' : '');
+        item.choisie = item.bilan;
+        conclure(item, bonnes === cases.length);
+      });
+      dessiner();
+    }
+
     // Suite commune à tous les types de questions : score, progression, correction.
     function conclure(item, juste) {
       if (juste) score++; else erreurs.push(item);
@@ -552,11 +726,12 @@
       const r = document.getElementById('retour');
       r.className = 'retour-reponse ' + (juste ? 'retour-bon' : 'retour-faux');
       r.innerHTML = `<strong>${juste ? 'Bonne réponse !' : 'Raté.'}</strong> ${fmt(item.q.explication)}`
-        + (!juste && item.q.type === 'ordre' ? `<p class="titre-ordre">Le bon ordre :</p>${bonneReponse(item.q)}` : '');
+        + (!juste && item.q.type === 'ordre' ? `<p class="titre-ordre">Le bon ordre :</p>${bonneReponse(item.q)}` : '')
+        + (item.q.type === 'etiquettes' ? `<p class="titre-ordre">Étiquettes : ${echapper(item.bilan)}.</p>${bonneReponse(item.q)}` : '');
       r.hidden = false;
 
       const zoneIA = document.getElementById('zone-ia');
-      if (!juste && CAP.ia.actif() && item.q.type !== 'ordre') {
+      if (!juste && CAP.ia.actif() && aChoixUnique(item.q)) {
         const cadre = document.createElement('div');
         cadre.innerHTML = '<button class="bouton bouton-ia" type="button">Explique-moi mon erreur</button>';
         zoneIA.appendChild(cadre);
@@ -599,7 +774,7 @@
       `);
       document.getElementById('refaire').addEventListener('click', o.refaire);
       brancherBilanIA(libelleSeance({ type: 'quiz', chapitre: o.seance }), score, nb,
-        erreurs.filter(e => e.q.type !== 'ordre').map(e => ({ q: e.q, ch: e.ch, choisie: e.choisie })));
+        erreurs.filter(e => aChoixUnique(e.q)).map(e => ({ q: e.q, ch: e.ch, choisie: e.choisie })));
     }
 
     if (!nb) { afficher(`${o.retour}<p>Pas encore de questions ici.</p>`); return; }
@@ -677,9 +852,9 @@
       seance: 'pieces',
       plusieursChapitres: true,
       sansEtiquette: true,
-      bandeau: 'Regarde bien la photo. Touche-la pour l\'agrandir.',
+      bandeau: 'Regarde bien la photo (touche-la pour l\'agrandir) ou place les noms sur le schéma.',
       liensFin: '<a class="bouton" href="#/credits">Crédits photos</a>',
-      libelleRefaire: 'Nouvelles photos',
+      libelleRefaire: 'Nouvelle série',
       refaire: vuePieces
     });
   }
@@ -690,7 +865,7 @@
     afficher(`
       ${lienRetour('#/', 'Accueil')}
       <h1>Crédits photos</h1>
-      <p class="description">Les photos viennent de Wikimedia Commons. Elles sont dans le domaine public ou sous licence libre Creative Commons, qui permet de les réutiliser en citant leur auteur.</p>
+      <p class="description">Les photos et les schémas viennent de Wikimedia Commons. Ils sont dans le domaine public ou sous licence libre Creative Commons, qui permet de les réutiliser en citant leur auteur. Sur les schémas, les noms d'origine ont été retirés pour l'exercice.</p>
       <section class="panneau">
         ${images.map(im => `
           <div class="ligne-credit">

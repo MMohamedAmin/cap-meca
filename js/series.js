@@ -77,8 +77,7 @@ CAP.series = (function () {
       return { items: melanger(choisies.concat(reste)), cibles };
     },
 
-    // Questions illustrées par une photo (mode « Reconnaître les pièces »).
-    // Photos et schémas.
+    // Questions illustrées par une photo ou un schéma à légender (mode « Reconnaître les pièces »).
     pieces(n) {
       return melanger(prioriser(toutesQuestions().filter(x => x.q.image || x.q.schema)).slice(0, n));
     },
@@ -94,11 +93,12 @@ CAP.series = (function () {
     // complété au hasard. Tous les niveaux sont mélangés, comme dans une vraie épreuve :
     // dans chaque chapitre, on alterne questions faciles (niveau 1) et difficiles (2 ou 3),
     // en commençant par une difficile un chapitre sur deux ; le complément est pour moitié difficile.
-    // Les questions « remettre dans l'ordre » n'y figurent pas (réponse unique par question dans l'examen).
+    // Seuls les QCM et Vrai/Faux y figurent (réponse unique par question dans l'examen) :
+    // ni « remettre dans l'ordre » ni schémas à légender.
     examen(n) {
       const parChapitre = Math.max(1, Math.floor(n / CAP.chapitres.length));
       const difficile = x => CAP.stats.niveau(x.q) > 1;
-      const aChoix = q => q.type !== 'ordre';
+      const aChoix = q => q.type === 'qcm' || q.type === 'vf';
       let choisies = [];
       CAP.chapitres.forEach((ch, i) => {
         const faciles = melanger(ch.questions.filter(q => aChoix(q) && CAP.stats.niveau(q) === 1));

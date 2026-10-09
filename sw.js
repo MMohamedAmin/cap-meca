@@ -1,6 +1,6 @@
 // Service worker : garde le site en mémoire pour qu'il marche sans connexion.
 // FICHIER GÉNÉRÉ par « node outils/maj-hors-ligne.js » : ne pas modifier à la main.
-const VERSION = 'capmeca-f5cae5041de9';
+const VERSION = 'capmeca-ffb58716f0b0';
 const FICHIERS = [
   './',
   'css/style.css',
@@ -54,6 +54,11 @@ const FICHIERS = [
   'images/pieces/soufflet-cardan.jpg',
   'images/pieces/tambour.jpg',
   'images/pieces/vilebrequin.png',
+  'images/schemas/clim-circuit.svg',
+  'images/schemas/embrayage-eclate.png',
+  'images/schemas/freinage-circuit.svg',
+  'images/schemas/moteur-coupe.jpg',
+  'images/schemas/pneu-structure.svg',
   'index.html',
   'js/app.js',
   'js/calculs.js',

@@ -34,8 +34,7 @@ CAP.ajouterChapitre({
           '**Motoventilateur** : force le passage d\'air dans le radiateur quand la vitesse ne suffit pas, commandé par une sonde ou le calculateur.',
           '**Vase d\'expansion** : absorbe la dilatation du liquide et porte le bouchon pressurisé.',
           '**Aérotherme** (radiateur de chauffage) : chauffe l\'habitacle avec le liquide chaud.'
-        ] },
-        { schema: 'circuit-refroidissement' }
+        ] }
       ]
     },
     {
